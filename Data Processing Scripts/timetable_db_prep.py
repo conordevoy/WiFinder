@@ -14,15 +14,15 @@ del df
 
 
 
-mon_df = pd.DataFrame(index = range(10), columns=[                        'Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
+mon_df = pd.DataFrame(index = range(10), columns=['Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
 
-tue_df = pd.DataFrame(index = range(10), columns=[                        'Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
+tue_df = pd.DataFrame(index = range(10), columns=['Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
 
-wed_df = pd.DataFrame(index = range(10), columns=[                        'Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
+wed_df = pd.DataFrame(index = range(10), columns=['Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
 
-thu_df = pd.DataFrame(index = range(10), columns=[                        'Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
+thu_df = pd.DataFrame(index = range(10), columns=['Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
 
-fri_df = pd.DataFrame(index = range(10), columns=[                        'Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
+fri_df = pd.DataFrame(index = range(10), columns=['Time', 'Date', 'Room', 'Room_Capacity', 'Module', 'Registered_Students'])
 
 day_tables = [mon_df, tue_df, wed_df, thu_df, fri_df]
 
