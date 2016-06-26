@@ -2,19 +2,20 @@
 import openpyxl
 import xlrd
 import csv
+import os
 
-def csv_from_excel():
-    """from so, check"""
-
-    wb = xlrd.open_workbook('your_workbook.xls')
-    sh = wb.sheet_by_name('Sheet1')
-    your_csv_file = open('your_csv_file.csv', 'wb')
-    wr = csv.writer(your_csv_file, quoting=csv.QUOTE_ALL)
-
-    for rownum in range(sh.nrows):
-        wr.writerow(sh.row_values(rownum))
-
-    your_csv_file.close()
+# def csv_from_excel():
+#     """from so, check"""
+#
+#     wb = xlrd.open_workbook('your_workbook.xls')
+#     sh = wb.sheet_by_name('Sheet1')
+#     your_csv_file = open('your_csv_file.csv', 'wb')
+#     wr = csv.writer(your_csv_file, quoting=csv.QUOTE_ALL)
+#
+#     for rownum in range(sh.nrows):
+#         wr.writerow(sh.row_values(rownum))
+#
+#     your_csv_file.close()
 
 def remove_double_classes(sheet):
 
@@ -29,13 +30,13 @@ def clean_timetable(timetable):
 
     wb = openpyxl.load_workbook(timetable)
 
-    sheet_separator(wb)
+    rooms = sheet_separator(wb)
 
     for room in rooms:
         remove_double_classes(room)
 
 
-def sheet_separator(workbook):
+def sheet_separator(wb):
     """Separates a workbook out into its component sheets, returning a list of the sheets
 
     Has options to omit specific sheetnames"""
@@ -55,6 +56,8 @@ def find_mergecells(sheet):
     """Takes a sheet and finds all mergecells within it, returning a list of the top left cells"""
 
     mergecells = []
+    print(type(sheet))
+    print(sheet)
 
     for i in range(len(sheet.merged_cell_ranges)):
 
@@ -97,6 +100,37 @@ def unmerge_double_classes(sheet, mergecells):
                 sheet[bottom_cell].value = sheet[cell].value
 
     return sheet
+
+
+path_choice = '/home/mike/wifiproj/data'
+os.chdir(path_choice)
+print('The current working directory is:', os.getcwd())
+path_choice = os.getcwd()
+path_ok = input('To use another directory, please press any key followed by enter. Otherwise, just press enter. ')
+
+
+if path_ok != '':
+    path_choice = input('Please enter the directory to use: \n')
+    invalid_path = True
+
+    while invalid_path:
+        try:
+            os.chdir(path_choice)
+            invalid_path = False
+        except:
+            path_choice = input('Invalid path. Please enter the directory to use: \n')
+
+
+
+print(path_choice)
+print(os.getcwd())
+
+clean_timetable('B0.02 B0.03 B0.04 Timetable.xlsx')
+
+
+
+
+
 
 # open the xlsx file to be operated on
 wb = openpyxl.load_workbook('B0.02 B0.03 B0.04 Timetable.xlsx')
