@@ -1,0 +1,4 @@
+unzip CSIWiFiLogs.zip
+unzip *.csv.zip
+sed -i '/^Belfield/!d' *.csv
+sed '' *.csv > merged.csv
