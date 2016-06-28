@@ -90,4 +90,4 @@ for room in rooms:
 
     wb.save('.xlsx'.format(room)) # save each room as its own file
 
-wb.save('CleanTimetable.xlsx')
+wb.save('CleanTimetable.xlsx') # save full timetable without double classes
