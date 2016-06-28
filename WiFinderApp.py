@@ -3,14 +3,14 @@ import sqlite3
 
 WiFinderApp = Flask(__name__, static_url_path="/app/website/static")
 
-#WiFinderApp.debug = True
+WiFinderApp.debug = True
 
 WiFinderApp.db = "wifinderDB.db"
 
-#@WifinderApp.route("/")
-#def WiFinderHTML():
-#	'''Render HTML template'''
-#	return render_template("index.html")
+@WiFinderApp.route("/")
+def WiFinderHTML():
+	'''Render HTML template'''
+	return render_template("index.html")
 
 def connectDB():
 	'''DB connection'''
