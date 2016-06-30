@@ -1,10 +1,15 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
 {% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
 
         <form action= "results.html">
 
             <select name="Room">
                 <option value="default">Select room</option>
+                <!--'rooms' is a parameter passed in the flask endpoint for '/search'
+                This code iterates through that parameter and populates a search option for each value
+                This structure is identical for all the search boxes-->
                 {% for room in rooms %}
                 <option value="{{room}}">{{room}}</option>
                 {% endfor %}

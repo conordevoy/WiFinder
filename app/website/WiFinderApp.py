@@ -21,7 +21,6 @@ def get_db():
         db = g._database = connectDB()
     return db
 
-
 @WiFinderApp.route("/")
 def WiFinderHTML():
     '''Render HTML template'''
@@ -29,7 +28,7 @@ def WiFinderHTML():
 
 
 @WiFinderApp.route("/searchfake")
-def search_page():
+def search_fake():
     '''Load demo search page - artificial data to test jinja connections'''
 
     return render_template("search.html",
