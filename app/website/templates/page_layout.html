@@ -1,0 +1,29 @@
+<!--This is the basic page which contians the logo and navigation bar
+It isn't intended to be displayed by itself
+It is the parent page for the other pages within the website
+Any changes to the title or navbar need to occur here and will be included in all other pages-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>WiFinder - {{title}}</title>
+    <!--Sets dynamic title for each page-->
+</head>
+<body>
+    <H1>WiFinder</H1>
+
+        <div class="navbar">
+          <ul>
+            <li class="one"><a href="index.html">Home</a></li>
+            <li class="two"><a href="results.html">Results</a></li>
+            <hr />
+          </ul>
+        </div>
+
+        {% block content %}
+            {% endblock %}
+        <!--These blocks contain the child webpage-->
+</body>
+</html>
