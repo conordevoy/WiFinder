@@ -1,5 +1,6 @@
 from flask import Flask, render_template, g
 import sqlite3
+#test comment
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
