@@ -90,10 +90,12 @@ df.reset_index(drop=True)
 df_finish = pd.concat(cleantables)
 print df_finish
 
-df_finish.to_csv('timetable_table.csv')
+df_finish.to_csv('timetable_table.csv', index=False)
 
 roomtable = df[['Room', 'Room_Capacity']]
 modtable = df[['Module', 'Registered_Students']]
 
-roomtable.to_csv('room_table.csv')
-modtable.to_csv('mod_table.csv')
+roomtable.to_csv('room_table.csv', index=False)
+modtable.to_csv('mod_table.csv', index=False)
+
+classtable = df[['Room', 'Module', 'Date', 'Time']]
