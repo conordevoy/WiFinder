@@ -7,7 +7,7 @@ WiFinderApp = Flask(__name__, static_url_path="/static")
 WiFinderApp.debug = True
 
 # WiFinderApp.db = "wifinderDB.db"
-db = "wifinderDB.db"
+db = "timetable2.sqlite"
 
 
 def connectDB():
@@ -53,6 +53,28 @@ def search_real():
                            times=[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                            days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                            densities=['0%', '25%', '50%', '75%', '100%'])
+
+@WiFinderApp.route("/presentation")
+def presentation():
+    '''a little something for the presentation'''
+
+    cur = get_db().cursor()
+    timedata = cur.execute("SELECT DISTINCT time FROM timetable_table;")
+    cur = get_db().cursor()
+    roomdata = cur.execute("SELECT DISTINCT room FROM timetable_table;")
+    cur = get_db().cursor()
+    moduledata = cur.execute("SELECT DISTINCT module FROM timetable_table;")
+    cur = get_db().cursor()
+    alldata = cur.execute("SELECT * FROM timetable_table;")
+
+
+
+    return render_template("presentation.html",
+                           title='Search',
+                           rooms=roomdata,
+                           times=timedata,
+                           modules=moduledata,
+                           densities=alldata)
 
 
 @WiFinderApp.route("/layout")
