@@ -45,7 +45,7 @@ def search_real():
     '''load search page with real data - test to check db connection'''
 
     cur = get_db().cursor()
-    roomdata = cur.execute("SELECT * FROM B02 WHERE pid < 10;")
+    roomdata = cur.execute("SELECT DISTINCT room FROM ROOM;")
 
     return render_template("search.html",
                            title='Search',
