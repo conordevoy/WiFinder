@@ -77,12 +77,12 @@ def presentation():
                            densities=alldata)
 
 
-@WiFinderApp.route("/layout")
-def layout():
+@WiFinderApp.route("/results")
+def results():
     '''load base layout - just to display basic template, not intended as standalone page'''
 
-    return render_template("page_layout.html",
-                           title='Layout')
+    return render_template("results.html",
+                           title='Results')
 
 
 if __name__ == "__main__":
