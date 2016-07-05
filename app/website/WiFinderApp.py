@@ -37,7 +37,7 @@ def search_fake():
                            rooms=['B002', 'quack', 'B004'],
                            times=[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                            days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                           densities=['0%', '25%', '50%', '75%', '100%'])
+                           densities=['0%', '25%', '5000%', '75%', '100%'])
 
 
 @WiFinderApp.route("/searchreal")
