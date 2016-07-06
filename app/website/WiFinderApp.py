@@ -47,7 +47,7 @@ def search():
 
 
 
-    return render_template("presentation.html",
+    return render_template("search.html",
                            title='Search',
                            rooms=roomdata,
                            times=timedata,
