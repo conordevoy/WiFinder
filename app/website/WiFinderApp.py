@@ -1,6 +1,5 @@
 from flask import Flask, render_template, g
 import sqlite3
-#test comment
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -38,8 +37,8 @@ def WiFinderHTML():
 
 
 @WiFinderApp.route("/search")
-def presentation():
-    '''a little something for the presentation'''
+def search():
+    '''search page for website'''
 
     timedata = query("SELECT DISTINCT time FROM timetable_table;")
     roomdata = query("SELECT DISTINCT room FROM timetable_table;")
@@ -61,7 +60,7 @@ def layout():
     '''load base template - only here to prototype design'''
 
     return render_template("page_layout.html",
-                           title='Results')
+                           title='Layout')
 
 
 if __name__ == "__main__":
