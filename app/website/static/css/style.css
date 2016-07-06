@@ -182,7 +182,7 @@ hr {
 /*
 #logo img{
     height: 300px;
-    float: left;
+    float: left;inpu
     opacity: 0.07;
     margin-bottom: 30px;
     margin-left: 40%
@@ -207,13 +207,13 @@ form select {
 }
 form input {
     height: 50px;
-    width: 150px;
+    width: 200px;
     background-color: #ec583a;
     border-radius: 10px;
     font-size: 15pt;
     color: white;
-    margin-left: 630px;
-    margin-bottom: 30px;
+    margin-left: auto;
+    margin-bottom: auto;
 }
 #timeslot {
     margin-left: 25%;
