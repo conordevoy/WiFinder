@@ -22,50 +22,29 @@ def get_db():
         db = g._database = connectDB()
     return db
 
+def query(sqlcode):
+    '''wrapper function to execute queries against set DB'''
+
+    cur = get_db().cursor()
+    data = cur.execute(sqlcode)
+
+    return data
+
+
 @WiFinderApp.route("/")
 def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
 
 
-@WiFinderApp.route("/searchfake")
-def search_fake():
-    '''Load demo search page - artificial data to test jinja connections'''
-
-    return render_template("search.html",
-                           title='Search',
-                           rooms=['B002', 'quack', 'B004'],
-                           times=[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-                           days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                           densities=['0%', '25%', '5000%', '75%', '100%'])
-
-
-@WiFinderApp.route("/searchreal")
-def search_real():
-    '''load search page with real data - test to check db connection'''
-
-    cur = get_db().cursor()
-    roomdata = cur.execute("SELECT DISTINCT room FROM ROOM;")
-
-    return render_template("search.html",
-                           title='Search',
-                           rooms=roomdata,
-                           times=[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-                           days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                           densities=['0%', '25%', '50%', '75%', '100%'])
-
-@WiFinderApp.route("/presentation")
+@WiFinderApp.route("/search")
 def presentation():
     '''a little something for the presentation'''
 
-    cur = get_db().cursor()
-    timedata = cur.execute("SELECT DISTINCT time FROM timetable_table;")
-    cur = get_db().cursor()
-    roomdata = cur.execute("SELECT DISTINCT room FROM timetable_table;")
-    cur = get_db().cursor()
-    moduledata = cur.execute("SELECT DISTINCT module FROM timetable_table;")
-    cur = get_db().cursor()
-    alldata = cur.execute("SELECT * FROM timetable_table;")
+    timedata = query("SELECT DISTINCT time FROM timetable_table;")
+    roomdata = query("SELECT DISTINCT room FROM timetable_table;")
+    moduledata = query("SELECT DISTINCT module FROM timetable_table;")
+    alldata = query("SELECT * FROM timetable_table;")
 
 
 
@@ -77,11 +56,11 @@ def presentation():
                            densities=alldata)
 
 
-@WiFinderApp.route("/results")
-def results():
-    '''load base layout - just to display basic template, not intended as standalone page'''
+@WiFinderApp.route("/layout")
+def layout():
+    '''load base template - only here to prototype design'''
 
-    return render_template("results.html",
+    return render_template("page_layout.html",
                            title='Results')
 
 
