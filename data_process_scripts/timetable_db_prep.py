@@ -99,3 +99,4 @@ roomtable.to_csv('room_table.csv', index=False)
 modtable.to_csv('mod_table.csv', index=False)
 
 classtable = df[['Room', 'Module', 'Date', 'Time']]
+classtable.to_csv('class_table.csv', index=False)
