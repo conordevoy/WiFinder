@@ -1,4 +1,3 @@
-
 import openpyxl
 import xlrd
 import csv
@@ -16,6 +15,7 @@ import os
 #         wr.writerow(sh.row_values(rownum))
 #
 #     your_csv_file.close()
+
 
 def remove_double_classes(sheet):
 
@@ -42,7 +42,7 @@ def sheet_separator(wb):
     Has options to omit specific sheetnames"""
 
     rooms = []
-    excluded_names = ['All'] # add names to be skipped
+    excluded_names = ['All']  # add names to be skipped
 
     for i in wb.get_sheet_names():
         if i in excluded_names:
@@ -51,6 +51,7 @@ def sheet_separator(wb):
         rooms.append(i)
 
     return rooms
+
 
 def find_mergecells(sheet):
     """Takes a sheet and finds all mergecells within it, returning a list of the top left cells"""
@@ -67,7 +68,7 @@ def find_mergecells(sheet):
         top_left_cell_value = range_of_merge.split(":")[0]
 
         # several cells contain nothing but are merged due to format, disregard these.
-        if sheet[top_left_cell_value].value == None:
+        if sheet[top_left_cell_value].value is None:
             continue
 
         # create list of all the value-containing cells which begin merge cells
@@ -91,7 +92,7 @@ def unmerge_double_classes(sheet, mergecells):
                 cell = cell.coordinate
 
                 # create the cell range so 'A1' becomes 'A1:A2'
-                cell_range = str(cell + ':' + cell[:1] ) + str( int(cell[1:]) + 1)
+                cell_range = str(cell + ':' + cell[:1]) + str(int(cell[1:]) + 1)
 
                 sheet.unmerge_cells(cell_range)
 
@@ -121,15 +122,10 @@ if path_ok != '':
             path_choice = input('Invalid path. Please enter the directory to use: \n')
 
 
-
 print(path_choice)
 print(os.getcwd())
 
 clean_timetable('B0.02 B0.03 B0.04 Timetable.xlsx')
-
-
-
-
 
 
 # open the xlsx file to be operated on
@@ -149,18 +145,14 @@ for i in wb.get_sheet_names():
     rooms.append(i)
 
 
-
 # pull the first one to operate on
 
 sheet = wb.get_sheet_by_name(rooms[0])
 
 
-
 # print the value of a cell from the merged range list
 
 sheet[sorted(sheet.merged_cell_ranges)[0][0:2]].value
-
-
 
 # find first value in each cell merge range
 
@@ -173,14 +165,12 @@ for i in range(len(sheet.merged_cell_ranges)):
     # only top left cell in merged cell contains a value, find this by splitting on ':' for 'A1:A2' = 'A1'
     top_left_cell_value = range_of_merge.split(":")[0]
 
-    # several cells contain nothing but are merged due to format, disregard these.
-    if sheet[top_left_cell_value].value == None:
+    # several cells contain nothing but are merged due to format, disregard these
+    if sheet[top_left_cell_value].value is None:
         continue
 
     # create list of all the value-containing cells which begin merge cells
     mergecells.append(top_left_cell_value)
-
-
 
 # only keep mergecells from the 'module' rows
 
@@ -193,14 +183,12 @@ for row in sheet.iter_rows(row_offset=2):
             cell = cell.coordinate
 
             # create the cell range so 'A1' becomes 'A1:A2'
-            cell_range = str(cell + ':' + cell[:1] ) + str( int(cell[1:]) + 1)
+            cell_range = str(cell + ':' + cell[:1]) + str(int(cell[1:]) + 1)
 
             sheet.unmerge_cells(cell_range)
 
             # copy value of first cell into the cell below it
             bottom_cell = cell_range.split(":")[1]
             sheet[bottom_cell].value = sheet[cell].value
-
-
 
 wb.save('B002_finalmerge.xlsx')
