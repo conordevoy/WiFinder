@@ -3,12 +3,14 @@
 
 import pandas as pd
 import os
+import glob
 
-os.chdir('/home/mike/wifiproj/data') # change to directory where file is located
+directory = input("Please enter location of the timetable csv files: ")
+# os.chdir('/home/mike/wifiproj/data') # change to directory where file is located
 
-timetables = ['B0.02_ready', 'B0.03_ready', 'B0.04_ready'] # hardcoded names of timetable files
-                    # this is not flexible; could be replaced with a glob function
-                    # '#neverhardcode'
+os.chdir(directory)
+
+timetables = glob.glob(directory + '/' + '*_ready.csv') # finds all files ending in _ready.csv
 
 cleantables = [] # make new list to store the names of cleaned tables;
                 # this is needed for using pd.concat later on to join them end to end
@@ -16,7 +18,7 @@ cleantables = [] # make new list to store the names of cleaned tables;
 
 for timetable in timetables:
 
-    df = pd.read_csv('{}.csv'.format(timetable)) # read the timetable
+    df = pd.read_csv('{}'.format(timetable)) # read the timetable
 
     df = df.ix[:9, :11] # cut out unneeded rows and columns
                         # not flexible; what if the structure changes?
