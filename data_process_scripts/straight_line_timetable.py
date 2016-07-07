@@ -1,5 +1,6 @@
 import openpyxl
 import os
+import csv
 
 path_choice = '/home/mike/wifiproj/data' # local path, just to speed up script
 os.chdir(path_choice)
@@ -81,5 +82,11 @@ for room in rooms:
 
 
     wb.save('.xlsx'.format(room)) # save each room as its own file
+
+    with open('{}_ready.csv', 'w') as f:
+        c = csv.writer(f)
+        for r in sheet.rows:
+            c.writerow([cell.value for cell in r])
+
 
 wb.save('CleanTimetable.xlsx') # save full timetable without double classes
