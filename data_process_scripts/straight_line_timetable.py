@@ -42,13 +42,6 @@ for room in rooms:
     # pull the sheet to operate on
 
     sheet = wb.get_sheet_by_name(room)
-    print(sheet)
-
-
-
-    # print the value of a cell from the merged range list
-
-    sheet[sorted(sheet.merged_cell_ranges)[0][0:2]].value
 
 
 
