@@ -30,11 +30,11 @@ wb = openpyxl.load_workbook('B0.02 B0.03 B0.04 Timetable.xlsx')
 
 rooms = []
 
-for i in wb.get_sheet_names():
-    if i == 'All':
+for sheetname in wb.get_sheet_names():
+    if sheetname == 'All': # skip 'all' sheet
         continue
 
-    rooms.append(i)
+    rooms.append(sheetname) # append sheet to list
 
 
 for room in rooms:
@@ -47,38 +47,37 @@ for room in rooms:
 
     # find first value in each cell merge range
 
-    mergecells = []
+    mergecells = [] # make list to store mergedcells
 
-    for i in range(len(sheet.merged_cell_ranges)):
+    for current_cell in range(len(sheet.merged_cell_ranges)): # move through each merge cell list
 
-        range_of_merge = sorted(sheet.merged_cell_ranges)[i]
+        range_of_merge = sorted(sheet.merged_cell_ranges)[current_cell]
 
         # only top left cell in merged cell contains a value, find this by splitting on ':' for 'A1:A2' = 'A1'
         top_left_cell_value = range_of_merge.split(":")[0]
 
 
-        if sheet[top_left_cell_value].value == None:
+        if sheet[top_left_cell_value].value == None: # skip any cells without data; some empty cells are merged
             continue
 
-        mergecells.append(top_left_cell_value)
+        mergecells.append(top_left_cell_value) # append any cell with data to the mergecells list
 
 
 
     # only keep mergecells from the 'module' rows
 
-    for row in sheet.iter_rows(row_offset=2):
+    for row in sheet.iter_rows(row_offset=2): # assumption; not all sheets may have the same row offset value
         for cell in row:
-            if cell.coordinate == 'N13': # local constraint, need to be checked for future datasets. Just to speed results.
-                break
-            if cell.coordinate in mergecells:
 
-                cell = cell.coordinate
-                cell_range = str(cell + ':' + cell[:1] ) + str( int(cell[1:]) + 1)
+            if cell.coordinate in mergecells: # if the cell is a mergecell
 
-                sheet.unmerge_cells(cell_range)
+                cell = cell.coordinate # take the coordinate of that mergecell, ie. 'X20'
+                cell_range = str(cell + ':' + cell[:1] ) + str( int(cell[1:]) + 1) # make range: 'X20:X21'
 
-                bottom_cell = cell_range.split(":")[1]
-                sheet[bottom_cell].value = sheet[cell].value
+                sheet.unmerge_cells(cell_range) # unmerge the cells
+
+                bottom_cell = cell_range.split(":")[1] # make variable of cell 'X21'
+                sheet[bottom_cell].value = sheet[cell].value # assign X20 = X21, bottom cell = top cell
 
 
     wb.save('.xlsx'.format(room)) # save each room as its own file
