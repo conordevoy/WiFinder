@@ -2,8 +2,7 @@ import openpyxl
 import os
 import csv
 
-path_choice = '/home/mike/wifiproj/data' # local path, just to speed up script
-os.chdir(path_choice)
+# path_choice = '/home/mike/wifiproj/data' # local path, just to speed up script
 print('The current working directory is:', os.getcwd())
 path_choice = os.getcwd()
 path_ok = input('To use another directory, please press any key followed by enter. Otherwise, just press enter. ')
