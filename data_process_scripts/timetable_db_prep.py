@@ -102,6 +102,18 @@ for timetable in timetables:
 df_finish = pd.concat(cleantables)
 df_finish.reset_index(drop=True) # reset the index of the joined tables
 
+#keep only first two characters in Time
+for item, frame in df_finish['Time'].iteritems():
+    df_finish['Time'] = df_finish['Time'].map(lambda x: str(x)[:2])
+
+#remove : from time
+for item, frame in df_finish['Time'].iteritems():
+    df_finish['Time'] = df_finish['Time'].map(lambda x: x.lstrip(':').rstrip(':'))
+
+#retain only first 10 characters in date
+for item, frame in df_finish['Date'].iteritems():
+    df_finish['Date'] = df_finish['Date'].map(lambda x: str(x)[:10])
+
 df_finish.to_csv('timetable_table.csv', index=False) # convert df to .csv, drop the index
 
 roomtable = df[['Room', 'Room_Capacity']] # create table according to DB schema
