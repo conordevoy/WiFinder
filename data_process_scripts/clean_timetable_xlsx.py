@@ -4,6 +4,18 @@ import xlrd
 import csv
 import os
 
+# def csv_from_excel():
+#     """from so, check"""
+#
+#     wb = xlrd.open_workbook('your_workbook.xls')
+#     sh = wb.sheet_by_name('Sheet1')
+#     your_csv_file = open('your_csv_file.csv', 'wb')
+#     wr = csv.writer(your_csv_file, quoting=csv.QUOTE_ALL)
+#
+#     for rownum in range(sh.nrows):
+#         wr.writerow(sh.row_values(rownum))
+#
+#     your_csv_file.close()
 
 def remove_double_classes(sheet):
 
@@ -114,6 +126,9 @@ print(path_choice)
 print(os.getcwd())
 
 clean_timetable('B0.02 B0.03 B0.04 Timetable.xlsx')
+
+
+
 
 
 
