@@ -43,7 +43,7 @@ for room in rooms:
 
     sheet = wb.get_sheet_by_name(room)
 
-
+    # NOTE: section below is inefficient. I'll fix this once the CSI data is clean.
 
     # find first value in each cell merge range
 
