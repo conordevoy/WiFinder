@@ -11,6 +11,8 @@ directory = input("Please enter location of the timetable csv files: ")
 os.chdir(directory)
 
 timetables = glob.glob(directory + '/' + '*_ready.csv') # finds all files ending in _ready.csv
+for t in timetables:
+    print(t)
 
 cleantables = [] # make new list to store the names of cleaned tables;
                 # this is needed for using pd.concat later on to join them end to end
