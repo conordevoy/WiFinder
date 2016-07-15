@@ -94,7 +94,7 @@ for timetable in timetables:
     while count < df.shape[0]:
         if pd.isnull(df.iat[count,4]): # if module value is NaN
             df.iat[count,4] = 'Vacant'
-            df.iat[count,5] = 'Vacant'
+            df.iat[count,5] = '-1'
 
         count += 1
 
