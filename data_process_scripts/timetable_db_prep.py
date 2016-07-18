@@ -94,7 +94,7 @@ for timetable in timetables:
     while count < df.shape[0]:
         if pd.isnull(df.iat[count,4]): # if module value is NaN
             df.iat[count,4] = 'Vacant'
-            df.iat[count,5] = 'Vacant'
+            df.iat[count,5] = '-1'
 
         count += 1
 
@@ -102,6 +102,13 @@ for timetable in timetables:
 
 
 df_finish = pd.concat(cleantables)
+
+for row in range(df_finish.shape[0]):
+    room_value = str(df_finish.iat[row, 2])
+    room_value.replace('.', '')
+    room_value.replace('CS', '')
+    df_finish.iat[row, 2] = room_value
+
 df_finish.reset_index(drop=True) # reset the index of the joined tables
 
 #keep only first two characters in Time

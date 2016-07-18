@@ -82,7 +82,7 @@ for room in rooms:
 
     wb.save('.xlsx'.format(room)) # save each room as its own file
 
-    with open('{}_ready.csv', 'w') as f:
+    with open('{}_ready.csv'.format(room), 'w') as f:
         c = csv.writer(f)
         for r in sheet.rows:
             c.writerow([cell.value for cell in r])
