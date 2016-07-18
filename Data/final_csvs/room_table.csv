@@ -1,4 +1,4 @@
-Room,Room_Capacity
-B002,90
-B003,90
-B004,220
+Room,Capacity,Building,Campus
+B002,90,Computer Science,Belfield
+B003,90,Computer Science,Belfield
+B004,220,Computer Science,Belfield
