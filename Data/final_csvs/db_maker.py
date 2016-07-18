@@ -6,7 +6,7 @@ conn = sqlite3.connect('WiFinderDBv02.db')
 cur = conn.cursor()
 
 cur.execute('''CREATE TABLE IF NOT EXISTS ROOM
-	(Room TEXT PRIMARY KEY NOT NULL,
+	(RoomID TEXT PRIMARY KEY NOT NULL,
 	Capacity INT NOT NULL,
 	Building TEXT NOT NULL,
 	Campus TEXT NOT NULL);''')
@@ -61,7 +61,7 @@ with open('occupancy_table_final.csv', 'rt') as f:
 	to_db_occ = [(i['Hour'], i['Date'], i['Room'], i['Occupancy'], i['ID']) for i in dr]
 f.close()
 
-cur.executemany('INSERT INTO ROOM (Room, Capacity, Building, Campus) VALUES (?, ?, ?, ?);', to_db_room)
+cur.executemany('INSERT INTO ROOM (RoomID, Capacity, Building, Campus) VALUES (?, ?, ?, ?);', to_db_room)
 cur.executemany('INSERT INTO CLASS (ClassID, Hour, Datetime, Room, Module, Reg_Students) VALUES (?, ?, ?, ?, ?, ?);', to_db_class)
 cur.executemany('INSERT INTO WIFI_LOGS (Time, Hour, Datetime, Room, Log_Count, ClassID) VALUES (?, ?, ?, ?, ?, ?);', to_db_log)
 cur.executemany('INSERT INTO OCCUPANCY (Hour, Datetime, Room, Occupancy, ClassID) VALUES (?, ?, ?, ?, ?)', to_db_occ)
