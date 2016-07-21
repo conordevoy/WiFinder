@@ -10,6 +10,9 @@
     <div class="container">
       <h1>Wifinder</h1>
       <br>
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
       <form action="" method="post">
         <input type="text" placeholder="Username" name="username" value="{{
           request.form.username }}">
@@ -20,9 +23,6 @@
       {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}
       {% endif %}
-      {% for message in get_flashed_messages() %}
-        {{ message }}
-      {% endfor %}
     </div>
   </body>
 </html>
