@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title> WiFinder</title>
-    </head>
-    <body>
-        <H1> WiFinder</H1>
-           <div class="container">
-          <ul>
-            <li class="one"><a href="index.html">Home</a></li>
-            <li class="two"><a href="results.html">Results</a></li>
-            <hr />
-          </ul>
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
         </div>
             <div id="timeslot">
             <button class="empty">9am</button>
@@ -24,4 +14,4 @@
             <button class="full">4pm</button>
             <button class="half">5pm</button>
         </div>
-    </body></html>
+ {% endblock %}
