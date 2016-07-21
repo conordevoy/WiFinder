@@ -15,7 +15,7 @@ def login_required(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash('You need to login')
+            flash('Sorry, you need to login first!')
             return redirect(url_for('login'))
     return wrap
 
@@ -50,6 +50,7 @@ def WiFinderHTML():
     return render_template("index.html")
 
 @WiFinderApp.route("/results")
+@login_required
 def results():
     '''results page for website'''
     return render_template("results.html", title='Results')
