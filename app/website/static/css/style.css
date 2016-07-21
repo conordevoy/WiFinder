@@ -5,61 +5,49 @@ body {
     background-position: 60% 60%; 
     background-size: 70%;
 }
-h1 {font-size: 50pt;
-    letter-spacing: 0.825em;
-    text-align: center;
-    color: dimgray;
-}
-{
-  box-sizing: border-box;
-}
-
 body {
   font: 300 100% 'Helvetica Neue', Helvetica, Arial;
   min-height: 800px;
 }
 
-.container {
-  width: 50%;
-  margin: 0 auto;
+/*styling of wifinder header*/
+h1 {font-size: 50pt;
+    letter-spacing: 0.825em;
+    text-align: center;
+    text-decoration: none;
+    color: dimgray;
 }
 
+/*styling of navigation bar*/
 ul li {
   display: inline;
   text-align: center;
 }
-
 .navbar{
     width: 500px;
     margin-left: auto;
     margin-right: auto;
 }
-a {
-  display: inline-block;
-  width: 200px;
-  padding: .75rem 0;
-  margin: 0;
-  text-decoration: none;
-  color: #ec583a;
-  font-size: 40px;
-  float: left;
+.navbar a {
+    display: inline-block;
+    color: #ec583a;
+    width: 200px;
+    text-decoration: none;
+    font-size: 40px;
+    padding: 1.5rem 0;
+    float: left;
+}
+.navbar a:hover {
+    color: #ec583a;
+    border-bottom: #ec583a solid 3px;
 }
 
-.two:hover ~ hr {
-  margin-left: 50%;
-}
-
-
-hr {
-  height: .25rem;
-  width: 40%;
-  margin: 0;
-  background: #ec583a;
-  border: none;
-  transition: .3s ease-in-out;
-}
-#login{
-    text-align: center;
+/*styling of results page --> buttons*/
+#timeslot {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 120px;
+    max-width: 700px;
 }
 .empty{
   display: inline-block;
@@ -179,20 +167,9 @@ hr {
   right: 0;
 }
 
-/*
-#logo img{
-    height: 300px;
-    float: left;inpu
-    opacity: 0.07;
-    margin-bottom: 30px;
-    margin-left: 40%
-}
-#sigma img{
-    margin-left: 10%
-}
-*/
+/*styling of form on search page*/
 form{
-    margin-top: 40px;
+    margin-top: 120px;
     margin-left: auto;
     margin-right: auto;
     max-width: 200px;
@@ -214,9 +191,4 @@ form input {
     color: white;
     margin-left: auto;
     margin-bottom: auto;
-}
-#timeslot {
-    margin-left: 25%;
-    margin-right: 15%;
-    margin-top: 50px;
 }
