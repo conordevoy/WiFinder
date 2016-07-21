@@ -52,7 +52,7 @@ def WiFinderHTML():
 @WiFinderApp.route("/results")
 def results():
     '''results page for website'''
-    return render_template("results.html")
+    return render_template("results.html", title='Results')
 
 @WiFinderApp.route("/search")
 @login_required
@@ -84,7 +84,7 @@ def login():
             session['logged_in'] = True
             flash("You have just been logged in!")
             return redirect(url_for('search'))
-    return render_template('login.html', error=error)
+    return render_template('login.html', title='Login', error=error)
 
 @WiFinderApp.route('/logout')
 def logout():
