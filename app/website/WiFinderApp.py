@@ -1,9 +1,23 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, redirect, url_for, request, session, flash
+from functools import wraps
 import sqlite3
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
 WiFinderApp.debug = True
+
+WiFinderApp.secret_key = 'hello'
+
+#login required decorator
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login')
+            return redirect(url_for('login'))
+    return wrap
 
 # WiFinderApp.db = "wifinderDB.db"
 db = "timetable2.sqlite"
@@ -37,6 +51,7 @@ def WiFinderHTML():
 
 
 @WiFinderApp.route("/search")
+@login_required
 def search():
     '''search page for website'''
 
@@ -54,6 +69,24 @@ def search():
                            modules=moduledata,
                            densities=alldata)
 
+# route for handling the login page logic
+@WiFinderApp.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            session['logged_in'] = True
+            flash("You have just been logged in!")
+            return redirect(url_for('search'))
+    return render_template('login.html', error=error)
+
+@WiFinderApp.route('/logout')
+def logout():
+    session.pop("logged_in", None)
+    flash("You have just been logged out!")
+    return redirect(url_for('login'))
 
 @WiFinderApp.route("/layout")
 def layout():
