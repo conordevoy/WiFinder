@@ -1,15 +1,8 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>WiFinder - {{title}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Wifinder</h1>
-      <br>
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
       {% for message in get_flashed_messages() %}
         {{ message }}
       {% endfor %}
@@ -23,6 +16,5 @@
       {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}
       {% endif %}
-    </div>
-  </body>
-</html>
+
+{% endblock %}
