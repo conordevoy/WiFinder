@@ -49,6 +49,10 @@ def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
 
+@WiFinderApp.route("/results")
+def results():
+    '''results page for website'''
+    return render_template("results.html")
 
 @WiFinderApp.route("/search")
 @login_required
