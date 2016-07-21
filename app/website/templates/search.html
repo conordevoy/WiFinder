@@ -2,6 +2,9 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
 
         <form action= "results.html">
 
@@ -39,8 +42,6 @@
             <input type="submit" value="Submit">
         </form>
         <p><a href="/logout">Logout</a></p>
-        {% for message in get_flashed_messages() %}
-        {{ message }}
-      {% endfor %}
+
 
 {% endblock %}
