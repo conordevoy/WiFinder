@@ -7,11 +7,13 @@ Any changes to the title or navbar need to occur here and will be included in al
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/css/style.css">
     <title>WiFinder - {{title}}</title>
     <!--Sets dynamic title for each page-->
 </head>
 <body>
+    <div class="container">
     <H1>WiFinder</H1>
 
         <div class="navbar">
@@ -25,5 +27,6 @@ Any changes to the title or navbar need to occur here and will be included in al
         {% block content %}
             {% endblock %}
         <!--These blocks contain the child webpage-->
+    </div>
 </body>
 </html>
