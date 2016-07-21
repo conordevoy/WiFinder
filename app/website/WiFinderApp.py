@@ -45,6 +45,7 @@ def query(sqlcode):
 
 
 @WiFinderApp.route("/")
+@login_required
 def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
