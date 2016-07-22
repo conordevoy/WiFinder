@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="/static/css/style.css">
@@ -51,7 +51,7 @@
             </select><br>
             <input type="submit" value="Submit">
         </form>
-<!--
+ 
         <div id="logo">
             <div id="sigma">
                 <img src="sigma.png">
@@ -60,5 +60,17 @@
                 <img src="wifi.png">
             </div>
         </div>
--->
-    </body></head></html>
+
+</body></head></html> -->
+
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+
+        <p><a href="/logout">Logout</a></p>
+
+{% endblock %}

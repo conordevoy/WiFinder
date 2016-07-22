@@ -2,7 +2,7 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
-        </div>
+<!--         </div>
             <div id="timeslot">
             <button class="empty">9am</button>
             <button class="full">10am</button>
@@ -13,6 +13,11 @@
             <button class="half">3pm</button>
             <button class="full">4pm</button>
             <button class="half">5pm</button>
-        </div>
+        </div> -->
+        {% for data in result %}
+            <table>
+                <tr>{{data}}</tr>
+            </table>
+        {% endfor %}
         <p><a href="/logout">Logout</a></p>
  {% endblock %}

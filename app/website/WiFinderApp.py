@@ -8,6 +8,8 @@ WiFinderApp.debug = True
 
 WiFinderApp.secret_key = 'hello'
 
+db = "WiFinderDBv02.db"
+
 #login required decorator
 def login_required(f):
     @wraps(f)
@@ -18,10 +20,6 @@ def login_required(f):
             flash('Sorry, you need to login first!')
             return redirect(url_for('login'))
     return wrap
-
-# WiFinderApp.db = "wifinderDB.db"
-db = "timetable2.sqlite"
-
 
 def connectDB():
     '''Connects to an Sqlite3 database'''
@@ -37,10 +35,8 @@ def get_db():
 
 def query(sqlcode):
     '''wrapper function to execute queries against set DB'''
-
     cur = get_db().cursor()
     data = cur.execute(sqlcode)
-
     return data
 
 
@@ -54,26 +50,29 @@ def WiFinderHTML():
 @login_required
 def results():
     '''results page for website'''
-    return render_template("results.html", title='Results')
+    alldata = query("""SELECT W.LogID, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy 
+                FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID 
+                JOIN ROOM R ON C.Room = R.RoomID 
+                JOIN OCCUPANCY O ON R.RoomID = O.Room 
+                WHERE W.Hour = 9 OR W.Hour = 10 OR W.Hour = 10 OR W.Hour = 11 OR W.Hour = 12 OR W.Hour = 13 OR W.Hour = 14 OR W.Hour = 15 OR W.Hour = 16 
+                GROUP BY W.LogID;
+                """)
+    return render_template("results.html", 
+                            title='Results',
+                            result=alldata)
 
 @WiFinderApp.route("/search")
 @login_required
 def search():
     '''search page for website'''
-
-    timedata = query("SELECT DISTINCT time FROM timetable_table;")
-    roomdata = query("SELECT DISTINCT room FROM timetable_table;")
-    moduledata = query("SELECT DISTINCT module FROM timetable_table;")
-    alldata = query("SELECT * FROM timetable_table;")
-
-
-
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
     return render_template("search.html",
-                           title='Search',
+                           title='Home',
                            rooms=roomdata,
                            times=timedata,
-                           modules=moduledata,
-                           densities=alldata)
+                           modules=moduledata)
 
 # route for handling the login page logic
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
@@ -97,7 +96,6 @@ def logout():
 @WiFinderApp.route("/layout")
 def layout():
     '''load base template - only here to prototype design'''
-
     return render_template("page_layout.html",
                            title='Layout')
 
