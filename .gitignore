@@ -54,3 +54,7 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml 
 # *.ipr
+.idea/
+app/__pycache__/
+data_process_scripts/.ipynb_checkpoints/
+data_process_scripts/__pycache__/
