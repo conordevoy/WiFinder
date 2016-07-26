@@ -8,7 +8,9 @@ in this directory, and navigate to:
 from __future__ import print_function
 
 import flask
-
+import sqlite3 as lite
+from bokeh.charts import Line, output_file, show
+import pandas as pd
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.resources import INLINE
@@ -30,44 +32,54 @@ def getitem(obj, item, default):
         return obj[item]
 
 @app.route("/")
-def polynomial():
-    """ Very simple embedding of a polynomial chart
+
+
+
+def data_retrieval():
+    """
+        Fucntion that queries database
+
+    :return:
     """
 
     # Grab the inputs arguments from the URL
     # This is automated by the button
-    args = flask.request.args
+#  args = flask.request.args         for when we want arguments input from url
 
-    # Get all the form arguments in the url with defaults
-    color = colors[getitem(args, 'color', 'Black')]
-    _from = int(getitem(args, '_from', 0))
-    to = int(getitem(args, 'to', 10))
+    # Connect to database
 
-    # Create a polynomial line graph
-    x = list(range(_from, to + 1))
-    fig = figure(title="Polynomial")
-    fig.line(x, [i ** 2 for i in x], color=color, line_width=2)
+    conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
+    with conn:
+        df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
 
-    # Configure resources to include BokehJS inline in the document.
-    # For more details see:
-    #   http://bokeh.pydata.org/en/latest/docs/reference/resources_embedding.html#bokeh-embed
-    js_resources = INLINE.render_js()
-    css_resources = INLINE.render_css()
+        # verify that result of SQL query is stored in the dataframe
+        print(df.head())
+        line = Line(df, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
+        output_file("line.html")
 
-    # For more details see:
-    #   http://bokeh.pydata.org/en/latest/docs/user_guide/embedding.html#components
-    script, div = components(fig, INLINE)
-    html = flask.render_template(
-        'embed.html',
-        plot_script=script,
-        plot_div=div,
-        js_resources=js_resources,
-        css_resources=css_resources,
-        color=color,
-        _from=_from,
-        to=to
-    )
-    return encode_utf8(html)
+        js_resources = INLINE.render_js()
+        css_resources = INLINE.render_css()
+
+        # For more details see:
+        #   http://bokeh.pydata.org/en/latest/docs/user_guide/embedding.html#components
+        script, div = components(line, INLINE)
+        html = flask.render_template(
+            'embed.html',
+            plot_script=script,
+            plot_div=div,
+            js_resources=js_resources,
+            css_resources=css_resources,
+
+        )
+        return encode_utf8(html)
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     print(__doc__)

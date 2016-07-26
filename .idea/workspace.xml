@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4306b696-ccc1-44e7-a90b-20734f823e78" name="Default" comment="bokeh returning plot, now initial embedding tests">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/module1/simple.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/module1/templates/embed.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/module1/bokeh_embedtest.py" afterPath="" />
+    <list default="true" id="4306b696-ccc1-44e7-a90b-20734f823e78" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/module1/bokeh_testpulldb.py" afterPath="$PROJECT_DIR$/app/module1/bokeh_testpulldb.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/module1/simple.py" afterPath="$PROJECT_DIR$/app/module1/simple.py" />
     </list>
     <ignored path="WiFinder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,21 +25,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="embed.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="embed.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/module1/templates/embed.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="33" />
+            <state relative-caret-position="354">
+              <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simple.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="simple.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+            <state relative-caret-position="-79">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="e#241#278#0" expanded="true" />
               </folding>
@@ -61,8 +60,8 @@
       <file leaf-file-name="bokeh_testpulldb.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/module1/bokeh_testpulldb.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state relative-caret-position="423">
+              <caret line="36" column="11" selection-start-line="10" selection-start-column="0" selection-end-line="36" selection-end-column="11" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -138,12 +137,12 @@
         <option value="$PROJECT_DIR$/data_process_scripts/timetable_db_prep.py" />
         <option value="$PROJECT_DIR$/app/module1/placeholdermodule.py" />
         <option value="$PROJECT_DIR$/app/module1/bokeh_test.py" />
-        <option value="$PROJECT_DIR$/app/module1/bokeh_testpulldb.py" />
         <option value="$PROJECT_DIR$/app/website/templates/testembedfile.html" />
         <option value="$PROJECT_DIR$/app/module1/embed_testpage.html" />
         <option value="$PROJECT_DIR$/app/module1/bokeh_embedtest.py" />
-        <option value="$PROJECT_DIR$/app/module1/simple.py" />
         <option value="$PROJECT_DIR$/app/module1/templates/embed.html" />
+        <option value="$PROJECT_DIR$/app/module1/bokeh_testpulldb.py" />
+        <option value="$PROJECT_DIR$/app/module1/simple.py" />
       </list>
     </option>
   </component>
@@ -219,6 +218,60 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WiFinder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -248,6 +301,8 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/CSI_db_formatting.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/master_data_clean.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -255,17 +310,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/CSI_db_formatting.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/ReadTimetable.ipynb</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/__init__.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/clean_timetable_xlsx.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/csi clean db prep.ipynb</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/log_file_cleaner.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/log_file_unzip.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/master_data_clean.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/straight_line_timetable.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/timetable_converter.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/timetable_db_prep.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_process_scripts/functions.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -273,15 +318,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="true" />
           <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/ReadTimetable.ipynb</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/__init__.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/clean_timetable_xlsx.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/log_file_cleaner.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/log_file_unzip.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/master_data_clean.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/straight_line_timetable.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/timetable_converter.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/data_process_scripts/timetable_db_prep.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Restored" />
@@ -363,7 +399,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="Python.bokeh_test">
+  <component name="RunManager" selected="Python.simple">
     <configuration default="false" name="WiFinderApp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -592,8 +628,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.bokeh_test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.simple" />
+        <item index="0" class="java.lang.String" itemvalue="Python.simple" />
+        <item index="1" class="java.lang.String" itemvalue="Python.bokeh_test" />
         <item index="2" class="java.lang.String" itemvalue="Python.bokeh_embedtest" />
         <item index="3" class="java.lang.String" itemvalue="Python.bokeh_testpulldb" />
         <item index="4" class="java.lang.String" itemvalue="Python.WiFinderApp" />
@@ -726,7 +762,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469533950958</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="initial working embedding on small scale, using limited data, need to now integrate with our own data">
+      <created>1469542072024</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1469542072024</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -738,11 +781,11 @@
     <frame x="2" y="23" width="1438" height="873" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41029206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41029206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.32711443" sideWeight="0.5139082" order="11" side_tool="false" content_ui="tabs" x="355" y="328" width="732" height="263" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.4860918" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.4860918" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32711443" sideWeight="0.4860918" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -788,7 +831,8 @@
     <MESSAGE value="no changes - need to commit to sort a merge conflict" />
     <MESSAGE value="initial test of bokeh, and prep for server pulling&#10;" />
     <MESSAGE value="bokeh returning plot, now initial embedding tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="bokeh returning plot, now initial embedding tests" />
+    <MESSAGE value="initial working embedding on small scale, using limited data, need to now integrate with our own data" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial working embedding on small scale, using limited data, need to now integrate with our own data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -799,7 +843,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1135,30 +1179,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
-          <folding>
-            <element signature="e#241#278#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/bokeh_testpulldb.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/module1/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/module1/embed_testpage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/module1/templates/embed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1171,19 +1211,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/templates/embed.html">
+    <entry file="file://$PROJECT_DIR$/app/module1/bokeh_testpulldb.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="33" />
-          <folding />
+        <state relative-caret-position="423">
+          <caret line="36" column="11" selection-start-line="10" selection-start-column="0" selection-end-line="36" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/embed_testpage.html">
+    <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="-79">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#241#278#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

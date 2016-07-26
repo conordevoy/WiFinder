@@ -1,12 +1,12 @@
 import numpy as np
-import pandas as pd
+
 import datetime
 import urllib
 from bokeh.plotting import figure, output_file, show
 import numpy as np
 import sqlite3 as lite
 from bokeh.charts import Line, output_file, show
-
+import pandas as pd
 
 def data_retrieval():
     """
