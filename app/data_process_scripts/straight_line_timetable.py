@@ -3,21 +3,6 @@ import os
 import csv
 
 # path_choice = '/home/mike/wifiproj/data' # local path, just to speed up script
-print('The current working directory is:', os.getcwd())
-path_choice = os.getcwd()
-path_ok = input('To use another directory, please press any key followed by enter. Otherwise, just press enter. ')
-
-
-if path_ok != '':
-    path_choice = input('Please enter the directory to use: \n')
-    invalid_path = True
-
-    while invalid_path:
-        try:
-            os.chdir(path_choice)
-            invalid_path = False
-        except:
-            path_choice = input('Invalid path. Please enter the directory to use: \n')
 
 
 # open the xlsx file to be operated on
