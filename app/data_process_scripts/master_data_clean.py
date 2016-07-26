@@ -1,4 +1,7 @@
 import os
+import sys
+import data_process_scripts.straight_line_timetable
+
 
 def check_path():
 
@@ -19,3 +22,4 @@ def check_path():
 
 check_path()
 
+ttxl.
