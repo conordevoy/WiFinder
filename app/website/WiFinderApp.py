@@ -54,44 +54,37 @@ def WiFinderHTML():
 
 @WiFinderApp.route("/results")
 @login_required
-# def results():
-#     '''results page for website'''
-#     alldata = query("""SELECT W.LogID, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy
-#                 FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID
-#                 JOIN ROOM R ON C.Room = R.RoomID
-#                 JOIN OCCUPANCY O ON R.RoomID = O.Room
-#                 WHERE W.Hour = 9 OR W.Hour = 10 OR W.Hour = 10 OR W.Hour = 11 OR W.Hour = 12 OR W.Hour = 13 OR W.Hour = 14 OR W.Hour = 15 OR W.Hour = 16
-#                 GROUP BY W.LogID;
-#                 """)
-#     return render_template("results.html",
-#                             title='Results',
-#                             result=alldata)
+def results():
+    '''results page for website'''
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    time = request.args.get('Time')
+    print(room, datetime, time)
+    cur = get_db().cursor()
+    alldata = cur.execute("""SELECT W.LogID, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy 
+                    FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room 
+                    WHERE R.RoomID = \'%s\' AND W.Datetime = \'%s\' AND W.Hour = \'%s\' 
+                    GROUP BY W.LogID;""" % (room, datetime, time))
+    return render_template("results.html", 
+                            title='Results',
+                            result=alldata)
 
+# def data_retrieval():
+#     conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
+#     with conn:
+#         df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
 
-def data_retrieval():
+#         line = Line(df, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
 
-
-    conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
-    with conn:
-        df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
-
-        line = Line(df, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
-
-        js_resources = INLINE.render_js()
-        css_resources = INLINE.render_css()
-        script, div = components(line)
-        return flask.render_template(
-            'results.html',
-            script=script,
-            div=div,
-            js_resources=js_resources,
-            css_resources=css_resources,)
-
-
-
-
-
-
+#         js_resources = INLINE.render_js()
+#         css_resources = INLINE.render_css()
+#         script, div = components(line)
+#         return flask.render_template(
+#             'results.html',
+#             script=script,
+#             div=div,
+#             js_resources=js_resources,
+#             css_resources=css_resources,)
 
 @WiFinderApp.route("/search")
 @login_required
@@ -101,8 +94,6 @@ def search():
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    # for row in datedata:
-    #     print(row[0])
     return render_template("search.html",
                            title='Home',
                            rooms=roomdata,
