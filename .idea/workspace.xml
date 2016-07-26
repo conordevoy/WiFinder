@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4306b696-ccc1-44e7-a90b-20734f823e78" name="Default" comment="simple.py now runs flask app that pulls request from our own database and retturns to my embeded template.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/module1/templates/index.html" />
+    <list default="true" id="4306b696-ccc1-44e7-a90b-20734f823e78" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/module1/testwifindapp.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/module1/bokeh_test.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/module1/simple.py" afterPath="$PROJECT_DIR$/app/module1/simple.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/module1/templates/embed.html" afterPath="$PROJECT_DIR$/app/module1/templates/embed.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/website/WiFinderApp.py" afterPath="$PROJECT_DIR$/app/website/WiFinderApp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/website/templates/results.html" afterPath="$PROJECT_DIR$/app/website/templates/results.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_process_scripts/merged_notebooks.ipynb" afterPath="$PROJECT_DIR$/data_process_scripts/merged_notebooks.ipynb" />
     </list>
     <ignored path="WiFinder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,14 +27,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="simple.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
+      <file leaf-file-name="WiFinderApp.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/website/WiFinderApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
+            <state relative-caret-position="375">
+              <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
               <folding>
-                <element signature="e#241#278#0" expanded="true" />
+                <element signature="e#0#87#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/module1/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -44,20 +52,30 @@
       <file leaf-file-name="embed.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/module1/templates/embed.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+            <state relative-caret-position="165">
+              <caret line="11" column="8" selection-start-line="9" selection-start-column="2" selection-end-line="11" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testwifindapp.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/module1/testwifindapp.py">
+      <file leaf-file-name="results.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/website/templates/results.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="345">
+              <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simple.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="41" column="41" selection-start-line="24" selection-start-column="0" selection-end-line="41" selection-end-column="41" />
               <folding>
-                <element signature="e#0#87#0" expanded="true" />
+                <element signature="e#241#278#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,11 +113,12 @@
         <option value="$PROJECT_DIR$/app/module1/bokeh_testpulldb.py" />
         <option value="$PROJECT_DIR$/app/module1/templates/index.html" />
         <option value="$PROJECT_DIR$/app/website/templates/page_layout.html" />
-        <option value="$PROJECT_DIR$/app/website/templates/results.html" />
-        <option value="$PROJECT_DIR$/app/website/WiFinderApp.py" />
         <option value="$PROJECT_DIR$/app/module1/templates/embed.html" />
         <option value="$PROJECT_DIR$/app/module1/simple.py" />
         <option value="$PROJECT_DIR$/app/module1/testwifindapp.py" />
+        <option value="$PROJECT_DIR$/data_process_scripts/merged_notebooks.ipynb" />
+        <option value="$PROJECT_DIR$/app/website/WiFinderApp.py" />
+        <option value="$PROJECT_DIR$/app/website/templates/results.html" />
       </list>
     </option>
   </component>
@@ -399,7 +418,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="Python.testwifindapp">
+  <component name="RunManager" selected="Python.WiFinderApp">
     <configuration default="false" name="WiFinderApp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -628,9 +647,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.testwifindapp" />
-        <item index="1" class="java.lang.String" itemvalue="Python.simple" />
-        <item index="2" class="java.lang.String" itemvalue="Python.WiFinderApp" />
+        <item index="0" class="java.lang.String" itemvalue="Python.WiFinderApp" />
+        <item index="1" class="java.lang.String" itemvalue="Python.testwifindapp" />
+        <item index="2" class="java.lang.String" itemvalue="Python.simple" />
         <item index="3" class="java.lang.String" itemvalue="Python.bokeh_test" />
         <item index="4" class="java.lang.String" itemvalue="Python.bokeh_embedtest" />
       </list>
@@ -776,7 +795,21 @@
       <option name="project" value="LOCAL" />
       <updated>1469543947714</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="reduced embed function to basics, next step integrate with main app file.">
+      <created>1469560098017</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1469560098017</updated>
+    </task>
+    <task id="LOCAL-00020" summary="reduced embed function to basics, next step integrate with main app file.">
+      <created>1469560211825</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1469560211825</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -788,13 +821,13 @@
     <frame x="2" y="23" width="1438" height="873" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41029206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41029206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.32711443" sideWeight="0.5139082" order="11" side_tool="false" content_ui="tabs" x="355" y="328" width="732" height="263" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.4860918" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32711443" sideWeight="0.4860918" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32711443" sideWeight="0.4860918" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -840,7 +873,8 @@
     <MESSAGE value="bokeh returning plot, now initial embedding tests" />
     <MESSAGE value="initial working embedding on small scale, using limited data, need to now integrate with our own data" />
     <MESSAGE value="simple.py now runs flask app that pulls request from our own database and retturns to my embeded template." />
-    <option name="LAST_COMMIT_MESSAGE" value="simple.py now runs flask app that pulls request from our own database and retturns to my embeded template." />
+    <MESSAGE value="reduced embed function to basics, next step integrate with main app file." />
+    <option name="LAST_COMMIT_MESSAGE" value="reduced embed function to basics, next step integrate with main app file." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -856,20 +890,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/website/templates/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/website/templates/results.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/website/WiFinderApp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1194,11 +1214,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/website/templates/results.html">
+    <entry file="file://$PROJECT_DIR$/data_process_scripts/csi_Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/module1/testwifindapp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_process_scripts/merged_notebooks.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="41" column="41" selection-start-line="24" selection-start-column="0" selection-end-line="41" selection-end-column="41" />
+          <folding>
+            <element signature="e#241#278#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1210,41 +1257,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/website/WiFinderApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/module1/templates/embed.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+        <state relative-caret-position="165">
+          <caret line="11" column="8" selection-start-line="9" selection-start-column="2" selection-end-line="11" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
+    <entry file="file://$PROJECT_DIR$/app/website/WiFinderApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
+        <state relative-caret-position="375">
+          <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
           <folding>
-            <element signature="e#241#278#0" expanded="true" />
+            <element signature="e#0#87#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/module1/testwifindapp.py">
+    <entry file="file://$PROJECT_DIR$/app/website/templates/results.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="345">
+          <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
