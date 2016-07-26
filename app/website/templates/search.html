@@ -18,6 +18,15 @@
                 {% endfor %}
             </select><br>
 
+            <!-- Looking to add a calendar here, where we can choose from the dates we have data available for -->
+            <!-- <input type="datetime"/> -->
+            <select name="Date">
+                <option value="default">Select date</option>
+                {% for date in dates %}
+                <option value="{{date.0}}">{{date.0}}</option>
+                {% endfor %}
+            </select><br>
+
             <select name="Time">
               <option value="default">Select time</option>
                 {% for time in times %}
