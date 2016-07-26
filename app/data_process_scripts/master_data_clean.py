@@ -1,6 +1,7 @@
 import os
-import sys
-import data_process_scripts.straight_line_timetable
+from app.data_process_scripts.straight_line_timetable import clean_tables
+from app.data_process_scripts.timetable_db_prep import timetables_to_csv
+
 
 
 def check_path():
@@ -22,4 +23,9 @@ def check_path():
 
 check_path()
 
-ttxl.
+# clean the timetables
+
+clean_tables()
+
+timetables_to_csv()
+
