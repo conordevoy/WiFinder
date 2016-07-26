@@ -31,7 +31,6 @@ def connectDB():
     '''Connects to an Sqlite3 database'''
     return sqlite3.connect(db)
 
-
 def get_db():
     '''Checks for a DB connection. If not found, calls connect_to_database to establish connection'''
     db = getattr(g, '_database', None)
@@ -45,14 +44,13 @@ def query(sqlcode):
     data = cur.execute(sqlcode)
     return data
 
-
 @WiFinderApp.route("/")
 @login_required
 def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
 
-@WiFinderApp.route("/results")
+@WiFinderApp.route("/results", methods=['GET'])
 @login_required
 def results():
     '''results page for website'''
@@ -125,7 +123,6 @@ def layout():
     '''load base template - only here to prototype design'''
     return render_template("page_layout.html",
                            title='Layout')
-
 
 if __name__ == "__main__":
     WiFinderApp.run()
