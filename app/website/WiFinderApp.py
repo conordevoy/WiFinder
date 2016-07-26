@@ -68,11 +68,15 @@ def search():
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    # for row in datedata:
+    #     print(row[0])
     return render_template("search.html",
                            title='Home',
                            rooms=roomdata,
                            times=timedata,
-                           modules=moduledata)
+                           modules=moduledata,
+                           dates=datedata)
 
 # route for handling the login page logic
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
