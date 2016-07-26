@@ -4,21 +4,34 @@ import datetime
 import urllib
 from bokeh.plotting import figure, output_file, show
 import numpy as np
-
-query = ("https://data.lacity.org/resource/mgue-vbsx.json?"
-    "$group=date"
-    "&call_type_code=507P"
-    "&$select=date_trunc_ymd(dispatch_date)%20AS%20date%2C%20count(*)"
-    "&$order=date")
-raw_data = pd.read_json(query)
+import sqlite3 as lite
+from bokeh.charts import Line, output_file, show
 
 
+def data_retrieval():
+    """
+        Fucntion that queries database
+
+    :return:
+    """
+    # Connect to database
+
+    conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
+    with conn:
+        df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
+
+        # verify that result of SQL query is stored in the dataframe
+        print(df.head())
+        return df
 
 
-TOOLS="crosshair,pan,wheel_zoom,box_zoom,undo,redo,reset,tap,save,box_select,poly_select,lasso_select"
 
 
+classdata = data_retrieval() # in this iteration
+classdata.dtypes
 
-p = figure(tools=TOOLS)
 
-output_file("test.html", title="color_scatter.py example")
+line = Line(classdata, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
+output_file("line.html")
+
+show (line)
