@@ -7,12 +7,13 @@ from bokeh.charts import Line
 import pandas as pd
 from bokeh.embed import components
 from bokeh.resources import INLINE
+from average_log import average_log_count
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
 WiFinderApp.debug = True
 
-WiFinderApp.secret_key = 'hello'
+WiFinderApp.secret_key = 'hello' #session key
 
 db = "WiFinderDBv02.db"
 
@@ -44,61 +45,6 @@ def query(sqlcode):
     data = cur.execute(sqlcode)
     return data
 
-@WiFinderApp.route("/")
-@login_required
-def WiFinderHTML():
-    '''Render HTML template'''
-    return render_template("index.html")
-
-@WiFinderApp.route("/results", methods=['GET'])
-@login_required
-def results():
-    '''results page for website'''
-    room = request.args.get('Room')
-    datetime = request.args.get('Date')
-    time = request.args.get('Time')
-    print(room, datetime, time)
-    cur = get_db().cursor()
-    alldata = cur.execute("""SELECT W.LogID, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy 
-                    FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room 
-                    WHERE R.RoomID = \'%s\' AND W.Datetime = \'%s\' AND W.Hour = \'%s\' 
-                    GROUP BY W.LogID;""" % (room, datetime, time))
-    return render_template("results.html", 
-                            title='Results',
-                            result=alldata)
-
-# def data_retrieval():
-#     conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
-#     with conn:
-#         df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
-
-#         line = Line(df, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
-
-#         js_resources = INLINE.render_js()
-#         css_resources = INLINE.render_css()
-#         script, div = components(line)
-#         return flask.render_template(
-#             'results.html',
-#             script=script,
-#             div=div,
-#             js_resources=js_resources,
-#             css_resources=css_resources,)
-
-@WiFinderApp.route("/search")
-@login_required
-def search():
-    '''search page for website'''
-    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("search.html",
-                           title='Home',
-                           rooms=roomdata,
-                           times=timedata,
-                           modules=moduledata,
-                           dates=datedata)
-
 # route for handling the login page logic
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -118,11 +64,50 @@ def logout():
     flash("You have just been logged out!")
     return redirect(url_for('login'))
 
-@WiFinderApp.route("/layout")
-def layout():
-    '''load base template - only here to prototype design'''
-    return render_template("page_layout.html",
-                           title='Layout')
+@WiFinderApp.route("/")
+@login_required
+def WiFinderHTML():
+    '''Render HTML template'''
+    return render_template("index.html")
+
+@WiFinderApp.route("/search")
+@login_required
+def search():
+    '''search page for website'''
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    return render_template("search.html",
+                           title='Home',
+                           rooms=roomdata,
+                           times=timedata,
+                           modules=moduledata,
+                           dates=datedata)
+
+@WiFinderApp.route("/results", methods=['GET'])
+@login_required
+def results():
+    '''results page for website'''
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    time = request.args.get('Time')
+    print(room, datetime, time)
+    cur = get_db().cursor()
+    alldata = cur.execute("""SELECT W.LogID, W.Time, W.Hour, W.Datetime, W.Log_Count, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy 
+                    FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room 
+                    WHERE R.RoomID = \'%s\' AND W.Datetime = \'%s\' AND W.Hour = \'%s\' 
+                    GROUP BY W.LogID;""" % (room, datetime, time))
+    result = average_log_count(alldata)
+    return render_template("results.html", 
+                            title='Results',
+                            result=result)
+
+# @WiFinderApp.route("/layout")
+# def layout():
+#     '''load base template - only here to prototype design'''
+#     return render_template("page_layout.html",
+#                            title='Layout')
 
 if __name__ == "__main__":
     WiFinderApp.run()
