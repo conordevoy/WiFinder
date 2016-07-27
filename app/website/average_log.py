@@ -10,4 +10,4 @@ def average_log_count(data):
 		res = 0
 	else:
 		res = s/c
-	return res
+	return int(res)
