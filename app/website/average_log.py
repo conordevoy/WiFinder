@@ -1,5 +1,5 @@
 def average_log_count(data):
-	print("I'm here")
+	# print("I'm here")
 	s = 0
 	c = 0
 	for d in data:
