@@ -1,5 +1,4 @@
 import pandas as pd
-import
 import datetime
 def clean_log_files():
     df = pd.read_csv('results.csv')
