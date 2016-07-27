@@ -39,3 +39,15 @@ def set_identifier(df):
         identifier = str(hour + date + room)
 
         df.iat[row, id_index] = identifier
+
+def strip_data(df):
+    ''' function to clean the time date and room column'''
+    #keep only first two characters in Time
+    df['Time'] = df['Time'].map(lambda x: str(x)[:2])
+    #remove : from time
+    df['Time'] = df['Time'].map(lambda x: x.lstrip(':').rstrip(':'))
+    #creating time column from datetime column
+    df['Date'] = pd.to_datetime(df['Date'])
+    #get rid of . and CS in Room column
+    df['Room'] = df['Room'].str.replace('.', '')
+    df['Room'] = df['Room'].str.replace('CS', '')
