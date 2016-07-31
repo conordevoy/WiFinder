@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4306b696-ccc1-44e7-a90b-20734f823e78" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/module1/test_multiplot.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/module1/slidertest.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WiFinder.iws" />
@@ -24,13 +24,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="simple.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="simple.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/module1/simple.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="453">
               <caret line="60" column="12" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
               <folding>
                 <element signature="e#241#278#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="slidertest.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/module1/slidertest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1755">
+              <caret line="117" column="25" selection-start-line="117" selection-start-column="25" selection-end-line="117" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,6 +88,7 @@
         <option value="$PROJECT_DIR$/app/module1/testwifindapp.py" />
         <option value="$PROJECT_DIR$/app/module1/simple.py" />
         <option value="$PROJECT_DIR$/app/module1/test_multiplot.py" />
+        <option value="$PROJECT_DIR$/app/module1/slidertest.py" />
       </list>
     </option>
   </component>
@@ -809,7 +822,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469964671007</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="removal of multiline test">
+      <created>1469965173367</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1469965173367</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -876,7 +896,8 @@
     <MESSAGE value="reduced embed function to basics, next step integrate with main app file." />
     <MESSAGE value="changes to results.html and app results page to allow bokeh to embed charts. &#10;also merged notebooks updating and i don't know why." />
     <MESSAGE value="Multi line plots working. &#10;next step sliders&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Multi line plots working. &#10;next step sliders&#10;" />
+    <MESSAGE value="removal of multiline test" />
+    <option name="LAST_COMMIT_MESSAGE" value="removal of multiline test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -892,13 +913,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Data/howto.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/website/wifinderDB.db" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
@@ -1163,6 +1177,16 @@
           <caret line="60" column="12" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
           <folding>
             <element signature="e#241#278#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/module1/slidertest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1755">
+          <caret line="117" column="25" selection-start-line="117" selection-start-column="25" selection-end-line="117" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
