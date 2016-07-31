@@ -1,19 +1,19 @@
 from flask import Flask, render_template, g, redirect, url_for, request, session, flash
 from functools import wraps
 import sqlite3
-import flask
-import sqlite3 as lite
-from bokeh.charts import Line
-import pandas as pd
-from bokeh.embed import components
-from bokeh.resources import INLINE
+# import flask
+# import sqlite3 as lite
+# from bokeh.charts import Line
+# import pandas as pd
+# from bokeh.embed import components
+# from bokeh.resources import INLINE
 from average_log import average_log_count
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
 WiFinderApp.debug = True
 
-WiFinderApp.secret_key = 'hello' #session key
+WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f' #session key random generated from os
 
 db = "WiFinderDBv02.db"
 
@@ -70,20 +70,20 @@ def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
 
-@WiFinderApp.route("/search")
-@login_required
-def search():
-    '''search page for website'''
-    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("search.html",
-                           title='Home',
-                           rooms=roomdata,
-                           times=timedata,
-                           modules=moduledata,
-                           dates=datedata)
+# @WiFinderApp.route("/search")
+# @login_required
+# def search():
+#     '''search page for website'''
+#     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+#     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+#     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+#     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+#     return render_template("search.html",
+#                            title='Home',
+#                            rooms=roomdata,
+#                            times=timedata,
+#                            modules=moduledata,
+#                            dates=datedata)
 
 @WiFinderApp.route("/results", methods=['GET'])
 @login_required
@@ -102,6 +102,34 @@ def results():
     return render_template("results.html", 
                             title='Results',
                             result=result)
+@WiFinderApp.route("/trialrun")
+@login_required
+def search():
+    '''search page for website'''
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    return render_template("trialrun.html",
+                           title='Home',
+                           rooms=roomdata,
+                           times=timedata,
+                           modules=moduledata,
+                           dates=datedata)
+
+
+def search1():
+    '''search page for website'''
+    timedata1 = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata1 = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata1 = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata1 = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    return render_template("trialrun.html",
+                           title='Home',
+                           rooms=roomdata1,
+                           times=timedata1,
+                           modules=moduledata1,
+                           dates=datedata1)
 
 # @WiFinderApp.route("/layout")
 # def layout():
