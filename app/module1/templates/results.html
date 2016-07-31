@@ -1,0 +1,32 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+<!--         </div>
+            <div id="timeslot">
+            <button class="empty">9am</button>
+            <button class="full">10am</button>
+            <button class="empty">11am</button>
+            <button class="empty">12pm</button>
+            <button class="empty">1pm</button>
+            <button class="empty">2pm</button>
+            <button class="half">3pm</button>
+            <button class="full">4pm</button>
+            <button class="half">5pm</button>
+        </div> -->
+        {% for data in result %}
+            <table>
+                <tr>{{data}}</tr>
+            </table>
+        {% endfor %}
+ {% endblock %}
+
+
+ 
+<!--     {{ js_resources|indent(4)|safe }}
+    {{ css_resources|indent(4)|safe }}
+    {{ script|safe }}
+    <div class='bokeh'>
+   {{ div|safe }}
+    </div>
+        <p><a href="/logout">Logout</a></p> -->

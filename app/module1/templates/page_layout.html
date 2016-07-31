@@ -1,0 +1,34 @@
+<!--This is the basic page which contians the logo and navigation bar
+It isn't intended to be displayed by itself
+It is the parent page for the other pages within the website
+Any changes to the title or navbar need to occur here and will be included in all other pages-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" type="text/css" />
+    <title>WiFinder - {{title}}</title>
+    <!--Sets dynamic title for each page-->
+</head>
+<body>
+    <div class="container">
+    <H1>WiFinder</H1>
+
+        <div class="navbar">
+          <ul>
+            <li class="one"><a href="/search">Search</a></li>
+            <!-- <li class="two"><a href="/results">Results</a></li> -->
+            <hr />
+          </ul>
+        </div>
+
+        {% block content %}
+            {% endblock %}
+        <!--These blocks contain the child webpage-->
+    </div>
+</body>
+</html>
