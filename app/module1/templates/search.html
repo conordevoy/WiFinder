@@ -1,0 +1,56 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+
+        <form action= "/results">
+
+            <select name="Room">
+                <option value="default">Select room</option>
+                <!--'rooms' is a parameter passed in the flask endpoint for '/search'
+                This code iterates through that parameter and populates a search option for each value
+                This structure is identical for all the search boxes-->
+                {% for room in rooms %}
+                <option value="{{room.0}}">{{room.0}}</option>
+                {% endfor %}
+            </select><br>
+
+            <!-- Looking to add a calendar here, where we can choose from the dates we have data available for -->
+            <!-- <input type="datetime"/> -->
+            <select name="Date">
+                <option value="default">Select date</option>
+                {% for date in dates %}
+                <option value="{{date.0}}">{{date.0}}</option>
+                {% endfor %}
+            </select><br>
+
+            <select name="Time">
+              <option value="default">Select time</option>
+                {% for time in times %}
+                <option value="{{time.0}}">{{time.0}}</option>
+                {% endfor %}
+            </select><br>
+
+<!--             <select name="Modules">
+              <option value="default">Select module</option>
+                {% for module in modules %}
+                <option value="{{module}}">{{module}}</option>
+                {% endfor %}
+            </select><br> -->
+
+<!--             <select name="Density">
+              <option value="default">Select density</option>
+                {% for density in densities %}
+                <option value="{{density}}">{{density}}</option>
+                {% endfor %}
+            </select><br> -->
+
+            <input type="submit" value="Submit">
+        </form>
+        <p><a href="/logout">Logout</a></p>
+
+
+{% endblock %}

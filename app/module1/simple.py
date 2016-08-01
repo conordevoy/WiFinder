@@ -13,6 +13,11 @@ from bokeh.charts import Line
 import pandas as pd
 from bokeh.embed import components
 from bokeh.resources import INLINE
+from bokeh.plotting import figure,output_file,show
+from bokeh.models import LinearAxis, Range1d
+from bokeh.layouts import widgetbox
+
+from bokeh.models import CustomJS, ColumnDataSource, Slider
 
 app = flask.Flask(__name__)
 
@@ -27,13 +32,50 @@ def data_retrieval():
 
     conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
     with conn:
-        df = pd.read_sql_query("SELECT Log_Count, Room, Hour, Datetime, Time from WIFI_LOGS Where Room= 'B002' and Hour ='9' ORDER BY Datetime ASC, Time ASC", conn)
+        df = pd.read_sql_query("SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;", conn)
+        output_file("datetime.html")
+        # p = figure(width=800, height=250, x_axis_type="datetime")
+        # p.line = Line(df, title="WIfi Logs", ylabel='Count', xlabel='Time',index='W.Datetime', legend=True)
+        print (df.head(5))
+        print(df.dtypes)
+        df['Time'] = df['Time'].apply(pd.to_datetime)
+        p = figure(width=800, height=250, x_axis_type="datetime", )
+        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
 
-        line = Line(df, title="WIfi Logs", legend="top_left", ylabel='Count', xlabel='Time')
+        p.line(df['Time'], df['Log_Count'],  color='red',legend='Log Count')
+        p.line(df['Time'], df['Reg_Students'], color='green',legend='Registered Students')
+        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+        p.line(df['Time'], df['Occupancy']*100, color='orange', legend='Occupancy')
+
+        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+
+        callback = CustomJS(args=dict(source=source), code="""
+            var data = source.get('data');
+            var f = cb_obj.get('value')
+            x = data['x']
+            y = data['y']
+            for (i = 0; i < x.length; i++) {
+                y[i] = Math.pow(x[i], f)
+            }
+            source.trigger('change');
+        """)
+
+
+
+
+
+        slider = Slider(start=1, end=4, value=1, step=.1, title="power", callback=callback)
+
+        show(widgetbox(slider))
+
+
+
+
+
 
         js_resources = INLINE.render_js()
         css_resources = INLINE.render_css()
-        script, div = components(line)
+        script, div = components(p,slider)
         return flask.render_template(
             'embed.html',
             script=script,
