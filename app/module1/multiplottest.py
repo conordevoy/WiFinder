@@ -5,7 +5,7 @@ import sqlite3 as lite
 import pandas as pd
 from bokeh.embed import components
 from bokeh.resources import INLINE
-from bokeh.plotting import figure,output_file,
+from bokeh.plotting import figure,output_file
 from bokeh.models import LinearAxis, Range1d
 from bokeh.layouts import gridplot
 

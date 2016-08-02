@@ -17,7 +17,7 @@ from bokeh.plotting import figure,output_file,show
 from bokeh.models import LinearAxis, Range1d
 from bokeh.layouts import widgetbox
 
-from bokeh.models import CustomJS, ColumnDataSource, Slider
+from bokeh.models import CustomJS, Slider
 
 app = flask.Flask(__name__)
 
