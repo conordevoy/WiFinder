@@ -1,8 +1,8 @@
 from data_process_scripts.Linear_Regression_Creator import linear_estimate_headcount
 from data_process_scripts.Logistic_Regression_Creator import binary_logistic_classifier
 from data_process_scripts.Logistic_Regression_Creator import tertiary_logistic_classifier
-import numpy as np
-import pandas as pd
+from numpy import ones
+from pandas import DataFrame, concat
 
 
 # linear functions
@@ -12,7 +12,7 @@ def prep_predictor_value(query_result):
 
     Avg_Count_30min is the name the model was trained to predict on."""
 
-    predictor_value = pd.DataFrame({'Avg_Count_30min': [query_result]})
+    predictor_value = DataFrame({'Avg_Count_30min': [query_result]})
 
     return predictor_value
 
@@ -42,7 +42,7 @@ def prep_predictor_values(*query_results):
     for result in query_results:
         query_list.append(result)
 
-    predictor_value = pd.DataFrame({'Avg_Count_30min': query_list})
+    predictor_value = DataFrame({'Avg_Count_30min': query_list})
 
     return predictor_value
 
@@ -71,9 +71,9 @@ def estimate_occupancy_numbers(*query_results):
 def logistic_prep_values(query_result):
     """Takes one query result and prepares it for classification by logistic_classifier"""
 
-    X = pd.DataFrame({'Avg_Count_30min': [query_result]})
-    intercept = pd.DataFrame({'Intercept': np.ones(1)})
-    X = pd.concat([intercept, X], axis=1)
+    X = DataFrame({'Avg_Count_30min': [query_result]})
+    intercept = DataFrame({'Intercept': ones(1)})
+    X = concat([intercept, X], axis=1)
 
     return X
 
