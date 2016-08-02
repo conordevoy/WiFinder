@@ -1,6 +1,6 @@
-from data_process_scripts.Linear_Regression_Creator import linear_estimate_headcount
-from data_process_scripts.Logistic_Regression_Creator import binary_logistic_classifier
-from data_process_scripts.Logistic_Regression_Creator import tertiary_logistic_classifier
+from Linear_Regression_Creator import linear_estimate_headcount
+from Logistic_Regression_Creator import binary_logistic_classifier
+from Logistic_Regression_Creator import tertiary_logistic_classifier
 import numpy as np
 import pandas as pd
 
