@@ -3,30 +3,55 @@ It isn't intended to be displayed by itself
 It is the parent page for the other pages within the website
 Any changes to the title or navbar need to occur here and will be included in all other pages-->
 
+<!--This is the basic page which contians the logo and navigation bar
+It isn't intended to be displayed by itself
+It is the parent page for the other pages within the website
+Any changes to the title or navbar need to occur here and will be included in all other pages-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>Bootstrap Theme Simply Me</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style_new.css">
+  <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <title>WiFinder - {{title}}</title>
     <!--Sets dynamic title for each page-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
-    <H1>WiFinder</H1>
-
-        <div class="navbar">
-          <ul>
-            <li class="one"><a href="/search">Search</a></li>
-            <!-- <li class="two"><a href="/results">Results</a></li> -->
-            <hr />
-          </ul>
-        </div>
+        <nav class="navbar navbar-default">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/search">Home</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/search">Estimate</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Data Input</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
         {% block content %}
             {% endblock %}
         <!--These blocks contain the child webpage-->
-    </div>
+        <!-- Footer -->
+        <!--<footer class="container-fluid bg-10 text-center">-->
+          <!--<p>Bootstrap Theme Made By <a href="http://www.w3schools.com">www.w3schools.com</a></p>-->
+        <!--</footer>-->
+
 </body>
 </html>
