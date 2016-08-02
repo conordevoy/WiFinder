@@ -70,20 +70,20 @@ def WiFinderHTML():
     '''Render HTML template'''
     return render_template("index.html")
 
-# @WiFinderApp.route("/search")
-# @login_required
-# def search():
-#     '''search page for website'''
-#     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-#     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-#     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-#     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-#     return render_template("search.html",
-#                            title='Home',
-#                            rooms=roomdata,
-#                            times=timedata,
-#                            modules=moduledata,
-#                            dates=datedata)
+@WiFinderApp.route("/search")
+@login_required
+def search():
+    '''search page for website'''
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    return render_template("search.html",
+                           title='Home',
+                           rooms=roomdata,
+                           times=timedata,
+                           modules=moduledata,
+                           dates=datedata)
 
 @WiFinderApp.route("/results", methods=['GET'])
 @login_required
@@ -102,40 +102,41 @@ def results():
     return render_template("results.html", 
                             title='Results',
                             result=result)
-@WiFinderApp.route("/trialrun")
-@login_required
-def search():
-    '''search page for website'''
-    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("trialrun.html",
-                           title='Home',
-                           rooms=roomdata,
-                           times=timedata,
-                           modules=moduledata,
-                           dates=datedata)
+
+# @WiFinderApp.route("/trialrun")
+# @login_required
+# def search():
+#     '''search page for website'''
+#     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+#     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+#     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+#     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+#     return render_template("trialrun.html",
+#                            title='Home',
+#                            rooms=roomdata,
+#                            times=timedata,
+#                            modules=moduledata,
+#                            dates=datedata)
 
 
-def search1():
-    '''search page for website'''
-    timedata1 = query("SELECT DISTINCT Hour FROM CLASS;")
-    roomdata1 = query("SELECT DISTINCT RoomID FROM ROOM;")
-    moduledata1 = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata1 = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("trialrun.html",
-                           title='Home',
-                           rooms=roomdata1,
-                           times=timedata1,
-                           modules=moduledata1,
-                           dates=datedata1)
+# def search1():
+#     '''search page for website'''
+#     timedata1 = query("SELECT DISTINCT Hour FROM CLASS;")
+#     roomdata1 = query("SELECT DISTINCT RoomID FROM ROOM;")
+#     moduledata1 = query("SELECT DISTINCT Module FROM CLASS;")
+#     datedata1 = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+#     return render_template("trialrun.html",
+#                            title='Home',
+#                            rooms=roomdata1,
+#                            times=timedata1,
+#                            modules=moduledata1,
+#                            dates=datedata1)
 
-# @WiFinderApp.route("/layout")
-# def layout():
-#     '''load base template - only here to prototype design'''
-#     return render_template("page_layout.html",
-#                            title='Layout')
+@WiFinderApp.route("/layout")
+def layout():
+    '''load base template - only here to prototype design'''
+    return render_template("page_layout.html",
+                           title='Layout')
 
 if __name__ == "__main__":
     WiFinderApp.run()
