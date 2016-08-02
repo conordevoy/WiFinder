@@ -54,7 +54,6 @@ def login():
             error = 'Invalid Credentials. Please try again.'
         else:
             session['logged_in'] = True
-            flash("You have just been logged in!")
             return redirect(url_for('search'))
     return render_template('login.html', title='Login', error=error)
 
@@ -102,35 +101,6 @@ def results():
     return render_template("results.html", 
                             title='Results',
                             result=result)
-
-# @WiFinderApp.route("/trialrun")
-# @login_required
-# def search():
-#     '''search page for website'''
-#     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-#     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-#     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-#     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-#     return render_template("trialrun.html",
-#                            title='Home',
-#                            rooms=roomdata,
-#                            times=timedata,
-#                            modules=moduledata,
-#                            dates=datedata)
-
-
-# def search1():
-#     '''search page for website'''
-#     timedata1 = query("SELECT DISTINCT Hour FROM CLASS;")
-#     roomdata1 = query("SELECT DISTINCT RoomID FROM ROOM;")
-#     moduledata1 = query("SELECT DISTINCT Module FROM CLASS;")
-#     datedata1 = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-#     return render_template("trialrun.html",
-#                            title='Home',
-#                            rooms=roomdata1,
-#                            times=timedata1,
-#                            modules=moduledata1,
-#                            dates=datedata1)
 
 @WiFinderApp.route("/layout")
 def layout():
