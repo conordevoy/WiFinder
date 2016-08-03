@@ -1,15 +1,30 @@
-import os
 import pandas as pd
-import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import cross_val_score
-
+from numpy import ones
+from pandas import DataFrame, concat
+import dill as pickle
+import sqlite3
 
 pd.options.mode.chained_assignment = None
 
-# os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
+db = "WiFinderDBv02.db"
 
-df = pd.read_csv('/home/mike/PycharmProjects/WiFinder/Data/final_csvs/ABT.csv')
+conn = sqlite3.connect(db)
+cur = conn.cursor()
+
+average_logs = cur.execute("""SELECT AVG(w.Log_Count), o.Occupancy
+                                FROM WIFI_LOGS w JOIN OCCUPANCY o JOIN ROOM r
+                                WHERE strftime('%M', w.Time) BETWEEN "15" AND "45"
+                                AND  strftime('%H', w.Time) BETWEEN "09" AND "17"
+                                AND  strftime('%w', w.Datetime) BETWEEN "1" AND "5"
+                                AND o.ClassID = w.ClassID
+                                GROUP BY w.ClassID;""") # 216 rows
+
+
+df = pd.DataFrame(average_logs.fetchall())
+
+df.columns = ['Avg_Count_30min', 'Occupancy']
 
 ave_30 = ['Occupancy', 'Avg_Count_30min']
 
@@ -30,56 +45,18 @@ ave_30_2['Occupancy'].replace(occupancy_binary, inplace=True)
 
                                             # SKLearn Log Reg Prep
 
-
-df.columns
-
-# Set your dummies as necessary
-
-date_dummies = pd.get_dummies(df.Date, prefix='Date')
-module_dummies = pd.get_dummies(df.Module, prefix='Module')
-room_dummies = pd.get_dummies(df.Room, prefix='Room')
-hour_dummies = pd.get_dummies(df.Room, prefix='Hour')
-
 def SKLogR(df):
 
-    intercept = pd.DataFrame({'Intercept': np.ones(216)})
+    intercept = pd.DataFrame({'Intercept': ones(216)}) # this will need to be updated; ONLY HOLDS FOR CURRENT DATABASE
     df = pd.concat([intercept, df], axis=1)
-
-    for i in df.columns:
-        if i == 'Room':
-            df = pd.concat([df, room_dummies], axis=1)
-            del df['Room']
-
-        if i == 'Date':
-            df = pd.concat([df, date_dummies], axis=1)
-            del df['Date']
-
-        if i == 'Module':
-            df = pd.concat([df, module_dummies], axis=1)
-            del df['Module']
-
-        if i == 'Hour':
-            df = pd.concat([df, hour_dummies], axis=1)
-            del df['Hour']
-
 
     X = df.ix[:, df.columns != 'Occupancy']
     Y = df.Occupancy
 
-    for i in X.columns:
-        j = i.split('_')
-
-        if j[0] in ['Date', 'Module', 'Room', 'Hour']:
-            if i == 'Room_Capacity':
-                continue
-
-            X[i] = X[i].astype('category')
-
     logSK = LogisticRegression().fit(X, Y)
-    logSK.score(X, Y)
 
     scores = cross_val_score(LogisticRegression(), X, Y, scoring='accuracy', cv=12)
-    print(scores.mean())
+    # print(scores.mean())
 
     return logSK
 
@@ -90,3 +67,82 @@ def SKLogR(df):
 tertiary_logistic_classifier = SKLogR(ave_30_3)
 
 binary_logistic_classifier = SKLogR(ave_30_2)
+
+def logistic_prep_values(query_result):
+    """Takes one query result and prepares it for classification by logistic_classifier"""
+
+    X = DataFrame({'Avg_Count_30min': [query_result]})
+    intercept = DataFrame({'Intercept': ones(1)})
+    X = concat([intercept, X], axis=1)
+
+    return X
+
+def logistic_classifier(query_result, classifier):
+    """Performs either binary or tertiary classification on supplied query. Cleans and returns result."""
+
+    if query_result is None:
+        query_result = -65535
+    X = logistic_prep_values(query_result)
+
+    if classifier == 'binary':
+        result = binary_logistic_classifier.predict(X)
+    elif classifier == 'tertiary':
+        result = tertiary_logistic_classifier.predict(X)
+    else:
+        print('Classifier = ', classifier, '. Invalid input')
+
+    result = str(result)
+    result = result.strip("[]''")
+
+    return result
+
+
+def find_break_point_tertiary():
+    """Finds where a classifier switches value for a given int. Ranges 1-1000000"""
+
+    break_points = {}
+    class_list = ['Empty', 'Medium']
+    list_position = 0
+
+    for i in range(1000000):
+
+        predicted_value = logistic_classifier(i, 'tertiary')
+        if predicted_value == class_list[list_position]:
+            continue
+
+        else:
+            break_points[class_list[list_position]] = (i - 1)
+            if predicted_value == 'High':
+                break
+            list_position += 1
+
+    return break_points
+
+
+def find_break_point_binary():
+    """Finds where a classifier switches value for a given int. Ranges 1-1000000"""
+
+    break_points = {}
+    empty = 'Empty'
+
+    for i in range(1000000):
+
+        predicted_value = logistic_classifier(i, 'binary')
+
+        if predicted_value == empty:
+            continue
+        else:
+            break_points[empty] = i
+            break
+
+    return break_points
+
+tertiary_break_points = find_break_point_tertiary()
+
+binary_break_points = find_break_point_binary()
+
+with open('binary_dict.pickle', 'wb') as handle:
+    pickle.dump(binary_break_points, handle)
+
+with open('tertiary_dict.pickle', 'wb') as handle:
+    pickle.dump(tertiary_break_points, handle)
