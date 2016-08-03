@@ -79,18 +79,34 @@ def logistic_prep_values(query_result):
 def logistic_classifier(query_result, classifier):
     """Performs either binary or tertiary classification on supplied query. Cleans and returns result."""
 
+    if query_result is None:
+        query_result = -65535
     X = logistic_prep_values(query_result)
 
-    try:
-        if classifier == 'binary':
-            result = binary_logistic_classifier.predict(X)
-        if classifier == 'tertiary':
-            result = tertiary_logistic_classifier.predict(X)
-    except:
-        print('Classifier must be either value "binary" or "tertiary"')
-        raise(SystemExit)
+    # try:
+    if classifier == 'binary':
+        result = binary_logistic_classifier.predict(X)
+    elif classifier == 'tertiary':
+        result = tertiary_logistic_classifier.predict(X)
+    else:
+        print('Classifier = ', classifier, '. Invalid input')
+    # except:
+    #     print('Classifier must be either value "binary" or "tertiary"')
+    #     raise(SystemExit)
 
     result = str(result)
     result = result.strip("[]''")
 
     return result
+
+def hardwire_linear(number):
+    '''hardwires parameters for linear regression'''
+
+    if number is None:
+        number = -65535
+
+    headcount = 0.710338 + (.933441 * number)
+
+    return int(headcount)
+
+print(hardwire_linear(100))
