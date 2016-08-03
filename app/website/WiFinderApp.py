@@ -4,6 +4,7 @@ import sqlite3
 from app.website.hardwire_models import hardwire_binary
 from app.website.hardwire_models import hardwire_tertiary
 from app.website.hardwire_models import hardwire_linear
+import hardwire_models
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -105,6 +106,7 @@ def results():
                             result=subdata.fetchone()[0])
 
 @WiFinderApp.route("/estimator", methods=['GET'])
+@login_required
 def estimator():
     '''estimates three model functions'''
 
