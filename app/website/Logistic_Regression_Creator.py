@@ -7,9 +7,9 @@ from sklearn.cross_validation import cross_val_score
 
 pd.options.mode.chained_assignment = None
 
-os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
+# os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
 
-df = pd.read_csv('ABT.csv')
+df = pd.read_csv('/home/mike/PycharmProjects/WiFinder/Data/final_csvs/ABT.csv')
 
 ave_30 = ['Occupancy', 'Avg_Count_30min']
 
