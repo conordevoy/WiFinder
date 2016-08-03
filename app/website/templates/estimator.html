@@ -65,9 +65,9 @@ form input {
     </div>
 
     <div class="container-fluid bg-3 text-center">
-
+        {% if linear_estimate or binary_estimate or tertiary_estimate %}
   <h3 class="margin">Estimated Occupancy Results</h3>
-
+        {% endif %}
   <div class="row">
 
     <div class="col-sm-4">
