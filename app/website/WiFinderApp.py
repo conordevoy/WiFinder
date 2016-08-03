@@ -2,7 +2,7 @@ from flask import Flask, render_template, g, redirect, url_for, request, session
 from functools import wraps
 import sqlite3
 from app.website.Modelling_Functions import logistic_classifier
-from app.website.Modelling_Functions import test
+from app.website.Modelling_Functions import hardwire_linear
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -135,7 +135,7 @@ def estimator():
 
 
     if room and time and datetime:
-        linear_estimate = test(query_result)
+        linear_estimate = hardwire_linear(query_result)
         tertiary_estimate = logistic_classifier(query_result, 'tertiary')
         binary_estimate = logistic_classifier(query_result, 'binary')
 
