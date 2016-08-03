@@ -113,7 +113,7 @@ def estimator():
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
     # get values from form
     room = request.args.get('Room')
