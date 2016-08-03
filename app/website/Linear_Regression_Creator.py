@@ -3,9 +3,9 @@ import pandas as pd
 import statsmodels.formula.api as sm
 from sklearn.cross_validation import cross_val_score
 
-os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
+# os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
 
-df = pd.read_csv('ABT.csv')
+df = pd.read_csv('/home/mike/PycharmProjects/WiFinder/Data/final_csvs/ABT.csv')
 
     #
     # Deriving features:
@@ -67,3 +67,5 @@ lm.resid.plot()
             # Create functions that will perform this regression in the working environment
 
 linear_estimate_headcount = lm
+
+print(lm.params)
