@@ -1,8 +1,9 @@
 from flask import Flask, render_template, g, redirect, url_for, request, session, flash
 from functools import wraps
 import sqlite3
-from app.website.Modelling_Functions import logistic_classifier
-from app.website.Modelling_Functions import hardwire_linear
+from app.website.hardwire_models import hardwire_binary
+from app.website.hardwire_models import hardwire_tertiary
+from app.website.hardwire_models import hardwire_linear
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -136,8 +137,8 @@ def estimator():
 
     if room and time and datetime:
         linear_estimate = hardwire_linear(query_result)
-        tertiary_estimate = logistic_classifier(query_result, 'tertiary')
-        binary_estimate = logistic_classifier(query_result, 'binary')
+        tertiary_estimate = hardwire_tertiary(query_result)
+        binary_estimate = hardwire_binary(query_result)
 
     # these return statements are ugly - these will hopefully be fixed but work for now.
         # maybe url redirects would be better?
