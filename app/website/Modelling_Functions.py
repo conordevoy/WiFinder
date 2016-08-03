@@ -98,15 +98,3 @@ def logistic_classifier(query_result, classifier):
     result = result.strip("[]''")
 
     return result
-
-def hardwire_linear(number):
-    '''hardwires parameters for linear regression'''
-
-    if number is None:
-        number = -65535
-
-    headcount = 0.710338 + (.933441 * number)
-
-    return int(headcount)
-
-print(hardwire_linear(100))
