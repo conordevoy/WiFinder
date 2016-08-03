@@ -1,40 +1,39 @@
-def hardwire_linear(number):
-    '''hardwires parameters for linear regression'''
+import dill as pickle
 
-    if number is None:
-        number = -65535
+with open('intercept.pickle', 'rb') as handle:
+    intercept = pickle.load(handle)
 
-    headcount = 0.710338 + (.933441 * number)
+with open('count_coefficient.pickle', 'rb') as handle:
+    count_coefficient = pickle.load(handle)
 
-    return int(headcount)
+with open('tertiary_dict.pickle', 'rb') as handle:
+    tertiary_break_points = pickle.load(handle)
 
-def hardwire_binary(number):
-    '''hardwires parameters for linear regression'''
+with open('binary_dict.pickle', 'rb') as handle:
+    binary_break_points = pickle.load(handle)
 
-    if number is None:
-        number = -65535
 
-    if number >= 10:
-        value = 'Occupied'
+def linear_predictor(count):
 
+    result = intercept + (count_coefficient * count)
+    return int(result)
+
+
+def binary_classifier(count):
+
+    if count <= binary_break_points['Empty']:
+        return 'Empty'
     else:
-        value = 'Empty'
+        return 'Occupied'
 
-    return value
 
-def hardwire_tertiary(number):
-    '''hardwires parameters for linear regression'''
+def tertiary_classifier(count):
 
-    if number is None:
-        number = -65535
+    if count <= tertiary_break_points['Empty']:
+        return 'Empty'
 
-    if number > 1100:
-        value = 'High'
+    if tertiary_break_points['Empty'] < count < tertiary_break_points['Medium']:
+        return 'Medium'
 
-    elif 12 <= number <= 1100:
-        value = 'Medium'
-
-    else:
-        value = 'Empty'
-
-    return value
+    if count > tertiary_break_points['Medium']:
+        return 'High'
