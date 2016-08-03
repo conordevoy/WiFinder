@@ -1,17 +1,26 @@
-import os
 import pandas as pd
 import statsmodels.formula.api as sm
-from sklearn.cross_validation import cross_val_score
+import dill as pickle
+import sqlite3
 
-# os.chdir('/home/mike/PycharmProjects/WiFinder/Data/final_csvs')
+db = "WiFinderDBv02.db"
 
-df = pd.read_csv('/home/mike/PycharmProjects/WiFinder/Data/final_csvs/ABT.csv')
+conn = sqlite3.connect(db)
+cur = conn.cursor()
 
-    #
-    # Deriving features:
-    #
-    # Occupancy count * Room Capacity: To give approximate number of students in classroom
-    #
+average_logs = cur.execute("""SELECT AVG(w.Log_Count), o.Occupancy, r.Capacity
+                                FROM WIFI_LOGS w JOIN OCCUPANCY o JOIN ROOM r
+                                WHERE strftime('%M', w.Time) BETWEEN "15" AND "45"
+                                AND  strftime('%H', w.Time) BETWEEN "09" AND "17"
+                                AND  strftime('%w', w.Datetime) BETWEEN "1" AND "5"
+                                AND o.ClassID = w.ClassID
+                                AND r.RoomID = o.Room
+                                GROUP BY w.ClassID;""") # 216 rows
+
+
+df = pd.DataFrame(average_logs.fetchall())
+
+df.columns = ['Avg_Count_30min', 'Occupancy', 'Room_Capacity']
 
 
 # create new feature:
@@ -32,8 +41,6 @@ test_residuals = df
 # plot best model - predict headcount from 30min average associated count
 
 lm = sm.ols(formula="Room_Survey_Headcount_Estimate ~ Avg_Count_30min", data=test_residuals).fit()
-
-print(lm.summary())
 
 # get the residual series
 
@@ -57,15 +64,23 @@ df_3std.plot(kind='scatter', x='Avg_Count_30min', y='Occupancy');
 
 lm = sm.ols(formula="Room_Survey_Headcount_Estimate ~ Avg_Count_30min", data=df_3std).fit()
 
-print(lm.summary())
-
-# replot the residuals - there is now no significant peaking and the residuals are much more stable
-
-lm.resid.plot()
-
 
             # Create functions that will perform this regression in the working environment
 
 linear_estimate_headcount = lm
 
-print(lm.params)
+# write function to generate a new linear_regression function that doesn't require running the regression again.
+
+parameters = lm.params
+
+param_dict = parameters.to_dict()
+
+intercept = param_dict['Intercept']
+count_coefficient = param_dict['Avg_Count_30min']
+
+
+with open('count_coefficient.pickle', 'wb') as handle:
+    pickle.dump(count_coefficient, handle)
+
+with open('intercept.pickle', 'wb') as handle:
+    pickle.dump(intercept, handle)
