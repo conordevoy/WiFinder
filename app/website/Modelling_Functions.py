@@ -1,36 +1,36 @@
-from data_process_scripts.Linear_Regression_Creator import linear_estimate_headcount
-from data_process_scripts.Logistic_Regression_Creator import binary_logistic_classifier
-from data_process_scripts.Logistic_Regression_Creator import tertiary_logistic_classifier
-from numpy import ones
-from pandas import DataFrame, concat
+# from data_process_scripts.Linear_Regression_Creator import linear_estimate_headcount
+# from data_process_scripts.Logistic_Regression_Creator import binary_logistic_classifier
+# from data_process_scripts.Logistic_Regression_Creator import tertiary_logistic_classifier
+# from numpy import ones
+# from pandas import DataFrame, concat
 
 
-# linear functions
+# # linear functions
 
-def prep_predictor_value(query_result):
-    """Wraps a SINGLE value in a pd.DataFrame to prepare it for a StatsModels Linear Regression object
+# def prep_predictor_value(query_result):
+#     """Wraps a SINGLE value in a pd.DataFrame to prepare it for a StatsModels Linear Regression object
 
-    Avg_Count_30min is the name the model was trained to predict on."""
+#     Avg_Count_30min is the name the model was trained to predict on."""
 
-    predictor_value = DataFrame({'Avg_Count_30min': [query_result]})
+#     predictor_value = DataFrame({'Avg_Count_30min': [query_result]})
 
-    return predictor_value
+#     return predictor_value
 
-def linear_prediction(predictor_value):
-    """Performs a prediction on a supplied dataframe object and returns the result"""
+# def linear_prediction(predictor_value):
+#     """Performs a prediction on a supplied dataframe object and returns the result"""
 
-    result = linear_estimate_headcount.predict(predictor_value)
+#     result = linear_estimate_headcount.predict(predictor_value)
 
-    result = int(result)
+#     result = int(result)
 
-    return result
+#     return result
 
-def test(count):
+# def test(count):
 
-    count_in_dataframe = prep_predictor_value(count)
-    predicted_value = linear_prediction(count_in_dataframe)
+#     count_in_dataframe = prep_predictor_value(count)
+#     predicted_value = linear_prediction(count_in_dataframe)
 
-    return predicted_value
+#     return predicted_value
 
 # def prep_predictor_values(*query_results):
 #     """Wraps MULTIPLE values in a pd.DataFrame to prepare it for a StatsModels Linear Regression object

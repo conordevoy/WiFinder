@@ -1,9 +1,10 @@
 from flask import Flask, render_template, g, redirect, url_for, request, session, flash
 from functools import wraps
 import sqlite3
-from app.website.hardwire_models import tertiary_classifier
-from app.website.hardwire_models import binary_classifier
-from app.website.hardwire_models import linear_predictor
+from hardwire_models import *
+# from app.website.hardwire_models import tertiary_classifier
+# from app.website.hardwire_models import binary_classifier
+# from app.website.hardwire_models import linear_predictor
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -56,7 +57,7 @@ def login():
             error = 'Invalid Credentials. Please try again.'
         else:
             session['logged_in'] = True
-            return redirect(url_for('search'))
+            return redirect(url_for('estimator'))
     return render_template('login.html', title='Login', error=error)
 
 
@@ -71,7 +72,7 @@ def logout():
 @login_required
 def WiFinderHTML():
     '''Render HTML template'''
-    return render_template("index.html")
+    return render_template("estimator.html")
 
 
 @WiFinderApp.route("/search")
