@@ -83,16 +83,12 @@ def logistic_classifier(query_result, classifier):
         query_result = -65535
     X = logistic_prep_values(query_result)
 
-    # try:
     if classifier == 'binary':
         result = binary_logistic_classifier.predict(X)
     elif classifier == 'tertiary':
         result = tertiary_logistic_classifier.predict(X)
     else:
         print('Classifier = ', classifier, '. Invalid input')
-    # except:
-    #     print('Classifier must be either value "binary" or "tertiary"')
-    #     raise(SystemExit)
 
     result = str(result)
     result = result.strip("[]''")
