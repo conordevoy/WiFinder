@@ -184,6 +184,14 @@ def update_model():
 
     return render_template("update_model.html")
 
+@WiFinderApp.route("/datainput", methods=['GET', 'POST'])
+@login_required
+def data_input():
+
+  # need to put the code here
+
+  return render_template("data_input.html")
+
 @WiFinderApp.route("/layout")
 def layout():
     '''load base template - only here to prototype design'''
