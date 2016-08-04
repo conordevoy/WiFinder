@@ -199,13 +199,16 @@ def allowed_file(filename):
 @WiFinderApp.route("/datainput", methods=['GET', 'POST'])
 @login_required
 def data_input():
+    cf = os.listdir(WiFinderApp.config['UPLOAD_FOLDER'],)
     if request.method == 'POST':
       file = request.files['file']
       if file and allowed_file(file.filename):
           filename = secure_filename(file.filename)
           file.save(os.path.join(WiFinderApp.config['UPLOAD_FOLDER'], filename))
-          return render_template("data_input.html")
-    return render_template("data_input.html")
+          return render_template("data_input.html",
+                  current_files= cf)
+    return render_template("data_input.html",
+            current_files= cf)
 
 @WiFinderApp.route("/layout")
 def layout():
