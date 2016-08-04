@@ -2,6 +2,8 @@ from flask import Flask, render_template, g, redirect, url_for, request, session
 from functools import wraps
 import sqlite3
 from hardwire_models import *
+from werkzeug import secure_filename
+import os
 # from app.website.hardwire_models import tertiary_classifier
 # from app.website.hardwire_models import binary_classifier
 # from app.website.hardwire_models import linear_predictor
@@ -14,6 +16,13 @@ WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session k
 
 db = "WiFinderDBv02.db"
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+# print(dir_path)
+
+UPLOAD_FOLDER = dir_path + '/tmp/'
+ALLOWED_EXTENSIONS = set(['zip'])
+
+WiFinderApp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # login required decorator
 def login_required(f):
@@ -184,20 +193,25 @@ def update_model():
 
     return render_template("update_model.html")
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 @WiFinderApp.route("/datainput", methods=['GET', 'POST'])
 @login_required
 def data_input():
-
-  # need to put the code here
-
-  return render_template("data_input.html")
+    if request.method == 'POST':
+      file = request.files['file']
+      if file and allowed_file(file.filename):
+          filename = secure_filename(file.filename)
+          file.save(os.path.join(WiFinderApp.config['UPLOAD_FOLDER'], filename))
+          return render_template("data_input.html")
+    return render_template("data_input.html")
 
 @WiFinderApp.route("/layout")
 def layout():
     '''load base template - only here to prototype design'''
     return render_template("page_layout.html",
                            title='Layout')
-
 
 if __name__ == "__main__":
     WiFinderApp.run()
