@@ -32,7 +32,8 @@ def data_retrieval():
 
     conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
     with conn:
-        df = pd.read_sql_query("SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;", conn)
+        datetime = "2015-11-12"
+        df = pd.read_sql_query("SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(datetime), conn)
         output_file("datetime.html")
         # p = figure(width=800, height=250, x_axis_type="datetime")
         # p.line = Line(df, title="WIfi Logs", ylabel='Count', xlabel='Time',index='W.Datetime', legend=True)
@@ -49,24 +50,15 @@ def data_retrieval():
 
         p.add_layout(LinearAxis(y_range_name="foo"), 'left')
 
-        callback = CustomJS(args=dict(source=source), code="""
-            var data = source.get('data');
-            var f = cb_obj.get('value')
-            x = data['x']
-            y = data['y']
-            for (i = 0; i < x.length; i++) {
-                y[i] = Math.pow(x[i], f)
-            }
-            source.trigger('change');
-        """)
 
 
 
 
 
-        slider = Slider(start=1, end=4, value=1, step=.1, title="power", callback=callback)
 
-        show(widgetbox(slider))
+
+
+
 
 
 
@@ -75,7 +67,7 @@ def data_retrieval():
 
         js_resources = INLINE.render_js()
         css_resources = INLINE.render_css()
-        script, div = components(p,slider)
+        script, div = components(p)
         return flask.render_template(
             'embed.html',
             script=script,
