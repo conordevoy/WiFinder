@@ -49,6 +49,7 @@ cast = TextInput(title="Cast names contains")
 x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Tomato Meter")
 y_axis = Select(title="Y Axis", options=sorted(axis_map.keys()), value="Number of Reviews")
 
+
 # Create Column Data Source that will be used by the plot
 source = ColumnDataSource(data=dict(x=[], y=[], color=[], title=[], year=[], revenue=[], alpha=[]))
 
