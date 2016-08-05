@@ -35,7 +35,7 @@
     <p>Users have the option to upload additional wifi log data and CSI survey data.
         This may result in more accurate and better predictive models.
         The additional files will automatically go through our data cleaning process
-        and will be fed into our data analytics models.
+        and will be fed into our data analytics models. We are not accepting new timetable data at present.
 
     </p>
 </div>
@@ -47,18 +47,22 @@
             <input class="upload" id="uploadBtn" type=file name=file> Choose File (must be zip)
             </div>
             <input type=submit value=Upload>
-
     </form>
+    {% for message in get_flashed_messages() %}
+          {{ message }}
+        {% endfor %}
 </div>
 <div class="container-fluid bg-2 text-center">
     <h1>Upload CSI Survey Data</h1>
-    <p>Wifi Log data must be uploaded in the form of a compressed .zip folder.</p>
-    <!--<form action="" method=post enctype=multipart/form-data>-->
-        <!--<div class="fileUpload btn btn-default">-->
-            <!--<input class="upload" id="uploadBtn" type=file name=file> Choose File (must be zip)-->
-            <!--</div>-->
-            <!--<input type=submit value=Upload>-->
-    <!--</form>-->
+    <p>Wifi Log data must be uploaded in the form of a .xlxs file</p>
+    <form action="" method=post enctype=multipart/form-data>
+        <div class="fileUpload btn btn-default">
+            <input class="upload" id="uploadBtn1" type=file name=file1> Choose File (must be .xlsx)
+        </div>
+        <div class>
+            <input type=submit value=Upload>
+        </div>
+    </form>
 </div>
     {% for file in current_files %}
     <p>{{file}}</p>
