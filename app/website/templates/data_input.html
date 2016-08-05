@@ -5,7 +5,6 @@
 <style>
     .bg-6 {
       background-color: #1ABC9C;
-/*      background-color: #2f2f2f;  Black Gray */
       color: #2f2f2f;
   }
     .fileUpload {
@@ -25,28 +24,18 @@
     filter: alpha(opacity=0);
 }
 
+
 </style>
 <div class="container-fluid bg-6 text-center">
     <h1>Upload new File</h1>
     <form action="" method=post enctype=multipart/form-data>
-      <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
-    <div class="fileUpload btn btn-primary">
-        <span>Choose File</span>
-        <input id="uploadBtn" type="file" class="upload" />
-    </div>
-        <button type="button" class="btn btn-default">Upload</button>
+        <div class="fileUpload btn btn-default">
+            <input class="upload" id="uploadBtn" type=file name=file> Choose File (must be zip)
+            </div>
+            <input type=submit value=Upload>
+
     </form>
-    <!--<input id="uploadFile" placeholder="Choose File" disabled="disabled" />-->
-    <!--<div class="fileUpload btn btn-primary">-->
-        <!--<span>Choose File</span>-->
-        <!--<input id="uploadBtn" type="file" class="upload" />-->
-    <!--</div>-->
 </div>
-<script>
-document.getElementById("uploadBtn").onchange = function () {
-    document.getElementById("uploadFile").value = this.value;
-};
-</script>
     {% for file in current_files %}
     <p>{{file}}</p>
     {% endfor %}
