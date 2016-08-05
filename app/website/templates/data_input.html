@@ -2,42 +2,51 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
-<!-- /*<style>
-    .logo-small {
-    color: #f4511e;
-    font-size: 50px;
+<style>
+    .bg-6 {
+      background-color: #1ABC9C;
+/*      background-color: #2f2f2f;  Black Gray */
+      color: #2f2f2f;
+  }
+    .fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
 }
-form{
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 200px;
-    color:#fff;
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
-form select {
-    height: 60px;
-    width: 200px;
-    margin-bottom: 30px;
-    background-color: #f9f9f9;
-    font-size: 15pt;
-    border: none;
-    color: grey;
-}
-form input {
-    height: 50px;
-    width: 200px;
-    background-color: #ec583a;
-    font-size: 15pt;
-    color: #fff;
-    margin-left: auto;
-    margin-bottom: auto;
-    border: none;
-}
-</style>*/ -->
-<h1>Upload new File</h1>
+
+</style>
+<div class="container-fluid bg-6 text-center">
+    <h1>Upload new File</h1>
     <form action="" method=post enctype=multipart/form-data>
-      <input type=file name=file>
-         <input type=submit value=Upload>
+      <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+    <div class="fileUpload btn btn-primary">
+        <span>Choose File</span>
+        <input id="uploadBtn" type="file" class="upload" />
+    </div>
+        <button type="button" class="btn btn-default">Upload</button>
     </form>
+    <!--<input id="uploadFile" placeholder="Choose File" disabled="disabled" />-->
+    <!--<div class="fileUpload btn btn-primary">-->
+        <!--<span>Choose File</span>-->
+        <!--<input id="uploadBtn" type="file" class="upload" />-->
+    <!--</div>-->
+</div>
+<script>
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+</script>
     {% for file in current_files %}
     <p>{{file}}</p>
     {% endfor %}
