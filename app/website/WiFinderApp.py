@@ -205,8 +205,12 @@ def data_input():
       if file and allowed_file(file.filename):
           filename = secure_filename(file.filename)
           file.save(os.path.join(WiFinderApp.config['UPLOAD_FOLDER'], filename))
+          flash(filename + " uploaded successfully")
           return render_template("data_input.html",
                   current_files= cf)
+      else:
+          filename = secure_filename(file.filename)
+          flash("Upload unsuccessful")
     return render_template("data_input.html",
             current_files= cf)
 
