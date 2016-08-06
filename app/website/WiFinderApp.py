@@ -84,39 +84,39 @@ def WiFinderHTML():
     return render_template("estimator.html")
 
 
-@WiFinderApp.route("/search")
+@WiFinderApp.route("/explore")
 @login_required
-def search():
+def explore():
     '''search page for website'''
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("search.html",
-                           title='Home',
+    return render_template("explore.html",
+                           title='Explore',
                            rooms=roomdata,
                            times=timedata,
                            modules=moduledata,
                            dates=datedata)
 
 
-@WiFinderApp.route("/results", methods=['GET'])
-@login_required
-def results():
-    '''results page for website'''
-    room = request.args.get('Room')
-    datetime = request.args.get('Date')
-    time = request.args.get('Time')
-    print(room, datetime, time)
-    cur = get_db().cursor()
-    subdata = cur.execute("""SELECT AVG(W.Log_Count) 
-        FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID 
-        JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room 
-        WHERE R.RoomID = \'{}\' AND W.Datetime = \'{}\' AND W.Hour = \'{}\' 
-        AND strftime('%M', W.Time) BETWEEN \"15\" AND \"45\";""".format(room, datetime, time))
-    return render_template("results.html",
-                           title='Results',
-                           result=subdata.fetchone()[0])
+# @WiFinderApp.route("/results", methods=['GET'])
+# @login_required
+# def results():
+#     '''results page for website'''
+#     room = request.args.get('Room')
+#     datetime = request.args.get('Date')
+#     time = request.args.get('Time')
+#     print(room, datetime, time)
+#     cur = get_db().cursor()
+#     subdata = cur.execute("""SELECT AVG(W.Log_Count)
+#         FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID
+#         JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room
+#         WHERE R.RoomID = \'{}\' AND W.Datetime = \'{}\' AND W.Hour = \'{}\'
+#         AND strftime('%M', W.Time) BETWEEN \"15\" AND \"45\";""".format(room, datetime, time))
+#     return render_template("results.html",
+#                            title='Results',
+#                            result=subdata.fetchone()[0])
 
 
 @WiFinderApp.route("/estimator", methods=['GET'])
