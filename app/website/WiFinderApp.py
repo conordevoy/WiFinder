@@ -99,6 +99,13 @@ def explore():
                            modules=moduledata,
                            dates=datedata)
 
+@WiFinderApp.route("/register")
+def register():
+    '''search page for website'''
+    # unique= query("SELECT DISTINCT username FROM User;")
+    return render_template("register.html",
+                           title='Registration')
+
 
 # @WiFinderApp.route("/results", methods=['GET'])
 # @login_required
