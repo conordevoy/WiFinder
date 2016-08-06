@@ -191,7 +191,7 @@ def update_model():
 
     # this will execute both scripts
 
-    return render_template("update_model.html")
+    return render_template("update_model.html", title='Update Model')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -207,12 +207,13 @@ def data_input():
           file.save(os.path.join(WiFinderApp.config['UPLOAD_FOLDER'], filename))
           flash(filename + " uploaded successfully")
           return render_template("data_input.html",
-                  current_files= cf)
+                  current_files= cf,
+                               title='Data Input')
       else:
           filename = secure_filename(file.filename)
           flash("Upload unsuccessful")
     return render_template("data_input.html",
-            current_files= cf)
+            current_files= cf, title='Data Input')
 
 @WiFinderApp.route("/layout")
 def layout():
