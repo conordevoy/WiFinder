@@ -4,9 +4,6 @@ import sqlite3
 from hardwire_models import *
 from werkzeug import secure_filename
 import os
-# from app.website.hardwire_models import tertiary_classifier
-# from app.website.hardwire_models import binary_classifier
-# from app.website.hardwire_models import linear_predictor
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -192,6 +189,16 @@ def update_model():
     # this will execute both scripts
 
     return render_template("update_model.html")
+
+@WiFinderApp.route("/modelupdated", methods=['GET'])
+@login_required
+def model_updated():
+
+
+    import Linear_Regression_Creator
+    import Logistic_Regression_Creator
+
+    return render_template("model_updated.html")
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
