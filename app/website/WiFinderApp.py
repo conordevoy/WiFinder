@@ -73,6 +73,12 @@ def logout():
     flash("You have just been logged out!")
     return redirect(url_for('login'))
 
+@WiFinderApp.route("/index")
+@login_required
+def index():
+    '''load homepage'''
+    return render_template("index.html",
+                           title='Home')
 
 @WiFinderApp.route("/")
 @login_required
