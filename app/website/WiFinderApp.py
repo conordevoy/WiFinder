@@ -71,7 +71,7 @@ def login():
             error = 'Invalid Credentials. Please try again.'
         else:
             session['logged_in'] = True
-            return redirect(url_for('estimator'))
+            return redirect(url_for('index'))
     return render_template('login.html', title='Login', error=error)
 
 
@@ -311,11 +311,11 @@ def data_input():
 
 
 
-@WiFinderApp.route("/layout")
-def layout():
-    '''load base template - only here to prototype design'''
-    return render_template("page_layout.html",
-                           title='Layout')
+# @WiFinderApp.route("/layout")
+# def layout():
+#     '''load base template - only here to prototype design'''
+#     return render_template("page_layout.html",
+#                            title='Layout')
 
 if __name__ == "__main__":
     WiFinderApp.run()
