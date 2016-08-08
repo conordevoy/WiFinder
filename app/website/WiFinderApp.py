@@ -10,7 +10,7 @@ from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
 from bokeh.models import LinearAxis, Range1d
 import pandas as pd
-from bokeh.layouts import gridplot
+# from bokeh.layouts import gridplot
 #trial
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
@@ -307,13 +307,19 @@ def data_input():
     return render_template("data_input.html",
             current_files= cf, title='Data Input')
 
+@WiFinderApp.route("/lectureinput")
+@login_required
+def input():
+    '''search page for website'''
+    timeinput = query("SELECT DISTINCT Hour FROM CLASS;")
+    roominput = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduleinput = query("SELECT DISTINCT Module FROM CLASS;")
+    return render_template("lectureinput.html",
+                           title='Home',
+                           rooms_input=roominput,
+                           times_input=timeinput,
+                           modules_input=moduleinput)
 
-
-# @WiFinderApp.route("/layout")
-# def layout():
-#     '''load base template - only here to prototype design'''
-#     return render_template("page_layout.html",
-#                            title='Layout')
 
 if __name__ == "__main__":
     WiFinderApp.run()
