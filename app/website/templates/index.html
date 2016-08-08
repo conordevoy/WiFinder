@@ -3,212 +3,84 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
-<!--<style>-->
-      <!--h2 {-->
-        <!--font-size: 50pt;-->
-        <!--letter-spacing: 0.825em;-->
-        <!--text-align: centre;-->
-        <!--text-decoration: none;-->
-        <!--color: #515756;-->
-    <!--}-->
-
-<!--.thumbnail {-->
-    <!--position:relative;-->
-    <!--overflow:hidden;-->
-    <!--padding:15px;-->
-<!--}-->
-<!--.thumbnail a {-->
-<!--text-decoration:none;-->
-<!--color: #2d2d2d;-->
-<!--}-->
-<!--.caption {-->
-    <!--position:absolute;-->
-    <!--top:0;-->
-    <!--right:0;-->
-    <!--background:rgba(90, 90, 90, 0.75);-->
-    <!--width:100%;-->
-    <!--height:100%;-->
-    <!--padding:2%;-->
-    <!--display: none;-->
-    <!--text-align: centre;-->
-    <!--line-height:50%;-->
-    <!--color:#fff !important;-->
-    <!--z-index:2;-->
-<!--}-->
-<!--#estimator {-->
-<!--background-color: #CFC996 ;-->
-<!--color:#fff;-->
-<!--}-->
-<!--#explore {-->
-<!--background-color:  #969063;-->
-<!--color:#fff;-->
-<!--}-->
-<!--#d_input {-->
-<!--background-color: #F9C396  ;-->
-<!--color:#fff;-->
-<!--}-->
-<!--</style>-->
-<!--<div class="container-fluid bg-8 text-center">-->
-    <!--<h2 class="margin">WiFinder</h2>-->
-    <!--<div class="container">-->
-    <!--<div class="row">-->
-
-
-    <!--&lt;!&ndash; TH1 &ndash;&gt;-->
-        <!--<div class="col-sm-4">-->
-            <!--<div class="thumbnail" id="estimator">-->
-              <!--<a href="/estimator">-->
-                <!--<div class="caption">-->
-                     <!--<h3>Estimator</h3>-->
-<!--</p>-->
-                <!--</div>-->
-                  <!--<h3 class="">Estimator</h3>-->
-                    <!--<p>Users can choose a specific time, date and room and, from the data that-->
-                        <!--we have stored in our database, our models will generate the estimated-->
-                        <!--occupancy of that room using the wifi log data. New data can be uploaded-->
-                        <!--at any time in the data upload section of our website.</p>-->
-                        <!--<p>After extensive data analysis, we have chosen the three best models which-->
-                        <!--give the most accurate predictions. Our binary model predicts whether a-->
-                        <!--class is empty or occupied. Our linear model predicts the actual headcount-->
-                        <!--of the class. Our last model categorises occupancy into high, medium or low-->
-                        <!--and predicts occupancy of a class in these bins.</p>-->
-               <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-4">-->
-            <!--<div class="thumbnail" id="explore">-->
-              <!--<a href="/explore" class="">-->
-                <!--<div class="caption">-->
-                    <!--<h3>Explore</h3>-->
-                <!--</div>-->
-                  <!--<h3 class="">Explore</h3>-->
-                  <!--<p>Users can choose any combination of time, date and room and, from the data that-->
-                      <!--we have stored in our database, interesting statistics can be generated.-->
-                      <!--New data can be uploaded at any time in the data upload section of our website.</p>-->
-                        <!--<p>To display the statistics we have used a program called Bokeh which allowed us-->
-                        <!--to present the data in interesting ways.</p>-->
-               <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-4">-->
-            <!--<div class="thumbnail" id="d_input">-->
-              <!--<a href="/datainput" class="">-->
-                <!--<div class="caption">-->
-                    <!--<h3>Data Input</h3>-->
-                <!--</div>-->
-                  <!--<h3 class="">Data input</h3>-->
-                    <!--<p>Users can choose a specific time, date and room and, from the data that-->
-                    <!--we have stored in our database, our models will generate the estimated-->
-                    <!--occupancy of that room using the wifi log data. New data can be uploaded-->
-                    <!--at any time in the data upload section of our website.</p>-->
-                    <!--<p>After extensive data analysis, we have chosen the three best models which-->
-                    <!--give the most accurate predictions. Our binary model predicts whether a-->
-                    <!--class is empty or occupied. Our linear model predicts the actual headcount-->
-                    <!--of the class. Our last model categorises occupancy into high, medium or low-->
-                    <!--and predicts occupancy of a class in these bins.</p>-->
-               <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<script>-->
-    <!--$("[rel='tooltip']").tooltip();-->
-
-    <!--$('.thumbnail').hover(-->
-        <!--function(){-->
-            <!--$(this).find('.caption').slideDown(250); //.fadeIn(250)-->
-        <!--},-->
-        <!--function(){-->
-            <!--$(this).find('.caption').slideUp(250); //.fadeOut(205)-->
-        <!--}-->
-    <!--);-->
-    <!--&lt;!&ndash;function to get all thumbnails same size&ndash;&gt;-->
-    <!--function equalHeight(group) {-->
-    <!--var tallest = 0;-->
-    <!--group.each(function() {-->
-        <!--var thisHeight = $(this).height();-->
-        <!--if(thisHeight > tallest) {-->
-            <!--tallest = thisHeight;-->
-        <!--}-->
-    <!--});-->
-    <!--group.each(function() { $(this).height(tallest); });-->
-<!--}-->
-
-<!--$(document).ready(function() {-->
-    <!--equalHeight($(".thumbnail"));-->
-<!--});-->
-    <!--</script>-->
-  <style>
-  body {
-      font: 20px Montserrat, sans-serif;
-      line-height: 1.8;
-      color: #f5f6f7;
-  }
-  p {font-size: 16px;}
-  .margin {margin-bottom: 45px;}
-  .bg-1 {
-      background-color: #1abc9c; /* Green */
-      color: #ffffff;
-  }
-  .bg-2 {
-      background-color: #474e5d; /* Dark Blue */
-  }
-  .bg-2 a{
-  color: #fff;
-  text-decoration:none;
-  }
-   .bg-3 a{
-  color: #474e5d;
-  text-decoration:none;
-  }
-  .bg-4 a{
-  color: #fff;
-  text-decoration:none;
-  }
-  .bg-3 {
-      background-color: #ffffff; /* White */
-      color: #555555;
-  }
-  .bg-4 {
-      background-color: #2f2f2f; /* Black Gray */
-      color: #fff;
-  }
-  .container-fluid {
-      padding-top: 70px;
-      padding-bottom: 70px;
-  }
-  h2 {
-        font-size: 40pt;
+<style>
+      h2 {
+        font-size: 50pt;
         letter-spacing: 0.825em;
         text-align: centre;
         text-decoration: none;
+        color: #515756;
     }
-  </style>
 
-<!-- First Container -->
-<div class="container-fluid bg-1 text-center">
-  <h2 class="margin">WiFinder</h2>
-  <img src="../static/images/ucd-logo.jpg" class="img-responsive img-circle margin" style="display:inline" alt="ucd" width="450px" height="450px">
-  <h3>Estimating classroom occupancy based on wifi log data</h3>
-</div>
+.thumbnail {
+    position:relative;
+    overflow:hidden;
+    padding:15px;
+}
+.thumbnail a {
+text-decoration:none;
+color: #2d2d2d;
+}
+.caption {
+    position:absolute;
+    top:0;
+    right:0;
+    background:rgba(90, 90, 90, 0.75);
+    width:100%;
+    height:100%;
+    padding:2%;
+    display: none;
+    text-align: centre;
+    line-height:50%;
+    color:#fff !important;
+    z-index:2;
+}
+#estimator {
+background-color: #CFC996 ;
+color:#fff;
+}
+#explore {
+background-color:  #969063;
+color:#fff;
+}
+#d_input {
+background-color: #F9C396  ;
+color:#fff;
+}
+</style>
+<div class="container-fluid bg-8 text-center">
+    <h2 class="margin">WiFinder</h2>
+    <div class="container">
+    <div class="row">
 
-<!-- Second Container -->
-<div class="container-fluid bg-2 text-center">
-  <a href="/estimator">
-      <h3 class="">Estimator</h3>
-        <p>Users can choose a specific time, date and room and, from the data that
-            we have stored in our database, our models will generate the estimated
-            occupancy of that room using the wifi log data. New data can be uploaded
-            at any time in the data upload section of our website.</p>
-            <p>After extensive data analysis, we have chosen the three best models which
-            give the most accurate predictions. Our binary model predicts whether a
-            class is empty or occupied. Our linear model predicts the actual headcount
-            of the class. Our last model categorises occupancy into high, medium or low
-            and predicts occupancy of a class in these bins.</p>
-    </a>
-</div>
 
-<!-- Third Container (Grid) -->
-<div class="container-fluid bg-3 text-center">
-  <a href="/explore" class="">
+    <!-- TH1 -->
+        <div class="col-sm-4">
+            <div class="thumbnail" id="estimator">
+              <a href="/estimator">
+                <div class="caption">
+                     <h3>Estimator</h3>
+</p>
+                </div>
+                  <h3 class="">Estimator</h3>
+                    <p>Users can choose a specific time, date and room and, from the data that
+                        we have stored in our database, our models will generate the estimated
+                        occupancy of that room using the wifi log data. New data can be uploaded
+                        at any time in the data upload section of our website.</p>
+                        <p>After extensive data analysis, we have chosen the three best models which
+                        give the most accurate predictions. Our binary model predicts whether a
+                        class is empty or occupied. Our linear model predicts the actual headcount
+                        of the class. Our last model categorises occupancy into high, medium or low
+                        and predicts occupancy of a class in these bins.</p>
+               </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail" id="explore">
+              <a href="/explore" class="">
+                <div class="caption">
+                    <h3>Explore</h3>
+                </div>
                   <h3 class="">Explore</h3>
                   <p>Users can choose any combination of time, date and room and, from the data that
                       we have stored in our database, interesting statistics can be generated.
@@ -216,11 +88,14 @@
                         <p>To display the statistics we have used a program called Bokeh which allowed us
                         to present the data in interesting ways.</p>
                </a>
-  </div>
-</div>
-
-<div class="container-fluid bg-4 text-center">
-    <a href="/datainput" class="">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail" id="d_input">
+              <a href="/datainput" class="">
+                <div class="caption">
+                    <h3>Data Input</h3>
+                </div>
                   <h3 class="">Data input</h3>
                     <p>Users can choose a specific time, date and room and, from the data that
                     we have stored in our database, our models will generate the estimated
@@ -232,6 +107,131 @@
                     of the class. Our last model categorises occupancy into high, medium or low
                     and predicts occupancy of a class in these bins.</p>
                </a>
-    </div>
+            </div>
+        </div>
+        <script>
+    $("[rel='tooltip']").tooltip();
+
+    $('.thumbnail').hover(
+        function(){
+            $(this).find('.caption').slideDown(250); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.caption').slideUp(250); //.fadeOut(205)
+        }
+    );
+    <!--function to get all thumbnails same size-->
+    function equalHeight(group) {
+    var tallest = 0;
+    group.each(function() {
+        var thisHeight = $(this).height();
+        if(thisHeight > tallest) {
+            tallest = thisHeight;
+        }
+    });
+    group.each(function() { $(this).height(tallest); });
+}
+
+$(document).ready(function() {
+    equalHeight($(".thumbnail"));
+});
+    </script>
+  <!--<style>-->
+  <!--body {-->
+      <!--font: 20px Montserrat, sans-serif;-->
+      <!--line-height: 1.8;-->
+      <!--color: #f5f6f7;-->
+  <!--}-->
+  <!--p {font-size: 16px;}-->
+  <!--.margin {margin-bottom: 45px;}-->
+  <!--.bg-1 {-->
+      <!--background-color: #1abc9c; /* Green */-->
+      <!--color: #ffffff;-->
+  <!--}-->
+  <!--.bg-2 {-->
+      <!--background-color: #474e5d; /* Dark Blue */-->
+  <!--}-->
+  <!--.bg-2 a{-->
+  <!--color: #fff;-->
+  <!--text-decoration:none;-->
+  <!--}-->
+   <!--.bg-3 a{-->
+  <!--color: #474e5d;-->
+  <!--text-decoration:none;-->
+  <!--}-->
+  <!--.bg-4 a{-->
+  <!--color: #fff;-->
+  <!--text-decoration:none;-->
+  <!--}-->
+  <!--.bg-3 {-->
+      <!--background-color: #ffffff; /* White */-->
+      <!--color: #555555;-->
+  <!--}-->
+  <!--.bg-4 {-->
+      <!--background-color: #2f2f2f; /* Black Gray */-->
+      <!--color: #fff;-->
+  <!--}-->
+  <!--.container-fluid {-->
+      <!--padding-top: 70px;-->
+      <!--padding-bottom: 70px;-->
+  <!--}-->
+  <!--h2 {-->
+        <!--font-size: 40pt;-->
+        <!--letter-spacing: 0.825em;-->
+        <!--text-align: centre;-->
+        <!--text-decoration: none;-->
+    <!--}-->
+  <!--</style>-->
+
+<!--&lt;!&ndash; First Container &ndash;&gt;-->
+<!--<div class="container-fluid bg-1 text-center">-->
+  <!--<h2 class="margin">WiFinder</h2>-->
+  <!--<img src="../static/images/ucd-logo.jpg" class="img-responsive img-circle margin" style="display:inline" alt="ucd" width="450px" height="450px">-->
+  <!--<h3>Estimating classroom occupancy based on wifi log data</h3>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Second Container &ndash;&gt;-->
+<!--<div class="container-fluid bg-2 text-center">-->
+  <!--<a href="/estimator">-->
+      <!--<h3 class="">Estimator</h3>-->
+        <!--<p>Users can choose a specific time, date and room and, from the data that-->
+            <!--we have stored in our database, our models will generate the estimated-->
+            <!--occupancy of that room using the wifi log data. New data can be uploaded-->
+            <!--at any time in the data upload section of our website.</p>-->
+            <!--<p>After extensive data analysis, we have chosen the three best models which-->
+            <!--give the most accurate predictions. Our binary model predicts whether a-->
+            <!--class is empty or occupied. Our linear model predicts the actual headcount-->
+            <!--of the class. Our last model categorises occupancy into high, medium or low-->
+            <!--and predicts occupancy of a class in these bins.</p>-->
+    <!--</a>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Third Container (Grid) &ndash;&gt;-->
+<!--<div class="container-fluid bg-3 text-center">-->
+  <!--<a href="/explore" class="">-->
+                  <!--<h3 class="">Explore</h3>-->
+                  <!--<p>Users can choose any combination of time, date and room and, from the data that-->
+                      <!--we have stored in our database, interesting statistics can be generated.-->
+                      <!--New data can be uploaded at any time in the data upload section of our website.</p>-->
+                        <!--<p>To display the statistics we have used a program called Bokeh which allowed us-->
+                        <!--to present the data in interesting ways.</p>-->
+               <!--</a>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div class="container-fluid bg-4 text-center">-->
+    <!--<a href="/datainput" class="">-->
+                  <!--<h3 class="">Data input</h3>-->
+                    <!--<p>Users can choose a specific time, date and room and, from the data that-->
+                    <!--we have stored in our database, our models will generate the estimated-->
+                    <!--occupancy of that room using the wifi log data. New data can be uploaded-->
+                    <!--at any time in the data upload section of our website.</p>-->
+                    <!--<p>After extensive data analysis, we have chosen the three best models which-->
+                    <!--give the most accurate predictions. Our binary model predicts whether a-->
+                    <!--class is empty or occupied. Our linear model predicts the actual headcount-->
+                    <!--of the class. Our last model categorises occupancy into high, medium or low-->
+                    <!--and predicts occupancy of a class in these bins.</p>-->
+               <!--</a>-->
+    <!--</div>-->
 
 {% endblock %}
