@@ -1,0 +1,46 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+<style>
+    .logo-small {
+    color: #f4511e;
+    font-size: 50px;
+}
+form{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 200px;
+    color:#fff;
+}
+form select {
+    height: 60px;
+    width: 200px;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    font-size: 15pt;
+    border: none;
+    color: grey;
+}
+form input {
+    height: 50px;
+    width: 200px;
+    background-color: #ec583a;
+    font-size: 15pt;
+    color: #fff;
+    margin-left: auto;
+    margin-bottom: auto;
+    border: none;
+}
+</style>
+
+
+<div class="container-fluid bg-2 text-center">
+        <h3 class="margin">Update Predictive Model</h3>
+        <ul>
+            <li>Your model has been updated!</li>
+        </ul>
+
+    </div>
+
+{% endblock %}
