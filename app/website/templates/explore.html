@@ -51,19 +51,19 @@ form input {
                 {% endfor %}
             </select><br>
 
-            <select name="Time">
+<!--             <select name="Time">
               <option value="default">Select time</option>
                 {% for time in times %}
                 <option value="{{time.0}}">{{time.0}}</option>
                 {% endfor %}
-            </select><br>
+            </select><br> -->
 
             <input type="submit" value="Submit">
         </form>
     </div>
 
 
-<div>
+<div align="center">
     {{ script | safe }}
     {{ div | safe }}
 </div>

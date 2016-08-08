@@ -38,7 +38,6 @@ def login_required(f):
         else:
             flash('Sorry, you need to login first!')
             return redirect(url_for('login'))
-
     return wrap
 
 
@@ -109,15 +108,14 @@ def explore():
     datetime = request.args.get('Date')
     time = request.args.get('Time')
 
-
     df = pd.read_sql_query(
         "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = \'{}\' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
             room, datetime), connectDB())
 
     df['Time'] = df['Time'].apply(pd.to_datetime)
 
-    if room  and datetime:
-        p = figure(width=800, height=250, x_axis_type="datetime", )
+    if room and datetime:
+        p = figure(width=800, height=500, x_axis_type="datetime", )
         p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
 
         p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
@@ -139,42 +137,42 @@ def explore():
             modules=moduledata,
             dates=datedata
         )
-    else:
-        df = pd.read_sql_query(
-            "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;",
-            connectDB())
+    # else:
+    #     df = pd.read_sql_query(
+    #         "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;",
+    #         connectDB())
 
 
-        df['Time'] = df['Time'].apply(pd.to_datetime)
-        p = figure(width=800, height=250, x_axis_type="datetime", )
-        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+    #     df['Time'] = df['Time'].apply(pd.to_datetime)
+    #     p = figure(width=800, height=250, x_axis_type="datetime", )
+    #     p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
 
-        p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
-        p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
-        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
-        p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
+    #     p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+    #     p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+    #     p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+    #     p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
 
-        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+    #     p.add_layout(LinearAxis(y_range_name="foo"), 'left')
 
-        p2 = figure(width=800, height=250, x_axis_type="datetime", x_range=p.x_range, )
-        p2.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+    #     p2 = figure(width=800, height=250, x_axis_type="datetime", x_range=p.x_range, )
+    #     p2.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
 
-        r = gridplot([[p, p2]], toolbar_location=None)
+    #     r = gridplot([[p, p2]], toolbar_location=None)
 
-        script, div = components(r)
-        return render_template(
-            'explore.html',
-            script=script,
-            div=div,
-
-            rooms=roomdata,
-            times=timedata,
-            modules=moduledata,
-            dates=datedata
-        )
-
-
-
+    #     script, div = components(r)
+    #     return render_template(
+    #         'explore.html',
+    #         script=script,
+    #         div=div,
+    #         rooms=roomdata,
+    #         times=timedata,
+    #         modules=moduledata,
+    #         dates=datedata
+    #     )
+    return render_template('explore.html',
+                          rooms=roomdata,
+                          times=timedata,
+                          dates=datedata) 
 
 @WiFinderApp.route("/register")
 def register():
