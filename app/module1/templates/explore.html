@@ -2,11 +2,38 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
-        {% for message in get_flashed_messages() %}
-            {{ message }}
-        {% endfor %}
+<style>
 
-        <form action= "/results">
+form{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 200px;
+    color:#fff;
+}
+form select {
+    height: 60px;
+    width: 200px;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    font-size: 15pt;
+    border: none;
+    color: grey;
+}
+form input {
+    height: 50px;
+    width: 200px;
+    background-color: #ec583a;
+    font-size: 15pt;
+    color: #fff;
+    margin-left: auto;
+    margin-bottom: auto;
+    border: none;
+}
+
+</style>
+    <div class="container-fluid bg-3 text-center">
+        <h3 class="margin">Explore Occupancy</h3>
+        <form action= "">
 
             <select name="Room">
                 <option value="default">Select room</option>
@@ -17,9 +44,6 @@
                 <option value="{{room.0}}">{{room.0}}</option>
                 {% endfor %}
             </select><br>
-
-            <!-- Looking to add a calendar here, where we can choose from the dates we have data available for -->
-            <!-- <input type="datetime"/> -->
             <select name="Date">
                 <option value="default">Select date</option>
                 {% for date in dates %}
@@ -34,23 +58,16 @@
                 {% endfor %}
             </select><br>
 
-<!--             <select name="Modules">
-              <option value="default">Select module</option>
-                {% for module in modules %}
-                <option value="{{module}}">{{module}}</option>
-                {% endfor %}
-            </select><br> -->
-
-<!--             <select name="Density">
-              <option value="default">Select density</option>
-                {% for density in densities %}
-                <option value="{{density}}">{{density}}</option>
-                {% endfor %}
-            </select><br> -->
-
             <input type="submit" value="Submit">
         </form>
-        <p><a href="/logout">Logout</a></p>
+    </div>
+
+<div>
+  {{ script | safe }}
+      {{ div | safe }}
+
+
+</div>
 
 
 {% endblock %}

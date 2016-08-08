@@ -46,7 +46,7 @@ def data_retrieval():
         css_resources = INLINE.render_css()
         script, div = components(r)
         return flask.render_template(
-            'embed.html',
+            'index.html',
             script=script,
             div=div,
             js_resources=js_resources,

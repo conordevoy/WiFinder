@@ -1,18 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title> WiFinder</title>
+    <body>
+        <H1> WiFinder</H1>
+        
+        <div class="container">
+          <ul>
+            <li class="one"><a href="index.html">Home</a></li>
+            <li class="two"><a href="results.html">Results</a></li>
+            <hr />
+          </ul>
+        </div>
+        <form action= "results.html">
+            <select name="Room">
+              <option value="default">Select room</option>
+              <option value="B02">B02</option>
+              <option value="B03">B03</option>
+              <option value="B04">B04</option>
+            </select><br>
+            <select name="Time">              <option value="B04">B04</option>
 
-        <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.css" type="text/css" />
-        <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.js"></script>
+              <option value="default">Select time</option>
+              <option value="9">9am</option>
+              <option value="10">10am</option>
+              <option value="11">11am</option>
+              <option value="12">12pm</option>
+              <option value="1">1pm</option>
+              <option value="2">2pm</option>
+              <option value="3">3pm</option>
+              <option value="4">4pm</option>
+              <option value="5">5pm</option>
+            </select><br>
+            <select name="Day">
+              <option value="default">Select day</option>
+              <option value="mon">Mon</option>
+              <option value="tues">Tues</option>
+              <option value="wed">Wed</option>
+              <option value="thurs">Thurs</option>
+              <option value="fri">Fri</option>
+            </select><br>
+            <select name="Density">
+              <option value="default">Select density</option>
+              <option value="0">0%</option>
+              <option value="25">25%</option>
+              <option value="50">50%</option>
+              <option value="75">75%</option>
+              <option value="100">100%</option>
+            </select><br>
+            <input type="submit" value="Submit">
+        </form>
+ 
+        <div id="logo">
+            <div id="sigma">
+                <img src="sigma.png">
+            </div>
+            <div id="wifi">
+                <img src="wifi.png">
+            </div>
+        </div>
 
-    <title>Hey, I'm working!</title>
-</head>
-<body>
-   <h1>here </h1>
+</body></head></html> -->
 
-    {{ script | safe }}
-    {{ div | safe }}
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
 
-</body>
-</html>
+        <p><a href="/logout">Logout</a></p>
+
+{% endblock %}

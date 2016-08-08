@@ -1,6 +1,7 @@
 from flask import Flask, render_template, g, redirect, url_for, request, session, flash
 from functools import wraps
 import sqlite3
+import pandas as pd
 from hardwire_models import *
 from werkzeug import secure_filename
 import os
@@ -9,9 +10,6 @@ from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
 from bokeh.models import LinearAxis, Range1d
-import pandas as pd
-from bokeh.layouts import gridplot
-
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -19,7 +17,7 @@ WiFinderApp.debug = True
 
 WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session key random generated from os
 
-db = "WiFinderDBv02.db"
+db = "/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # print(dir_path)
@@ -81,12 +79,6 @@ def logout():
     flash("You have just been logged out!")
     return redirect(url_for('login'))
 
-@WiFinderApp.route("/index")
-@login_required
-def index():
-    '''load homepage'''
-    return render_template("index.html",
-                           title='Home')
 
 @WiFinderApp.route("/")
 @login_required
@@ -105,74 +97,30 @@ def explore():
     datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
     # get values from form
-    room = request.args.get('Room')
-    datetime = request.args.get('Date')
-    time = request.args.get('Time')
-
-
+    datetime = "2015-11-12"
     df = pd.read_sql_query(
-        "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = \'{}\' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
-            room, datetime), connectDB())
+        "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
+            datetime), connectDB())
 
     df['Time'] = df['Time'].apply(pd.to_datetime)
+    p = figure(width=800, height=250, x_axis_type="datetime", )
+    p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
 
-    if room  and datetime:
-        p = figure(width=800, height=250, x_axis_type="datetime", )
-        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+    p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+    p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+    p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+    p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
 
-        p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
-        p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
-        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
-        p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
-
-        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
-
-        print(df.head(5))
-
-        script, div = components(p)
-        return render_template(
-            'explore.html',
-            script=script,
-            div=div,
-            rooms=roomdata,
-            times=timedata,
-            modules=moduledata,
-            dates=datedata
-        )
-    else:
-        df = pd.read_sql_query(
-            "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;",
-            connectDB())
+    p.add_layout(LinearAxis(y_range_name="foo"), 'left')
 
 
-        df['Time'] = df['Time'].apply(pd.to_datetime)
-        p = figure(width=800, height=250, x_axis_type="datetime", )
-        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+    print(df.head(5))
 
-        p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
-        p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
-        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
-        p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
-
-        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
-
-        p2 = figure(width=800, height=250, x_axis_type="datetime", x_range=p.x_range, )
-        p2.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
-
-        r = gridplot([[p, p2]], toolbar_location=None)
-
-        script, div = components(r)
-        return render_template(
-            'explore.html',
-            script=script,
-            div=div,
-
-            rooms=roomdata,
-            times=timedata,
-            modules=moduledata,
-            dates=datedata
-        )
-
+    script, div = components(p)
+    return render_template(
+        'explore.html',
+        script=script,
+        div=div, )
 
 
 
@@ -308,8 +256,6 @@ def data_input():
           flash("Upload unsuccessful")
     return render_template("data_input.html",
             current_files= cf, title='Data Input')
-
-
 
 @WiFinderApp.route("/layout")
 def layout():
