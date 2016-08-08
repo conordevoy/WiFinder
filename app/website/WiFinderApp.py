@@ -10,8 +10,8 @@ from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
 from bokeh.models import LinearAxis, Range1d
 import pandas as pd
-# from bokeh.layouts import gridplot
-#trial
+from bokeh.layouts import gridplot
+
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
@@ -64,6 +64,7 @@ def query(sqlcode):
 # route for handling the login page logic
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
 def login():
+    '''login page for website'''
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
@@ -97,7 +98,7 @@ def WiFinderHTML():
 @WiFinderApp.route("/explore")
 @login_required
 def explore():
-    '''search page for website'''
+    '''explore page for website'''
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
@@ -176,7 +177,7 @@ def explore():
 
 @WiFinderApp.route("/register")
 def register():
-    '''search page for website'''
+    '''registration page for website'''
     # unique= query("SELECT DISTINCT username FROM User;")
     return render_template("register.html",
                            title='Registration')
@@ -310,7 +311,7 @@ def data_input():
 @WiFinderApp.route("/lectureinput")
 @login_required
 def input():
-    '''search page for website'''
+    '''page for lecturers to upload a survey form'''
     timeinput = query("SELECT DISTINCT Hour FROM CLASS;")
     roominput = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduleinput = query("SELECT DISTINCT Module FROM CLASS;")
