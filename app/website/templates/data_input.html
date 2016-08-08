@@ -2,42 +2,72 @@
 {% extends "page_layout.html" %}
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
-<!-- /*<style>
-    .logo-small {
-    color: #f4511e;
-    font-size: 50px;
+<style>
+    .bg-12 {
+
+      color: #808080;
+  }
+    .bg-6 {
+      background-color: #1ABC9C;
+      color: #2f2f2f;
+  }
+    .fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
 }
-form{
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 200px;
-    color:#fff;
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
-form select {
-    height: 60px;
-    width: 200px;
-    margin-bottom: 30px;
-    background-color: #f9f9f9;
-    font-size: 15pt;
-    border: none;
-    color: grey;
+.bg-2 input {
+background-color: #f4511e;
+border: none;
 }
-form input {
-    height: 50px;
-    width: 200px;
-    background-color: #ec583a;
-    font-size: 15pt;
-    color: #fff;
-    margin-left: auto;
-    margin-bottom: auto;
-    border: none;
-}
-</style>*/ -->
-<h1>Upload new File</h1>
+
+
+</style>
+<div class="container-fluid bg-12 text-center">
+    <h1>Upload of additional Files</h1>
+    <p>Users have the option to upload additional wifi log data and CSI survey data.
+        This may result in more accurate and better predictive models.
+        The additional files will automatically go through our data cleaning process
+        and will be fed into our data analytics models. We are not accepting new timetable data at present.
+
+    </p>
+</div>
+<div class="container-fluid bg-6 text-center">
+    <h1>Upload Wifi Log Counts</h1>
+    <p>Wifi Log data must be uploaded in the form of a compressed .zip folder.</p>
     <form action="" method=post enctype=multipart/form-data>
-      <input type=file name=file>
-         <input type=submit value=Upload>
+        <div class="fileUpload btn btn-default">
+            <input class="upload" id="uploadBtn" type=file name=file> Choose File (must be zip)
+            </div>
+            <input type=submit value=Upload>
     </form>
+    {% for message in get_flashed_messages() %}
+          {{ message }}
+        {% endfor %}
+</div>
+<div class="container-fluid bg-2 text-center">
+    <h1>Upload CSI Survey Data</h1>
+    <p>Wifi Log data must be uploaded in the form of a .xlxs file</p>
+    <form action="" method=post enctype=multipart/form-data>
+        <div class="fileUpload btn btn-default">
+            <input id="uploadBtn1" class="upload" type=file name=file1> Choose File (must be .xlsx)
+        </div>
+        <div>
+            <input type=submit value=Upload>
+        </div>
+    </form>
+</div>
     {% for file in current_files %}
     <p>{{file}}</p>
     {% endfor %}

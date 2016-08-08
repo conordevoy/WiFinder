@@ -4,16 +4,30 @@
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
       <style>
-       .bg-1 {
+      html,body{height:100%;}
+    .container-fluid {
+        height:100%;
+     }
+    .bg-1 {
        background-image: url("../static/images/ucd.jpg");
         background-repeat: no-repeat;
         color: #555555;
         background-size:100%,100%;
-        length:800px;
-        }
+    }
+    h2 {
+        font-size: 50pt;
+        letter-spacing: 0.825em;
+        text-align: center;
+        text-decoration: none;
+        color: #515756;
+    }
+    .error {
+    background-color: #fff;
+    }
       </style>
+
       <div class="container-fluid bg-1 text-center">
-        <h3 class="margin">Wifinder</h3>
+        <h2 class="margin">Wifinder</h2>
         <h3>UCD Occupancy Estimator</h3><br>
         <form action="" method="post">
           <input type="text" placeholder="Username" name="username" value="{{
@@ -21,12 +35,15 @@
            <input type="password" placeholder="Password" name="password" value="{{
             request.form.password }}"><br><br>
           <input class="btn btn-default" type="submit" value="Login">
-        </form>
+            <a href="/register" class="btn btn-info" role="button">Register</a>
+        </form><br>
+        <div class="container error">
         {% if error %}
           <p class="error"><strong>Error:</strong> {{ error }}</p>
         {% endif %}
           {% for message in get_flashed_messages() %}
           {{ message }}
         {% endfor %}
+         </div>
       </div>
 {% endblock %}

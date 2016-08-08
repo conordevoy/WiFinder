@@ -37,8 +37,7 @@ def data_retrieval():
         output_file("datetime.html")
         # p = figure(width=800, height=250, x_axis_type="datetime")
         # p.line = Line(df, title="WIfi Logs", ylabel='Count', xlabel='Time',index='W.Datetime', legend=True)
-        print (df.head(5))
-        print(df.dtypes)
+
         df['Time'] = df['Time'].apply(pd.to_datetime)
         p = figure(width=800, height=250, x_axis_type="datetime", )
         p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
@@ -51,25 +50,11 @@ def data_retrieval():
         p.add_layout(LinearAxis(y_range_name="foo"), 'left')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         js_resources = INLINE.render_js()
         css_resources = INLINE.render_css()
         script, div = components(p)
         return flask.render_template(
-            'embed.html',
+            'index.html',
             script=script,
             div=div,
             js_resources=js_resources,

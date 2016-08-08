@@ -81,39 +81,46 @@ def WiFinderHTML():
     return render_template("estimator.html")
 
 
-@WiFinderApp.route("/search")
+@WiFinderApp.route("/explore")
 @login_required
-def search():
+def explore():
     '''search page for website'''
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
     datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("search.html",
-                           title='Home',
+    return render_template("explore.html",
+                           title='Explore',
                            rooms=roomdata,
                            times=timedata,
                            modules=moduledata,
                            dates=datedata)
 
+@WiFinderApp.route("/register")
+def register():
+    '''search page for website'''
+    # unique= query("SELECT DISTINCT username FROM User;")
+    return render_template("register.html",
+                           title='Registration')
 
-@WiFinderApp.route("/results", methods=['GET'])
-@login_required
-def results():
-    '''results page for website'''
-    room = request.args.get('Room')
-    datetime = request.args.get('Date')
-    time = request.args.get('Time')
-    print(room, datetime, time)
-    cur = get_db().cursor()
-    subdata = cur.execute("""SELECT AVG(W.Log_Count) 
-        FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID 
-        JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room 
-        WHERE R.RoomID = \'{}\' AND W.Datetime = \'{}\' AND W.Hour = \'{}\' 
-        AND strftime('%M', W.Time) BETWEEN \"15\" AND \"45\";""".format(room, datetime, time))
-    return render_template("results.html",
-                           title='Results',
-                           result=subdata.fetchone()[0])
+
+# @WiFinderApp.route("/results", methods=['GET'])
+# @login_required
+# def results():
+#     '''results page for website'''
+#     room = request.args.get('Room')
+#     datetime = request.args.get('Date')
+#     time = request.args.get('Time')
+#     print(room, datetime, time)
+#     cur = get_db().cursor()
+#     subdata = cur.execute("""SELECT AVG(W.Log_Count)
+#         FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID
+#         JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON R.RoomID = O.Room
+#         WHERE R.RoomID = \'{}\' AND W.Datetime = \'{}\' AND W.Hour = \'{}\'
+#         AND strftime('%M', W.Time) BETWEEN \"15\" AND \"45\";""".format(room, datetime, time))
+#     return render_template("results.html",
+#                            title='Results',
+#                            result=subdata.fetchone()[0])
 
 
 @WiFinderApp.route("/estimator", methods=['GET'])
@@ -188,7 +195,7 @@ def update_model():
 
     # this will execute both scripts
 
-    return render_template("update_model.html")
+    return render_template("update_model.html", title='Update Model')
 
 @WiFinderApp.route("/modelupdated", methods=['GET'])
 @login_required
@@ -212,10 +219,15 @@ def data_input():
       if file and allowed_file(file.filename):
           filename = secure_filename(file.filename)
           file.save(os.path.join(WiFinderApp.config['UPLOAD_FOLDER'], filename))
+          flash(filename + " uploaded successfully")
           return render_template("data_input.html",
-                  current_files= cf)
+                  current_files= cf,
+                               title='Data Input')
+      else:
+          filename = secure_filename(file.filename)
+          flash("Upload unsuccessful")
     return render_template("data_input.html",
-            current_files= cf)
+            current_files= cf, title='Data Input')
 
 @WiFinderApp.route("/layout")
 def layout():
