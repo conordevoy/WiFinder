@@ -5,6 +5,13 @@ from hardwire_models import *
 from werkzeug import secure_filename
 import os
 
+from bokeh.embed import components
+from bokeh.resources import INLINE
+from bokeh.plotting import figure,output_file,show
+from bokeh.models import LinearAxis, Range1d
+import pandas as pd
+
+
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
 WiFinderApp.debug = True
@@ -94,13 +101,41 @@ def explore():
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("explore.html",
-                           title='Explore',
-                           rooms=roomdata,
-                           times=timedata,
-                           modules=moduledata,
-                           dates=datedata)
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    time = request.args.get('Time')
+
+
+    df = pd.read_sql_query(
+        "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = \'{}\' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
+            room, datetime), connectDB())
+
+    df['Time'] = df['Time'].apply(pd.to_datetime)
+    p = figure(width=800, height=250, x_axis_type="datetime", )
+    p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+
+    p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+    p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+    p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+    p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
+
+    p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+
+    print(df.head(5))
+
+    script, div = components(p)
+    return render_template(
+        'explore.html',
+        script=script,
+        div=div,
+        rooms=roomdata,
+        times=timedata,
+        modules=moduledata,
+        dates=datedata
+    )
 
 @WiFinderApp.route("/register")
 def register():
@@ -235,12 +270,7 @@ def data_input():
     return render_template("data_input.html",
             current_files= cf, title='Data Input')
 
-@WiFinderApp.route("/explore")
-def explore():
-    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
-    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
-    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
+
 
 @WiFinderApp.route("/layout")
 def layout():
