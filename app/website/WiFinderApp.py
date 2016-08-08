@@ -229,6 +229,13 @@ def data_input():
     return render_template("data_input.html",
             current_files= cf, title='Data Input')
 
+@WiFinderApp.route("/explore")
+def explore():
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
+
 @WiFinderApp.route("/layout")
 def layout():
     '''load base template - only here to prototype design'''
