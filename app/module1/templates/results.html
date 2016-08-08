@@ -1,0 +1,80 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+<style>
+    .logo-small {
+    color: #f4511e;
+    font-size: 50px;
+}
+
+</style>
+<div class="container-fluid bg-3 text-center">
+  <h3 class="margin">Estimated Occupancy Results</h3>
+  <div class="row">
+    <div class="col-sm-4">
+        <div class="binary-empty">
+           <span class="glyphicon glyphicon-remove-sign logo-small"></span>
+           <h4>EMPTY</h4>
+            <p>This class is estimated to be empty, meaning less than 25% full.</p>
+         </div>
+        <div class="binary-occupied">
+           <span class="glyphicon glyphicon-ok-sign logo-small"></span>
+           <h4>OCCUPIED</h4>
+            <p>This class is estimated to be occupied, meaning more than 25% full.</p>
+         </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="tertiary-low">
+            <span class="glyphicon glyphicon-circle-arrow-down logo-small"></span>
+            <h4>LOW</h4>
+            <p>This class is estimated to have a low occupancy, meaning less than 25% full.
+            </p>
+         </div>
+        <div class="tertiary-medium">
+            <span class="glyphicon glyphicon-circle-arrow-right logo-small"></span>
+            <h4>MEDIUM</h4>
+            <p>This class is estimated to have a medium occupancy, meaning between 25 -75% full.
+            </p>
+         </div>
+        <div class="tertiary-high">
+            <span class="glyphicon glyphicon-circle-arrow-up logo-small"></span>
+            <h4>HIGH</h4>
+            <p>This class is estimated to have a high occupancy, meaning more than 75% full.
+            </p>
+         </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="linear">
+           <h4 style="color: #f4511e; font-size: 70px">{{result}}</h4>
+            <p>people are estimated to be in this class.
+            </p>
+        </div>
+    </div>
+  </div>
+
+<!--         </div>
+            <div id="timeslot">
+            <button class="empty">9am</button>
+            <button class="full">10am</button>
+            <button class="empty">11am</button>
+            <button class="empty">12pm</button>
+            <button class="empty">1pm</button>
+            <button class="empty">2pm</button>
+            <button class="half">3pm</button>
+            <button class="full">4pm</button>
+            <button class="half">5pm</button>
+        </div> -->
+        <!--<p style="font-size:200px">{{result}}</p>-->
+ {% endblock %}
+
+
+ 
+<!--     {{ js_resources|indent(4)|safe }}
+    {{ css_resources|indent(4)|safe }}
+    {{ script|safe }}
+    <div class='bokeh'>
+   {{ div|safe }}
+    </div>
+        <p><a href="/logout">Logout</a></p> -->
+

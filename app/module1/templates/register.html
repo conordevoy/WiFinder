@@ -1,0 +1,26 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+<style>
+    .bg-7 {
+    color: #2f2f2f;
+    }
+</style>
+<div class="container-fluid bg-7 text-center">
+            <form>
+                <h1>Registration</h1>
+                <div class="line"><label for="username">Username *: </label><input type="text" id="username" /></div>
+                <div class="line"><label for="pwd">Password *: </label><input type="password" id="pwd" /></div>
+               <div class="line"><label for="pwd"> Confirm Password *: </label><input type="password" id="c_pwd" /></div>
+                <div class="line"><label for="surname">Surname *: </label><input type="text" id="surname" /></div>
+                <div class="line"><label for="name">First Name *: </label><input type="text" id="name" /></div>
+                <div class="line"><label for="email">Email *: </label><input type="email" id="email" /></div>
+
+
+                <div class="line submit"><input type="submit" value="Submit" /></div>
+
+                <p>Note: Please make sure your details are correct before submitting form and that all fields marked with * are completed!</p>
+            </form>
+        </div>
+{% endblock %}
