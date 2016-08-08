@@ -73,6 +73,12 @@ def logout():
     flash("You have just been logged out!")
     return redirect(url_for('login'))
 
+@WiFinderApp.route("/index")
+@login_required
+def index():
+    '''load homepage'''
+    return render_template("index.html",
+                           title='Home')
 
 @WiFinderApp.route("/")
 @login_required
@@ -228,6 +234,13 @@ def data_input():
           flash("Upload unsuccessful")
     return render_template("data_input.html",
             current_files= cf, title='Data Input')
+
+@WiFinderApp.route("/explore")
+def explore():
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
 @WiFinderApp.route("/layout")
 def layout():
