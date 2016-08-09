@@ -24,7 +24,7 @@ def data_retrieval():
     conn = lite.connect('/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db')
     with conn:
         df = pd.read_sql_query("SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;", conn)
-        output_file("datetime.html")
+
 
         df['Time'] = df['Time'].apply(pd.to_datetime)
         p = figure(width=800, height=250, x_axis_type="datetime", )
@@ -46,7 +46,7 @@ def data_retrieval():
         css_resources = INLINE.render_css()
         script, div = components(r)
         return flask.render_template(
-            'index.html',
+            'explore.html',
             script=script,
             div=div,
             js_resources=js_resources,
