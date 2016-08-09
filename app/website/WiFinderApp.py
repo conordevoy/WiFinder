@@ -80,11 +80,11 @@ def login():
         for user in user_exists:
           # print(user[1])
           # print(user[2])
-        if request.form['password'] != user[2]:
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            session['logged_in'] = True
-            return redirect(url_for('index'))
+          if request.form['password'] != user[2]:
+              error = 'Invalid Credentials. Please try again.'
+          else:
+              session['logged_in'] = True
+              return redirect(url_for('index'))
     return render_template('login.html', title='Login', error=error)
 
 
