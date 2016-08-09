@@ -31,7 +31,7 @@ form input {
 }
 
 </style>
-    <div class="container-fluid bg-3 text-center">
+    <div class="container-fluid bg-2 text-center">
         <h3 class="margin">Explore Occupancy</h3>
         <form action= "">
 
@@ -51,16 +51,25 @@ form input {
                 {% endfor %}
             </select><br>
 
-            <select name="Time">
+<!--             <select name="Time">
               <option value="default">Select time</option>
                 {% for time in times %}
                 <option value="{{time.0}}">{{time.0}}</option>
                 {% endfor %}
-            </select><br>
+            </select><br> -->
 
             <input type="submit" value="Submit">
         </form>
     </div>
+<br>
+<br>
+
+<div align="center">
+    {{ script | safe }}
+    {{ div | safe }}
+</div>
+<br>
+<br>
 
 
 {% endblock %}

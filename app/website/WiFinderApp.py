@@ -5,13 +5,21 @@ from hardwire_models import *
 from werkzeug import secure_filename
 import os
 
+from bokeh.embed import components
+from bokeh.resources import INLINE
+from bokeh.plotting import figure,output_file,show
+from bokeh.models import LinearAxis, Range1d
+import pandas as pd
+from bokeh.layouts import gridplot
+
+
 WiFinderApp = Flask(__name__, static_url_path="/static")
 
 WiFinderApp.debug = True
 
 WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session key random generated from os
 
-db = "WiFinderDBv02.db"
+db = "WiFinderDBv03.db"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # print(dir_path)
@@ -30,7 +38,6 @@ def login_required(f):
         else:
             flash('Sorry, you need to login first!')
             return redirect(url_for('login'))
-
     return wrap
 
 
@@ -57,13 +64,27 @@ def query(sqlcode):
 # route for handling the login page logic
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
 def login():
+    '''login page for website'''
+    # userdata = query("SELECT * FROM USER;")
+    # print(userdata)
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            session['logged_in'] = True
-            return redirect(url_for('estimator'))
+        # if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
+        #     error = 'Invalid Credentials. Please try again.'
+        # else:
+        #     session['logged_in'] = True
+        #     return redirect(url_for('index'))
+        user = request.form['username']
+        user_exists = query("SELECT * FROM USER WHERE email=\'{}\';".format(user))
+        # print(user_exists)
+        for user in user_exists:
+          # print(user[1])
+          # print(user[2])
+          if request.form['password'] != user[2]:
+              error = 'Invalid Credentials. Please try again.'
+          else:
+              session['logged_in'] = True
+              return redirect(url_for('index'))
     return render_template('login.html', title='Login', error=error)
 
 
@@ -90,21 +111,86 @@ def WiFinderHTML():
 @WiFinderApp.route("/explore")
 @login_required
 def explore():
-    '''search page for website'''
+    '''explore page for website'''
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduledata = query("SELECT DISTINCT Module FROM CLASS;")
-    datedata = query("SELECT DISTINCT Datetime FROM WIFI_LOGS;")
-    return render_template("explore.html",
-                           title='Explore',
-                           rooms=roomdata,
-                           times=timedata,
-                           modules=moduledata,
-                           dates=datedata)
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    time = request.args.get('Time')
+
+    df = pd.read_sql_query(
+        "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = \'{}\' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
+            room, datetime), connectDB())
+
+    df['Time'] = df['Time'].apply(pd.to_datetime)
+
+    if room and datetime:
+        p = figure(width=800, height=500, x_axis_type="datetime", )
+        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+
+        p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+        p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+        p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
+
+        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+
+        print(df.head(5))
+
+        script, div = components(p)
+        return render_template(
+            'explore.html',
+            script=script,
+            div=div,
+            rooms=roomdata,
+            times=timedata,
+            modules=moduledata,
+            dates=datedata
+        )
+    # else:
+    #     df = pd.read_sql_query(
+    #         "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime = '2015-11-12' GROUP BY W.LogID;",
+    #         connectDB())
+
+
+    #     df['Time'] = df['Time'].apply(pd.to_datetime)
+    #     p = figure(width=800, height=250, x_axis_type="datetime", )
+    #     p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+
+    #     p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+    #     p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+    #     p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+    #     p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
+
+    #     p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+
+    #     p2 = figure(width=800, height=250, x_axis_type="datetime", x_range=p.x_range, )
+    #     p2.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+
+    #     r = gridplot([[p, p2]], toolbar_location=None)
+
+    #     script, div = components(r)
+    #     return render_template(
+    #         'explore.html',
+    #         script=script,
+    #         div=div,
+    #         rooms=roomdata,
+    #         times=timedata,
+    #         modules=moduledata,
+    #         dates=datedata
+    #     )
+    return render_template('explore.html',
+                          rooms=roomdata,
+                          times=timedata,
+                          dates=datedata)
 
 @WiFinderApp.route("/register")
 def register():
-    '''search page for website'''
+    '''registration page for website'''
     # unique= query("SELECT DISTINCT username FROM User;")
     return render_template("register.html",
                            title='Registration')
@@ -389,12 +475,19 @@ def explore2():
 
 
 
+@WiFinderApp.route("/lectureinput")
+@login_required
+def input():
+    '''page for lecturers to upload a survey form'''
+    timeinput = query("SELECT DISTINCT Hour FROM CLASS;")
+    roominput = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduleinput = query("SELECT DISTINCT Module FROM CLASS;")
+    return render_template("lectureinput.html",
+                           title='Home',
+                           rooms_input=roominput,
+                           times_input=timeinput,
+                           modules_input=moduleinput)
 
-@WiFinderApp.route("/layout")
-def layout():
-    '''load base template - only here to prototype design'''
-    return render_template("page_layout.html",
-                           title='Layout')
 
 if __name__ == "__main__":
     WiFinderApp.run()

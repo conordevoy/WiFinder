@@ -2,7 +2,7 @@ import os
 import csv
 import sqlite3
 
-conn = sqlite3.connect('WiFinderDBv02.db')
+conn = sqlite3.connect('WiFinderDBv03.db')
 cur = conn.cursor()
 
 cur.execute('''CREATE TABLE IF NOT EXISTS ROOM
@@ -41,6 +41,12 @@ cur.execute('''CREATE TABLE IF NOT EXISTS OCCUPANCY
 	FOREIGN KEY(Room) REFERENCES ROOM(Room),
 	FOREIGN KEY(ClassID) REFERENCES CLASS(ClassID));''')
 
+cur.execute('''CREATE TABLE IF NOT EXISTS USER
+	(userID INTEGER PRIMARY KEY AUTOINCREMENT,
+	email TEXT NOT NULL,
+	password TEXT NOT NULL,
+	permission INT NOT NULL);''')
+
 with open('room_table.csv', 'rt') as f:
 	dr = csv.DictReader(f)
 	to_db_room = [(i['Room'], i['Capacity'], i['Building'], i['Campus']) for i in dr]
@@ -65,5 +71,10 @@ cur.executemany('INSERT INTO ROOM (RoomID, Capacity, Building, Campus) VALUES (?
 cur.executemany('INSERT INTO CLASS (ClassID, Hour, Datetime, Room, Module, Reg_Students) VALUES (?, ?, ?, ?, ?, ?);', to_db_class)
 cur.executemany('INSERT INTO WIFI_LOGS (Time, Hour, Datetime, Room, Log_Count, ClassID) VALUES (?, ?, ?, ?, ?, ?);', to_db_log)
 cur.executemany('INSERT INTO OCCUPANCY (Hour, Datetime, Room, Occupancy, ClassID) VALUES (?, ?, ?, ?, ?)', to_db_occ)
+cur.execute('INSERT INTO USER (email, password, permission) VALUES ("admin@wifinder.ie", "wifinder", 1)')
+cur.execute('INSERT INTO USER (email, password, permission) VALUES ("admin@ucd.ie", "admin", 2)')
+cur.execute('INSERT INTO USER (email, password, permission) VALUES ("it@ucd.ie", "it", 3)')
+cur.execute('INSERT INTO USER (email, password, permission) VALUES ("lecturer@ucd.ie", "lecturer", 4)')
+cur.execute('INSERT INTO USER (email, password, permission) VALUES ("viewer", "viewer", 5)')
 conn.commit()
 conn.close()
