@@ -77,9 +77,9 @@ def login():
         user = request.form['username']
         user_exists = query("SELECT * FROM USER WHERE email=\'{}\';".format(user))
         # print(user_exists)
-        # for user in user_exists:
-        #   print(user[1])
-        #   print(user[2])
+        for user in user_exists:
+          print(user[1])
+          print(user[2])
         if request.form['password'] != user[2]:
             error = 'Invalid Credentials. Please try again.'
         else:
