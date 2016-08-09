@@ -1,0 +1,86 @@
+<!--Extends sets the page it needs to inherit from, in this case it is inheriting the basic layout-->
+{% extends "page_layout.html" %}
+<!--Block content is the content which inserts into the block section of the parent page-->
+{% block content %}
+<style>
+
+
+</style>
+
+
+<div class="container-fluid bg-4 text-center">
+    <form action= "/explore2">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+            <h1>Y-Axis</h1>
+
+        <div class="checkbox">
+            <label><input type="checkbox" name="Occupancy_check" value="1">Occupancy</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" name="Count_check" value="1">WiFi Count</label>
+        </div>
+        <div class="checkbox disabled">
+            <label><input type="checkbox" name="Capacity_check" value="1">Room Capacity</label>
+        </div>
+</div>
+
+<div class="col-sm-4">
+    <h1>X-Axis</h1>
+            <select name="Date">
+                <option value="">Date?</option>
+                {% for date in dates %}
+                <option value="{{date.0}}">{{date.0}}</option>
+                {% endfor %}
+            </select><br>
+
+            <select name="Day">
+                <option value="">Day?</option>
+                {% for day in days %}
+                <option value="{{day}}">{{day}}</option>
+                {% endfor %}
+            </select><br>
+
+            <select name="Hour">
+              <option value="">Hour?</option>
+                {% for hour in hours %}
+                <option value="{{hour.0}}">{{hour.0}}</option>
+                {% endfor %}
+            </select><br>
+</div>
+
+<div class="col-sm-4">
+    <h1>Filters</h1>
+
+    <select name="Room">
+                <option value="">Room?</option>
+                <!--'rooms' is a parameter passed in the flask endpoint for '/search'
+                This code iterates through that parameter and populates a search option for each value
+                This structure is identical for all the search boxes-->
+                {% for room in rooms %}
+                <option value="{{room.0}}">{{room.0}}</option>
+                {% endfor %}
+            </select><br>
+    <select name="Module">
+                <option value="">Module</option>
+                {% for module in modules %}
+                <option value="{{module.0}}">{{module.0}}</option>
+                {% endfor %}
+            </select><br>
+</div>
+</div>
+        <div class="submitter">
+
+            <input type="submit" value="Submit">
+                            </div>
+        </form>
+         </div>
+    <h1>{{which_path }}</h1>
+    <h2>{% for value in values %} {{value}} {% endfor %}</h2>
+    <h1>{{returned_data }}</h1>
+    <h1>{{error}}</h1>
+    </div>
+
+{{ querybaby}}
+{% endblock %}
