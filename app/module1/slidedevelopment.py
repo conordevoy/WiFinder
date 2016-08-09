@@ -16,9 +16,9 @@ conn = sql.connect(db)
 query = "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002'  GROUP BY W.LogID;"
 movies = psql.read_sql(query, conn)
 
-picker_start = "2015-11-03"
-picker_end = '2015-11-13'
-picker = DatePicker(title="Date:", min_date=picker_start, max_date = picker_end, value=picker_start)
+start = "2015-11-04"
+end = '2015-11-17'
+reviews = DatePicker(title="Date:", min_date=start, max_date = end, value=start)
 
 
 
@@ -36,7 +36,13 @@ def select_day():
     movies['Time'] = movies['Time'].apply(pd.to_datetime)
     movies['Datetime'] = movies['Datetime'].apply(pd.to_datetime)
 
-    selected=movies[movies.Datetime==picker.value]
+
+
+
+
+
+    selected=movies[movies.Datetime==reviews.value]
+
 
     return selected
 
@@ -44,6 +50,7 @@ def select_day():
 
 def update():
     df = select_day()
+
 
     p.title.text = "%d movies selected" % len(df)
     source.data = dict(Log_Count=df['Log_Count'],
@@ -64,7 +71,7 @@ def update():
 
 
 # Controller Listeners
-controls = [picker]
+controls = [reviews]
 for control in controls:
     control.on_change('value', lambda attr, old, new: update())
 

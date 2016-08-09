@@ -15,14 +15,16 @@ from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
 from bokeh.models import LinearAxis, Range1d
-from bokeh.layouts import widgetbox
-
+from bokeh.layouts import WidgetBox, column
+from bokeh.models.widgets.inputs import DatePicker
+from bokeh.layouts import layout, widgetbox
 from bokeh.models import CustomJS, Slider
+from bokeh.layouts import gridplot
+
+from bokeh.io import output_file, show, vform
+
 
 app = flask.Flask(__name__)
-
-
-
 @app.route("/")
 
 
@@ -34,7 +36,6 @@ def data_retrieval():
     with conn:
         datetime = "2015-11-12"
         df = pd.read_sql_query("SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = 'B002' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(datetime), conn)
-        output_file("datetime.html")
         # p = figure(width=800, height=250, x_axis_type="datetime")
         # p.line = Line(df, title="WIfi Logs", ylabel='Count', xlabel='Time',index='W.Datetime', legend=True)
 
@@ -49,16 +50,27 @@ def data_retrieval():
 
         p.add_layout(LinearAxis(y_range_name="foo"), 'left')
 
+        # picker_start = "2015-11-03"
+        # picker_end = '2015-11-13'
+        # slider = DatePicker(title="Date:", min_date=picker_start, max_date=picker_end, value=picker_start)
+        slider = Slider(start=0, end=10, value=1, step=.1, title="Stuff")
 
-        js_resources = INLINE.render_js()
-        css_resources = INLINE.render_css()
-        script, div = components(p)
-        return flask.render_template(
-            'index.html',
-            script=script,
-            div=div,
-            js_resources=js_resources,
-            css_resources=css_resources,)
+        controls = [slider]
+
+
+        sizing_mode = 'fixed'
+        inputs = widgetbox(*controls, sizing_mode=sizing_mode)
+
+        layoutss = widgetbox(slider)
+
+        r = layout([[p, layoutss]], sizing_mode='stretch_both')
+
+
+        script, div = components(r)
+
+        return flask.render_template('explore.html', script=script,
+                                     div=div,
+                                     )
 
 
 
