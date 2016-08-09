@@ -19,7 +19,7 @@ WiFinderApp.debug = True
 
 WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session key random generated from os
 
-db = "WiFinderDBv02.db"
+db = "WiFinderDBv03.db"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # print(dir_path)
@@ -65,9 +65,22 @@ def query(sqlcode):
 @WiFinderApp.route('/login', methods=['GET', 'POST'])
 def login():
     '''login page for website'''
+    # userdata = query("SELECT * FROM USER;")
+    # print(userdata)
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
+        # if request.form['username'] != 'shauna' or request.form['password'] != 'wifinder':
+        #     error = 'Invalid Credentials. Please try again.'
+        # else:
+        #     session['logged_in'] = True
+        #     return redirect(url_for('index'))
+        user = request.form['username']
+        user_exists = query("SELECT * FROM USER WHERE email=\'{}\';".format(user))
+        # print(user_exists)
+        # for user in user_exists:
+        #   print(user[1])
+        #   print(user[2])
+        if request.form['password'] != user[2]:
             error = 'Invalid Credentials. Please try again.'
         else:
             session['logged_in'] = True
