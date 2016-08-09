@@ -27,22 +27,9 @@ text-decoration:none;
 color: #FFFFFF;
 }
 .thumbnail:hover {
-      box-shadow: 5px 0px 40px rgba(0,0,0, .8);
+      box-shadow: 5px 0px 40px rgba(0,0,0, .4);
   }
-<!--.caption {-->
-    <!--position:absolute;-->
-    <!--top:0;-->
-    <!--right:0;-->
-    <!--background:rgba(90, 90, 90, 0.75);-->
-    <!--width:100%;-->
-    <!--height:100%;-->
-    <!--padding:2%;-->
-    <!--display: none;-->
-    <!--text-align: centre;-->
-    <!--line-height:50%;-->
-    <!--color:#fff !important;-->
-    <!--z-index:2;-->
-<!--}-->
+
 #estimator {
 background-color: #474e5d;
 }
@@ -58,8 +45,21 @@ background-color:  #ec583a;
     <div class="container">
     <div class="row">
 
+        <div class="col-sm-4">
+            <div class="thumbnail" id="explore">
+              <a href="/explore" class="">
+                <div class="caption">
 
-    <!-- TH1 -->
+                </div>
+                  <h3 class="">Explore</h3>
+                  <p>Users can choose any combination of time, date and room and, from the data that
+                      we have stored in our database, interesting statistics can be generated.
+                      New data can be uploaded at any time in the data upload section of our website.</p>
+                        <p>To display the statistics we have used a program called Bokeh which allowed us
+                        to present the data in interesting ways.</p>
+               </a>
+            </div>
+        </div>
         <div class="col-sm-4">
             <div class="thumbnail" id="estimator">
               <a href="/estimator">
@@ -76,21 +76,6 @@ background-color:  #ec583a;
                         class is empty or occupied. Our linear model predicts the actual headcount
                         of the class. Our last model categorises occupancy into high, medium or low
                         and predicts occupancy of a class in these bins.</p>
-               </a>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="thumbnail" id="explore">
-              <a href="/explore" class="">
-                <div class="caption">
-
-                </div>
-                  <h3 class="">Explore</h3>
-                  <p>Users can choose any combination of time, date and room and, from the data that
-                      we have stored in our database, interesting statistics can be generated.
-                      New data can be uploaded at any time in the data upload section of our website.</p>
-                        <p>To display the statistics we have used a program called Bokeh which allowed us
-                        to present the data in interesting ways.</p>
                </a>
             </div>
         </div>
