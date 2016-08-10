@@ -8,7 +8,8 @@ import os
 from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
-from bokeh.models import LinearAxis, Range1d
+from bokeh.charts import Scatter
+from bokeh.models import LinearAxis, Range1d, ColumnDataSource, HoverTool
 import pandas as pd
 from bokeh.layouts import gridplot
 
@@ -335,11 +336,11 @@ def explore2():
 
         if true_count(day, date, hour) == 1:
                 if bool(day) == 1:
-                    return "AND strftime('%w', w.Datetime) = {day}".format(day=day)
+                    return 'AND strftime("%w", w.Datetime) = "{day}"'.format(day=day_dict[day])
                 if bool(date) == 1:
                     return 'AND w.Datetime = "{date}"'.format(date=date)
                 if bool(hour) == 1:
-                    return "AND  strftime('%H', w.Time) = {hour}".format(hour=hour)
+                    return 'AND  strftime("%H", w.Time) = "{hour}"'.format(hour=hour)
 
     def select_filter_value(room, module):
         if true_count(room, module, None) > 1:
@@ -349,9 +350,9 @@ def explore2():
 
         if true_count(room, module, None) == 1:
                 if bool(room) == 1:
-                    return "AND r.RoomID = '{room}'".format(room=room)
+                    return 'AND r.RoomID = "{room}"'.format(room=room)
                 if bool(module) == 1:
-                    return "AND c.Module = {module}".format(module=module)
+                    return 'AND c.Module = "{module}"'.format(module=module)
 
     def select_y_axis_value(occupancy_requested, count_requested, capacity_requested):
 
@@ -396,7 +397,7 @@ def explore2():
     yaxis_value = select_y_axis_value(occupancy_requested, count_requested, capacity_requested)
 
     if true_count(time_value, filter_value, yaxis_value) == 3:
-        explore_query = """SELECT {y_axis_selector}
+        df = pd.read_sql_query("""SELECT {y_axis_selector}
                             FROM WIFI_LOGS w JOIN OCCUPANCY o JOIN ROOM r JOIN CLASS c
                             WHERE o.ClassID = w.ClassID
                             AND c.ClassID = o.ClassID
@@ -405,7 +406,24 @@ def explore2():
                             {filter_selector}
                             """.format(y_axis_selector=yaxis_value,
                                        time_selector=time_value,
-                                       filter_selector=filter_value)
+                                       filter_selector=filter_value),
+                            connectDB())
+
+        query_string = ("""SELECT {y_axis_selector}
+                            FROM WIFI_LOGS w JOIN OCCUPANCY o JOIN ROOM r JOIN CLASS c
+                            WHERE o.ClassID = w.ClassID
+                            AND c.ClassID = o.ClassID
+                            AND r.RoomID = o.Room
+                            {time_selector}
+                            {filter_selector}
+                            """.format(y_axis_selector=yaxis_value,
+                                       time_selector=time_value,
+                                       filter_selector=filter_value))
+
+        # this is the bokeh: bokeh forever!
+
+        # p = Scatter(df, x='Occupancy', y='Log_Count')
+        # script, div = components(p)
 
         return render_template("explore2.html",
                                 rooms=rooms_available,
@@ -413,20 +431,10 @@ def explore2():
                                 dates=dates_available,
                                 days=day_dict,
                                 hours=hours_available,
-                               returned_data=explore_query,
-                                which_path=true_count(time_value, filter_value, yaxis_value),
-                               values = ['room', room_value,
-                                     'module',
-                                     module_value,
-                                     'date', date_value,
-                                     'day', day_value,
-                                     'hour', hour_value,
-                                    'occupancy', occupancy_requested,
-                                     'capacity', capacity_requested,
-                                     'count', count_requested,
-                                    'time', time_value,
-                                     'filter', filter_value,
-                                     'yaxis', yaxis_value])
+                               #  script=script,
+                               # div=div,
+                               error=query_string
+                               )
 
     if 1 <= true_count(time_value, filter_value, yaxis_value) < 3 :
         selection_error = 'Please select one value from each list.'
@@ -473,7 +481,127 @@ def explore2():
                                      'filter', filter_value,
                                      'yaxis', yaxis_value])
 
+@WiFinderApp.route("/exploredemo")
+@login_required
+def exploredemo():
+    '''search page for website'''
+    timedata = query("SELECT DISTINCT Hour FROM CLASS;")
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    moduledata = query("SELECT DISTINCT Module FROM CLASS;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    time = request.args.get('Time')
+
+    df = pd.read_sql_query(
+        "SELECT W.Log_Count, W.Time, W.Hour, W.Datetime, R.RoomID, R.Capacity, C.ClassID, C.Module, C.Reg_Students, O.Occupancy, O.OccID FROM WIFI_LOGS W JOIN CLASS C ON W.ClassID = C.ClassID JOIN ROOM R ON C.Room = R.RoomID JOIN OCCUPANCY O ON C.ClassID = O.ClassID WHERE R.RoomID = \'{}\' AND W.Datetime =\'{}\' GROUP BY W.LogID;".format(
+            room, datetime), connectDB())
+
+    df['Time'] = df['Time'].apply(pd.to_datetime)
+
+    if room and datetime:
+
+        # figure 1: all lines on one line
+
+        p = figure(width=900, height=500, x_axis_type="datetime", title='Occupancy, Count, Capacity & Students vs. Time')
+        p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
+
+        p.line(df['Time'], df['Log_Count'], color='red', legend='Log Count')
+        p.line(df['Time'], df['Reg_Students'], color='green', legend='Registered Students')
+        p.line(df['Time'], df['Capacity'], color='blue', legend='Capacity')
+        p.line(df['Time'], df['Occupancy'] * 100, color='orange', legend='Occupancy')
+
+        p.add_layout(LinearAxis(y_range_name="foo"), 'left')
+
+
+
+        script, div = components(p)
+
+        # figure 2: occupancy and count on separate figures
+        # linked panning
+        # color
+
+        plot_options = dict(width=500, plot_height=500, x_axis_type="datetime",\
+                            tools='pan, wheel_zoom, box_select,box_zoom,reset,save')
+
+        linked_occu = figure(**plot_options, title='Occupancy vs. Time')
+        linked_occu.circle(x=df['Time'], y=df['Occupancy'], color="red")
+
+        linked_count = figure(x_range=linked_occu.x_range, **plot_options, title='Count vs. Time')
+        linked_count.circle(x=df['Time'], y=df['Log_Count'], color='orange')
+
+        linked_pan_gridplot = gridplot([[linked_occu, linked_count]])
+
+        # script2, div2 = components(linked_pan_gridplot)
+
+        # script, div = components(linked_pan_gridplot)
+
+        # figure 3 - sharing data between two graphs
+
+        x = df['Time']
+        y0 = df['Occupancy']
+        y1 = df['Log_Count']
+
+        source = ColumnDataSource(data=dict(x=x, y0=y0, y1=y1))
+
+        brush_occu = figure(**plot_options, title='Occupancy vs. Time')
+        brush_occu.square('x', 'y0', source=source, color="blue")
+
+        brush_count = figure(**plot_options, title='Count vs. Time')
+        brush_count.square('x', 'y1', source=source, color="green", alpha=0.5)
+
+        brush_pan_gridplot = gridplot([[brush_occu, brush_count]])
+
+        # script3, div3 = components(brush_pan_gridplot)
+
+        # script, div = components(brush_pan_gridplot)
+
+
+
+        linked_occu.yaxis.axis_label = 'Occupancy'
+        linked_count.yaxis.axis_label = 'Count'
+        brush_occu.yaxis.axis_label = 'Occupancy'
+        brush_count.yaxis.axis_label = 'Count'
+
+        # hover tool example
+
+        # hover_fig = figure(**plot_options, title='Hover-hand')
+        # hover_fig.line(df['Time'], df['Log_Count'], color='black', legend='Log Count', line_dash="5 5",\
+        #                line_width=2)
+        #
+        # hoverer = hover_fig.circle(x, y1,\
+        #                            fill_color='grey', hover_fill_color='orange',\
+        #                            fill_alpha=0.05, hover_alpha=0.04,\
+        #                            line_color=None, hover_line_color="white")
+        #
+        # hover_fig.add_tools(HoverTool(tooltips=None, renderers=[hoverer], mode='hline'))
+
+
+        all_plots = gridplot([[p], [linked_occu, linked_count], [brush_occu, brush_count]])
+
+        script, div = components(all_plots)
+
+        return render_template(
+            'explore.html',
+            script=script,
+            div=div,
+            # script2=script2,
+            # div2=div2,
+            rooms=roomdata,
+            times=timedata,
+            modules=moduledata,
+            dates=datedata
+        )
+
+    else:
+        return render_template("explore.html",
+                               title='Estimations',
+                               rooms=roomdata,
+                               times=timedata,
+                               modules=moduledata,
+                               dates=datedata)
 
 @WiFinderApp.route("/lectureinput")
 @login_required
