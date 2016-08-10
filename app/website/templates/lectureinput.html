@@ -3,10 +3,16 @@
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
 <style>
+.bg-2 {
+    background-color: #ec583a;
+    }
     .logo-small {
     color: #f4511e;
     font-size: 50px;
 }
+<!--h2 {-->
+<!--color: #474e5d;-->
+<!--}-->
 form{
     margin-left: auto;
     margin-right: auto;
@@ -31,10 +37,19 @@ form select {
     border: none;
     color: grey;
 }
+#module {
+    height: 60px;
+    width: 230px;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    font-size: 15pt;
+    border: none;
+    color: grey;
+}
 form input {
     height: 50px;
     width: 230px;
-    background-color: #ec583a;
+    background-color: #474e5d;
     font-size: 15pt;
     color: #fff;
     margin-left: auto;
@@ -43,7 +58,7 @@ form input {
 }
 </style>
     <div class="container-fluid bg-2 text-center">
-        <h3 class="margin">Upload Survey Data</h3>
+        <h2 class="margin">Upload Survey Data</h2>
         <form action= "/lectureinput">
 
             <select name="Room">
@@ -55,12 +70,13 @@ form input {
                 <option value="{{room.0}}">{{room.0}}</option>
                 {% endfor %}
             </select><br>
-            <select name="Module">
-                <option value="default">Select module</option>
-                {% for module in modules_input %}
-                <option value="{{module.0}}">{{module.0}}</option>
-                {% endfor %}
-            </select><br>
+            <!--<select name="Module">-->
+                <!--<option value="default">Select module</option>-->
+                <!--{% for module in modules_input %}-->
+                <!--<option value="{{module.0}}">{{module.0}}</option>-->
+                <!--{% endfor %}-->
+                <input id="module" type="text" name="Module" placeholder="Enter Module"><br>
+            <!--</select><br>-->
 
             <select name="Time">
               <option value="default">Select time</option>
