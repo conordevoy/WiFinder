@@ -78,7 +78,6 @@ param_dict = parameters.to_dict()
 intercept = param_dict['Intercept']
 count_coefficient = param_dict['Avg_Count_30min']
 
-
 with open('count_coefficient.pickle', 'wb') as handle:
     pickle.dump(count_coefficient, handle)
 
