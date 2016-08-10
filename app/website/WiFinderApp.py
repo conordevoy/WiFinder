@@ -526,10 +526,10 @@ def exploredemo():
         plot_options = dict(width=500, plot_height=500, x_axis_type="datetime",\
                             tools='pan, wheel_zoom, box_select,box_zoom,reset,save')
 
-        linked_occu = figure(**plot_options, title='Occupancy vs. Time')
+        linked_occu = figure(**plot_options)
         linked_occu.circle(x=df['Time'], y=df['Occupancy'], color="red")
 
-        linked_count = figure(x_range=linked_occu.x_range, **plot_options, title='Count vs. Time')
+        linked_count = figure(x_range=linked_occu.x_range, **plot_options)
         linked_count.circle(x=df['Time'], y=df['Log_Count'], color='orange')
 
         linked_pan_gridplot = gridplot([[linked_occu, linked_count]])
@@ -546,10 +546,10 @@ def exploredemo():
 
         source = ColumnDataSource(data=dict(x=x, y0=y0, y1=y1))
 
-        brush_occu = figure(**plot_options, title='Occupancy vs. Time')
+        brush_occu = figure(**plot_options)
         brush_occu.square('x', 'y0', source=source, color="blue")
 
-        brush_count = figure(**plot_options, title='Count vs. Time')
+        brush_count = figure(**plot_options)
         brush_count.square('x', 'y1', source=source, color="green", alpha=0.5)
 
         brush_pan_gridplot = gridplot([[brush_occu, brush_count]])
