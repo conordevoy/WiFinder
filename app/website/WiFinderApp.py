@@ -109,7 +109,7 @@ def WiFinderHTML():
     return render_template("estimator.html")
 
 
-@WiFinderApp.route("/explore")
+@WiFinderApp.route("/exploreold")
 @login_required
 def explore():
     '''explore page for website'''
@@ -481,7 +481,7 @@ def explore2():
                                      'filter', filter_value,
                                      'yaxis', yaxis_value])
 
-@WiFinderApp.route("/exploredemo")
+@WiFinderApp.route("/explore")
 @login_required
 def exploredemo():
     '''search page for website'''
