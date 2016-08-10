@@ -74,13 +74,21 @@
 
             <input type="submit" value="Submit">
                             </div>
-        </form>
-         </div>
-    <h1>{{which_path }}</h1>
-    <h2>{% for value in values %} {{value}} {% endfor %}</h2>
-    <h1>{{returned_data }}</h1>
-    <h1>{{error}}</h1>
+        {{ error }}
+        </div>
+    </form>
+</div>
+
+<div>
+    <div style="width: 20%; display: inline-block;">
+
+        {{ div | safe }}
+        {{ script | safe }}
+        {{ div2 | safe }}
+        {{ script2 | safe }}
+
     </div>
+</div>
 
 {{ querybaby}}
 {% endblock %}
