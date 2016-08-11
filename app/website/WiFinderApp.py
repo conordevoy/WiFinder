@@ -620,12 +620,13 @@ def input():
     print(room, time, date, occupancy)
 
     if room != 'default' and time != 'default' and occupancy != 'default' and room != None and time != None and occupancy != None:
-        # classID = (time+date+room)
+        classID = (time+date+room)
+        print(classID)
         conn = get_db()
         cur = conn.cursor()
         cur.execute("""INSERT INTO OCCUPANCY (Hour, Datetime, Room, Occupancy, ClassID)
             VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\')
-            ;""".format(time, date, room, occupancy, date))
+            ;""".format(time, date, room, occupancy, classID))
         conn.commit()
         flash("Upload Successful!")
     elif room == None and time == None and occupancy == None:
