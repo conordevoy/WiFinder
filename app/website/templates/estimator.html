@@ -62,6 +62,9 @@ form input {
             </select><br>
                 <input type="submit" value="Submit">
         </form>
+        {% for message in get_flashed_messages() %}
+          {{ message }}
+        {% endfor %}
     </div>
 
     <div class="container-fluid bg-3 text-center">
