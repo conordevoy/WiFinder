@@ -248,7 +248,7 @@ def estimator():
                   'Medium': 'arrow-right',
                   'High': 'arrow-up'}
 
-    if room and time and datetime:
+    if room != 'default' and time != 'default' and datetime != 'default' and room != None and time != None and datetime != None:
         linear_estimate = linear_predictor(query_result)
         tertiary_estimate = tertiary_classifier(query_result)
         binary_estimate = binary_classifier(query_result)
@@ -269,9 +269,12 @@ def estimator():
                                room_check=room,
                                date_check=datetime,
                                time_check=time)
-
+    elif room == None and time == None and datetime == None:
+        pass
     else:
-        return render_template("estimator.html",
+        flash('You need to input all three values')
+
+    return render_template("estimator.html",
                                title='Estimations',
                                rooms=roomdata,
                                times=timedata,
