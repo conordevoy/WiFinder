@@ -82,7 +82,7 @@ def login():
           # print(user[1])
           # print(user[2])
           if request.form['password'] != user[2]:
-              error = 'Invalid Credentials. Please try again.'
+              flash('Invalid Credentials. Please try again.')
           else:
               session['logged_in'] = True
               return redirect(url_for('index'))
