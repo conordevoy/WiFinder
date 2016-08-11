@@ -627,8 +627,7 @@ def input():
             VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\')
             ;""".format(time, date, room, occupancy, classID))
         conn.commit()
-        flash("Upload successful")
-
+        flash("Upload Successful!")
     return render_template("lectureinput.html",
                            title='Home',
                            rooms_input=roominput,
