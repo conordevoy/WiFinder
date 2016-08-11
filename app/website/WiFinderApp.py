@@ -619,15 +619,19 @@ def input():
     occupancy = request.args.get('Occupancy')
     print(room, time, date, occupancy)
 
-    if room and time and occupancy:
-        classID = (time+date+room)
+    if room != 'default' and time != 'default' and occupancy != 'default' and room != None and time != None and occupancy != None:
+        # classID = (time+date+room)
         conn = get_db()
         cur = conn.cursor()
         cur.execute("""INSERT INTO OCCUPANCY (Hour, Datetime, Room, Occupancy, ClassID)
             VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\')
-            ;""".format(time, date, room, occupancy, classID))
+            ;""".format(time, date, room, occupancy, date))
         conn.commit()
         flash("Upload Successful!")
+    elif room == None and time == None and occupancy == None:
+        pass
+    else:
+        flash('You need to input all three values')
     return render_template("lectureinput.html",
                            title='Home',
                            rooms_input=roominput,
