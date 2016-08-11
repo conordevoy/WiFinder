@@ -4,6 +4,8 @@ import sqlite3
 from hardwire_models import *
 from werkzeug import secure_filename
 import os
+# import time
+from datetime import datetime
 
 from bokeh.embed import components
 from bokeh.resources import INLINE
@@ -20,7 +22,7 @@ WiFinderApp.debug = True
 
 WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session key random generated from os
 
-db = "WiFinderDBv03.db"
+db = "WiFinderDBv03test.db"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # print(dir_path)
@@ -44,7 +46,7 @@ def login_required(f):
 
 def connectDB():
     '''Connects to an Sqlite3 database'''
-    return sqlite3.connect(db)
+    return sqlite3.connect(db, timeout=10)
 
 
 def get_db():
@@ -603,13 +605,30 @@ def exploredemo():
                                modules=moduledata,
                                dates=datedata)
 
-@WiFinderApp.route("/lectureinput")
+@WiFinderApp.route("/lectureinput", methods=['GET'])
 @login_required
 def input():
     '''page for lecturers to upload a survey form'''
     timeinput = query("SELECT DISTINCT Hour FROM CLASS;")
     roominput = query("SELECT DISTINCT RoomID FROM ROOM;")
     moduleinput = query("SELECT DISTINCT Module FROM CLASS;")
+
+    room = request.args.get('Room')
+    time = request.args.get('Time')
+    date = datetime.now().strftime("%Y-%m-%d")
+    occupancy = request.args.get('Occupancy')
+    print(room, time, date, occupancy)
+
+    if room and time and occupancy:
+        classID = (time+date+room)
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("""INSERT INTO OCCUPANCY (Hour, Datetime, Room, Occupancy, ClassID)
+            VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\')
+            ;""".format(time, date, room, occupancy, classID))
+        conn.commit()
+        flash("Upload successful")
+
     return render_template("lectureinput.html",
                            title='Home',
                            rooms_input=roominput,
