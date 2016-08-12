@@ -1,14 +1,14 @@
 from flask import Flask, render_template, g, redirect, url_for, request, session, flash
 from functools import wraps
 import sqlite3
-from hardwire_models import *
+from hardwire_models import linear_predictor, binary_classifier, tertiary_classifier
 from werkzeug import secure_filename
 import os
 
 from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
-from bokeh.charts import Scatter
+from bokeh.charts import Scatter, HeatMap
 from bokeh.models import LinearAxis, Range1d, ColumnDataSource, HoverTool
 import pandas as pd
 from bokeh.layouts import gridplot
@@ -482,7 +482,6 @@ def explore2():
                                      'yaxis', yaxis_value])
 
 @WiFinderApp.route("/explore")
-@login_required
 def exploredemo():
     '''search page for website'''
     timedata = query("SELECT DISTINCT Hour FROM CLASS;")
@@ -578,8 +577,52 @@ def exploredemo():
         #
         # hover_fig.add_tools(HoverTool(tooltips=None, renderers=[hoverer], mode='hline'))
 
+        # (dict, OrderedDict, lists, arrays and DataFrames are valid inputs)
 
-        all_plots = gridplot([[p], [linked_occu, linked_count], [brush_occu, brush_count]])
+        #inputs needed
+        # need to know what days there are: could be hardcoded?
+        # hours could be hardcoded
+        # occupancy: can take the tertiary prediction or headcount
+        # list comprehensions?
+        # so, return the count for each day, list comprehend that and show the predicted occupancy
+        # NEED: sqlquery which will return all data for the week surrounding a given date.
+
+        weekly_occupancy_query = """SELECT AVG(Log_Count) as count, Datetime as date
+                                    FROM WIFI_LOGS
+                                    WHERE strftime('%W', Datetime) =  strftime('%W', "{date}")
+                                    AND strftime('%H', Time) BETWEEN "09" and "17"
+                                    AND strftime('%w', Datetime) BETWEEN "1" and "5"
+                                    And Room = "{room}"
+                                    GROUP BY ClassID
+                                    ORDER BY date ASC"""
+        #IMPORTANT: this query returns M-F values
+
+        # get a df with date and count values, for a given room and date
+        week_counts = pd.read_sql_query(weekly_occupancy_query.format(date=datetime, room=room),
+                                           connectDB())
+
+        headcount = list(week_counts['count'])
+        headcount = [linear_predictor(x) for x in headcount] # predict on all supplied values
+
+        bins = list(week_counts['count'])
+        bins = [tertiary_classifier(x) for x in bins] # predict on all supplied values
+        tert_dictionary = {'Empty': 0, 'Medium': 0.5, 'High': 1} # map to int as only ints can go in heatmap
+        bins = [tert_dictionary[x] for x in bins] # map with listcomp
+
+        # 5 * 9 = 45, so all elements need to have 45 values. Days and hours are just multipled out.
+        data = {'days': ['fri']*9 + ['thu']*9 + ['wed']*9 + ['tue']*9 + ['mon']*9,
+                'occupancy': headcount,
+                'hours': ['9', '10', '11', '12', '13', '14', '15', '16', '17']*5}
+
+        colors = ['#1abc9c', '#ec583a', '#474e5d'] # set colors; currently not shading on continuous features
+
+        hm = HeatMap(data, x='hours', y='days', values='occupancy',
+                     title='Occupancy in {} over the week'.format(room), stat=None,
+                     color=colors, tools=None)
+
+
+        # all_plots = gridplot([[p], [linked_occu, linked_count], [brush_occu, brush_count]])
+        all_plots = gridplot([[hm]])
 
         script, div = components(all_plots)
 
@@ -587,8 +630,7 @@ def exploredemo():
             'explore.html',
             script=script,
             div=div,
-            # script2=script2,
-            # div2=div2,
+            error=bins,
             rooms=roomdata,
             times=timedata,
             modules=moduledata,
@@ -602,6 +644,57 @@ def exploredemo():
                                times=timedata,
                                modules=moduledata,
                                dates=datedata)
+
+@WiFinderApp.route("/evaluator")
+def evaluator():
+    '''returns appraisal data for rooms'''
+
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+
+    average_room_occupancy_query = """Select AVG(Occupancy)
+                                        From OCCUPANCY
+                                        Where Hour BETWEEN "9" and "17"
+                                        AND strftime('%w', Datetime) BETWEEN "1" and "5"
+                                        And Room = "{}"""
+    #
+    # registred_students_capacity_query = """Select Reg_Students, Capacity
+    #                                     From Class c JOIN Room r
+    #                                     Where Hour BETWEEN "9" and "17"
+    #                                     AND strftime('%w', Datetime) BETWEEN "1" and "5"
+    #                                     And Room = "{}"
+    #                                     and c.Room = r.RoomID""".format(room)
+
+    average_connections_query = """Select AVG(Log_Count)
+                                        From WIFI_LOGS
+                                        Where Hour BETWEEN "9" and "17"
+                                        AND strftime('%w', Datetime) BETWEEN "1" and "5"
+                                        And Room = "{}"""
+
+    room_evaluation = []
+    queries = [average_room_occupancy_query, average_connections_query]
+    headings = ['Room', 'Average Occupancy', 'Average Connections']
+
+    for room in roomdata:
+        items = [room]
+
+        for element in queries:
+            cur = get_db().cursor()
+            returned_data = cur.execute(element.format(str(room)))
+            query_result = returned_data.fetchone()[0]
+            items.append(query_result)
+
+        room_evaluation.append(items)
+
+
+
+
+    return render_template("evaluator.html",
+                               title='Estimations',
+                               rooms=room_evaluation,
+                                headings=headings)
+
+
+
 
 @WiFinderApp.route("/lectureinput")
 @login_required
