@@ -19,7 +19,7 @@ WiFinderApp.debug = True
 
 WiFinderApp.secret_key = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8b\x0c\x9f'  # session key random generated from os
 
-db = "/Users/shanekenny/PycharmProjects/WiFinder/app/website/WiFinderDBv02.db"
+db = "WiFinderDBv03.db"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # print(dir_path)
@@ -117,7 +117,7 @@ def explore():
 
     df['Time'] = df['Time'].apply(pd.to_datetime)
 
-    if room  and datetime:
+    if room and datetime:
         p = figure(width=800, height=250, x_axis_type="datetime", )
         p.extra_y_ranges = {"foo": Range1d(start=0, end=1)}
 
@@ -142,10 +142,7 @@ def explore():
 
 
         inputs = widgetbox(*controls, sizing_mode=sizing_mode)
-        l = layout([
-
-            [inputs, p],
-        ], sizing_mode=sizing_mode)
+        l = layout([[inputs, p]], sizing_mode=sizing_mode)
 
 
 
@@ -185,14 +182,14 @@ def explore():
         controls = [slider]
 
         inputs = widgetbox(*controls, sizing_mode=sizing_mode)
-        r = layout([[p, p2]],sizing_mode='stretch_both')
+        r = layout([[p, p2]], sizing_mode='stretch_both')
 
 
         script, div = components(r)
         return render_template(
             'explore.html',
-            script=script,
-            div=div,
+            # script=script,
+            # div=div,
 
             rooms=roomdata,
             times=timedata,
