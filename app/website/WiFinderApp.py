@@ -107,7 +107,7 @@ def index():
 @login_required
 def WiFinderHTML():
     '''Render HTML template'''
-    return render_template("estimator.html")
+    return render_template("login.html")
 
 
 @WiFinderApp.route("/exploreold")
