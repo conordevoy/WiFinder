@@ -11,7 +11,7 @@ os.chdir(directory)
 
 timetables = glob.glob(directory + '/' + '*_ready.csv') # finds all files ending in _ready.csv
 for t in timetables:
-    print(t)
+    print(t) # check to ensure only desired files are matched
 
 cleantables = [] # make new list to store the names of cleaned tables;
                 # this is needed for using pd.concat later on to join them end to end
@@ -46,15 +46,14 @@ for timetable in timetables:
     column = 1 # counter for controlling the column to take values from
 
     for table in day_tables:
-        table.Time = df[[0]].ix[1:]
-        table.Module = df[[column]].ix[1:]
-        table.Registered_Students = df[[column+1]].ix[1:]
-        room = df.columns[0]
-        csroom = 'CS' + room
-        table.Room= csroom
-        table.Room_Capacity = df.columns[2].split(' ')[2]
-        # date. changeable
-        column += 2
+        table.Time = df[[0]].ix[1:] # pull the time values; same for all tables
+        table.Module = df[[column]].ix[1:] # pull the modules from the given column
+        table.Registered_Students = df[[column+1]].ix[1:] # pull corresponding students, from column+1
+        room = df.columns[0] # room is the same for each timetable
+        csroom = 'CS' + room # append 'CS' as identifier for room
+        table.Room= csroom # room = the appended string, e.g. 'CSB002'
+        table.Room_Capacity = df.columns[2].split(' ')[2] # pull room capacity from  existing string 'room capacity: 90'
+        column += 2 # increment column by 2 as modules and students come in sets of 2 columns.
 
     del column # clean column for subsequent loops
 
