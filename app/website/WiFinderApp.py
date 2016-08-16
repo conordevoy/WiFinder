@@ -13,6 +13,8 @@ from bokeh.charts import Scatter, HeatMap
 from bokeh.models import LinearAxis, Range1d, ColumnDataSource, HoverTool
 import pandas as pd
 from bokeh.layouts import gridplot
+from SQL_queries import *
+from bokeh_functions import *
 
 
 WiFinderApp = Flask(__name__, static_url_path="/static")
@@ -562,8 +564,6 @@ def exploredemo():
 
         # script, div = components(brush_pan_gridplot)
 
-
-
         linked_occu.yaxis.axis_label = 'Occupancy'
         linked_count.yaxis.axis_label = 'Count'
         brush_occu.yaxis.axis_label = 'Occupancy'
@@ -661,19 +661,15 @@ def evaluator():
                                         Where Hour BETWEEN "9" and "17"
                                         AND strftime('%w', Datetime) BETWEEN "1" and "5"
                                         And Room = "{}"""
-    #
-    # registred_students_capacity_query = """Select Reg_Students, Capacity
-    #                                     From Class c JOIN Room r
-    #                                     Where Hour BETWEEN "9" and "17"
-    #                                     AND strftime('%w', Datetime) BETWEEN "1" and "5"
-    #                                     And Room = "{}"
-    #                                     and c.Room = r.RoomID""".format(room)
+
 
     average_connections_query = """Select AVG(Log_Count)
                                         From WIFI_LOGS
                                         Where Hour BETWEEN "9" and "17"
                                         AND strftime('%w', Datetime) BETWEEN "1" and "5"
                                         And Room = "{}"""
+
+
 
     room_evaluation = []
     queries = [average_room_occupancy_query, average_connections_query]
@@ -699,6 +695,34 @@ def evaluator():
                                 headings=headings)
 
 
+@WiFinderApp.route("/heatmapplot", methods=['GET', 'POST'])
+def heatmapper():
+
+    roomdata = query(get_all_rooms)
+    datedata = query(get_all_dates)
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+
+    if room and datetime:
+        plot = hotmap(datetime, room, weekly_occupancy_query)
+        script, div = components(plot)
+        error = "Hi, I'm bokeh!"
+
+        return render_template(
+            'explore_heatmap.html',
+            script=script,
+            div=div,
+            error=error,
+            rooms=roomdata,
+            dates=datedata
+            )
+    else:
+        return render_template("explore_heatmap.html",
+                               title='Estimations',
+                               rooms=roomdata,
+                               dates=datedata)
 
 
 @WiFinderApp.route("/lectureinput", methods=['GET'])
@@ -735,6 +759,100 @@ def input():
                            times_input=timeinput,
                            modules_input=moduleinput)
 
+@WiFinderApp.route("/correlation")
+def correlator_plot():
+
+    roomdata = query(get_all_rooms)
+    datedata = query(get_all_dates)
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+
+    if room and datetime:
+        plot = correlatorPlot(datetime, room)
+        script, div = components(plot)
+        error = None
+
+        return render_template(
+            'explore_correlation.html',
+            script=script,
+            div=div,
+            error=error,
+            rooms=roomdata,
+            dates=datedata
+                )
+    else:
+        return render_template("explore_correlation.html",
+                               title='Estimations',
+                               rooms=roomdata,
+                               dates=datedata,
+                               )
+
+
+@WiFinderApp.route("/simple")
+def simple_mapper():
+    '''allows for mutliple easy to read charts to be rendered'''
+
+    roomdata = query(get_all_rooms)
+    datedata = query(get_all_dates)
+    chartdata = ['Histogram', 'Bar']
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+    chartpick = request.args.get('Chart')
+
+    if room and datetime:
+        plot = simplePlotter(room, datetime, chartpick)
+        script, div = components(plot)
+        error= chartpick
+
+        return render_template(
+            'explore_simple.html',
+            script=script,
+            div=div,
+            error=error,
+            rooms=roomdata,
+            dates=datedata,
+            charts=chartdata
+            )
+    else:
+        return render_template("explore_simple.html",
+                               title='Estimations',
+                               rooms=roomdata,
+                               dates=datedata,
+                               charts=chartdata
+                               )
+
+@WiFinderApp.route("/heatmap", methods=['GET', 'POST'])
+def heatmap():
+
+    roomdata = query(get_all_rooms)
+    datedata = query(get_all_dates)
+
+    # get values from form
+    room = request.args.get('Room')
+    datetime = request.args.get('Date')
+
+    if room and datetime:
+        plot = hotmap(datetime, room, weekly_occupancy_query)
+        script, div = components(plot)
+        error = "Hi, I'm bokeh!"
+
+        return render_template(
+            'explore_heatmap.html',
+            script=script,
+            div=div,
+            error=error,
+            rooms=roomdata,
+            dates=datedata
+            )
+    else:
+        return render_template("explore_heatmap.html",
+                               title='Estimations',
+                               rooms=roomdata,
+                               dates=datedata)
 
 if __name__ == "__main__":
     WiFinderApp.run()
