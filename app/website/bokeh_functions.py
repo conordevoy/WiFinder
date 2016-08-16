@@ -8,7 +8,7 @@ from bokeh.layouts import gridplot
 import sqlite3
 from bokeh.palettes import YlGnBu9 as palette
 from hardwire_models import *
-from SQL_queries_functions import *
+from SQL_queries import *
 
 
 db = "WiFinderDBv03test.db"
