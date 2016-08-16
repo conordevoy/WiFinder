@@ -656,35 +656,51 @@ def evaluator():
 
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
 
-    average_room_occupancy_query = """Select AVG(Occupancy)
-                                        From OCCUPANCY
-                                        Where Hour BETWEEN "9" and "17"
-                                        AND strftime('%w', Datetime) BETWEEN "1" and "5"
-                                        And Room = "{}"""
+    average_room_occupancy_query = '''
+                                Select AVG(Occupancy)
+                                From OCCUPANCY
+                                Where Hour BETWEEN "9" and "17"
+                                AND strftime('%w', Datetime) BETWEEN "1" and "5"
+                                And Room = "{}"
+                                '''
 
 
-    average_connections_query = """Select AVG(Log_Count)
-                                        From WIFI_LOGS
-                                        Where Hour BETWEEN "9" and "17"
-                                        AND strftime('%w', Datetime) BETWEEN "1" and "5"
-                                        And Room = "{}"""
+    average_connections_query = '''
+                                Select AVG(Log_Count)
+                                From WIFI_LOGS
+                                Where Hour BETWEEN "9" and "17"
+                                AND strftime('%w', Datetime) BETWEEN "1" and "5"
+                                And Room = "{}"
+                                '''
+
+
 
 
 
     room_evaluation = []
     queries = [average_room_occupancy_query, average_connections_query]
-    headings = ['Room', 'Average Occupancy', 'Average Connections']
+    headings = ['Room', 'Average Occupancy', 'Average Connections', ]
+
+    roomdata = ['B002', 'B003', 'B004']
+
 
     for room in roomdata:
-        items = [room]
 
-        for element in queries:
-            cur = get_db().cursor()
-            returned_data = cur.execute(element.format(str(room)))
-            query_result = returned_data.fetchone()[0]
-            items.append(query_result)
+        # for eachQuery in queries:
+        #     cur = get_db().cursor()
+        #     returned_data = cur.execute(eachQuery.format(room))
+        #     query_result = returned_data.fetchone()[0]
+        #     items.append(query_result)
+        #
+        # room_evaluation.append(items)
 
-        room_evaluation.append(items)
+        avg_occupancy = query(average_connections_query.format(room))
+        b = 0
+
+        # this whole thing is shit. need to rewrite the whole loop as this is
+        # a dumb way of doing this.
+
+
 
 
 
