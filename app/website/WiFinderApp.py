@@ -656,10 +656,19 @@ def evaluator():
 
     roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
 
+    # Gives the average occupancy of all survey data for that room
     average_room_occupancy_query = '''
                                 SELECT AVG(Occupancy)
                                 FROM OCCUPANCY
                                 WHERE Room = "{}"
+                                '''
+    # gives the avg occupancy of survey data, discounting the 0's
+    # this how the CSI do it.
+    CSI_average_room_occupancy_query = '''
+                                SELECT AVG(Occupancy)
+                                FROM OCCUPANCY
+                                WHERE Room = "{}"
+                                AND Occupancy > 0
                                 '''
 
 
@@ -671,8 +680,8 @@ def evaluator():
                                 And Room = "{}"
                                 '''
 
-    use_rate_query = '''
-                    SELECT COUNT(case when o.Occupancy != 0 then 1 else NULL end) as used
+    base_rate_query = '''
+                    SELECT COUNT(Occupancy)
                     from Occupancy o
                     where Room = "{}"
                     '''
@@ -688,7 +697,7 @@ def evaluator():
 
 
     room_evaluation = []
-    headings = ['Room', 'Average Occupancy', 'Frequency of Use', 'Average Connections', 'Rating']
+    headings = ['Room', 'Average Occupancy', 'Average Frequency of Use', 'Average Utilisation', 'Average Connections', 'Rating']
 
     roomdata = ['B002', 'B003', 'B004']
 
@@ -697,12 +706,14 @@ def evaluator():
         name = room
         average_count = query(average_connections_query.format(room)).fetchone()[0]
         average_occupancy = query(average_room_occupancy_query.format(room)).fetchone()[0]
-        used_slots = query(use_rate_query.format(room)).fetchone()[0]
+        number_of_slots = query(base_rate_query.format(room)).fetchone()[0]
         unused_slots = query(unused_rate_query.format(room)).fetchone()[0]
 
-        frequency_of_use = int((unused_slots/used_slots) * 100)
+        frequency_of_use = int(((unused_slots/number_of_slots) -1) * -100)
         average_occupancy = int(average_occupancy * 100)
         average_count = int(average_count)
+
+        utilisation = (average_occupancy * frequency_of_use) / 100
 
 
         def rating(frequency):
@@ -718,28 +729,9 @@ def evaluator():
 
         rating = rating(frequency_of_use)
 
-        metrics = [name, average_occupancy, frequency_of_use, average_count, rating]
+        metrics = [name, average_occupancy, frequency_of_use, utilisation, average_count, rating]
 
         room_evaluation.append(metrics)
-
-
-
-
-
-        # for eachQuery in queries:
-        #     cur = get_db().cursor()
-        #     returned_data = cur.execute(eachQuery.format(room))
-        #     query_result = returned_data.fetchone()[0]
-        #     items.append(query_result)
-        #
-        # room_evaluation.append(items)
-
-        # avg_occupancy = query(average_connections_query.format(room))
-        # b = 0
-
-        # this whole thing is shit. need to rewrite the whole loop as this is
-        # a dumb way of doing this.
-
 
 
     return render_template("evaluator.html",
