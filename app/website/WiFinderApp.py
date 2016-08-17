@@ -692,12 +692,9 @@ def evaluator():
                     where Room = "{}"
                     '''
 
-
-
-
-
     room_evaluation = []
-    headings = ['Room', 'Average Occupancy', 'Average Frequency of Use', 'Average Utilisation', 'Average Connections', 'Rating']
+    headings = ['Room', 'Average Occupancy', 'Average Frequency of Use',\
+                'Average Utilisation', 'Average Connections', 'Rating']
 
     roomdata = ['B002', 'B003', 'B004']
 
@@ -712,9 +709,7 @@ def evaluator():
         frequency_of_use = int(((unused_slots/number_of_slots) -1) * -100)
         average_occupancy = int(average_occupancy * 100)
         average_count = int(average_count)
-
         utilisation = (average_occupancy * frequency_of_use) / 100
-
 
         def rating(frequency):
 
@@ -723,13 +718,21 @@ def evaluator():
             elif frequency > 59:
                 return 'Good'
             elif 49 <= frequency <= 59:
-                return 'fair'
+                return 'Fair'
             else:
                 return 'Error: Did not match frequency rating.'
 
+        def add_percent_sign(int): return str(int) + '%'
+
+        # the add % for frequency is placed in metrics to avoid conflict with the 'rating' function
+        # trips error due to comparison with string. e.g. '34%' < 49
+        average_occupancy = add_percent_sign(average_occupancy)
+        average_count = add_percent_sign(average_count)
+        utilisation = add_percent_sign(utilisation)
+
         rating = rating(frequency_of_use)
 
-        metrics = [name, average_occupancy, frequency_of_use, utilisation, average_count, rating]
+        metrics = [name, average_occupancy, add_percent_sign(frequency_of_use), utilisation, average_count, rating]
 
         room_evaluation.append(metrics)
 
