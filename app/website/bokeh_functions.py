@@ -2,11 +2,11 @@ from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.plotting import figure,output_file,show
 from bokeh.charts import Scatter, HeatMap, Bar, Histogram
-from bokeh.models import LinearAxis, Range1d, ColumnDataSource, HoverTool
+from bokeh.models import LinearAxis, Range1d, ColumnDataSource, HoverTool, Legend
 import pandas as pd
 from bokeh.layouts import gridplot
 import sqlite3
-from bokeh.palettes import YlGnBu9 as palette
+from bokeh.palettes import Oranges9 as palette
 from hardwire_models import *
 from SQL_queries import *
 
@@ -37,7 +37,7 @@ def hotmap(datetime, room, query):
                                        connectDB())
 
     headcount = list(week_counts['count'])
-    # headcount = [linear_predictor(x) for x in headcount] # predict on all supplied values
+    headcount = [linear_predictor(x) for x in headcount] # predict on all supplied values
 
     bins = list(week_counts['count'])
     # bins = [tertiary_classifier(x) for x in bins] # predict on all supplied values
@@ -67,6 +67,10 @@ def hotmap(datetime, room, query):
                  title='Occupancy in room over the week'.format(room), stat=None,
                  palette=palette, tools=None, width=1000, height=500,
                  hover_tool=True)
+
+    legend = Legend(location=(0, -30))
+
+    hm.add_layout(legend, 'right')
 
     all_plots = gridplot([[hm]])
 
