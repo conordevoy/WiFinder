@@ -29,7 +29,19 @@ form input {
     margin-bottom: auto;
     border: none;
 }
+.corrplot {
+max-width:1200px;
+margin-left: auto;
+margin-right:auto;
+}
+ @media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
 
+.corrplot {
+min-width: 300px;
+overflow:scroll;
+}
 </style>
     <div class="container-fluid bg-4 text-center">
         <h2 class="margin">Correlation Plot</h2>
@@ -58,7 +70,7 @@ form input {
 <br>
 <br>
 
-<div class="container-fluid bg-1 text-center">
+<div class="corrplot">
 
     {{ script | safe }}
     {{ div | safe }}

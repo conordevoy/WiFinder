@@ -30,6 +30,18 @@ form input {
     border: none;
 }
 
+ @media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+.plot {
+min-height:300px;
+min-width: 300px;
+overflow:hidden;
+}
+
+
+
 </style>
     <div class="container-fluid bg-4 text-center">
         <h2 class="margin">Histogram / Bar Plot</h2>
@@ -76,7 +88,7 @@ form input {
 <br>
 <br>
 
-<div class="container-fluid bg-1 text-center">
+<div class="plot" align="center">
 
     {{ script | safe }}
     {{ div | safe }}

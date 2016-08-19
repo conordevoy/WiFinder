@@ -29,7 +29,19 @@ form input {
     margin-bottom: auto;
     border: none;
 }
+.plot {
+max-width:600px;
+margin-left: auto;
+margin-right:auto;
+}
+ @media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
 
+.plot {
+min-width: 300px;
+overflow:scroll;
+}
 </style>
     <div class="container-fluid bg-4 text-center">
         <h2 class="margin">Heat Map</h2>
@@ -58,11 +70,9 @@ form input {
 <br>
 <br>
 
-<div class="container-fuid bg-1 text-center">
-    <div class="container">
+<div class="plot">
     {{ script | safe }}
     {{ div | safe }}
-        </div>
 </div>
 <br>
 <br>

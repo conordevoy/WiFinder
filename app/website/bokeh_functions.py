@@ -65,7 +65,7 @@ def hotmap(datetime, room, query):
 
     hm = HeatMap(data, x='hours', y='days', values='occupancy',
                  title='Occupancy in room over the week'.format(room), stat=None,
-                 palette=palette, tools=None, width=1000, height=500,
+                 palette=palette, tools=None,
                  hover_tool=True)
 
     legend = Legend(location=(0, -30))
@@ -96,7 +96,7 @@ def simplePlotter(room, datetime, chartpick):
 
 def correlatorPlot(datetime, room):
 
-    plot_options = dict(width=500, plot_height=500, x_axis_type="datetime",\
+    plot_options = dict(x_axis_type="datetime",\
                             tools='pan, wheel_zoom, box_select,box_zoom,reset,save')
 
     df_day_survey_counts = pd.read_sql_query(day_count_and_survey_query.format(date=datetime, room=room),

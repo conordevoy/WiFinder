@@ -91,14 +91,23 @@ only screen and (max-width: 760px),
 		left: -9999px;
 	}
 
-	tr { border: 1px solid #fff; }
+table td {
+border-left: none;
+border-right: none;
+}
+table {
+background-color: #ec583a;
+}
+	tr { border: none; }
 
 	td {
 		/* Behave  like a "row" */
 		border: none;
 		border-bottom: 1px solid #fff;
 		position: relative;
-		padding-left: 50%;
+		padding-left: 80%;
+		text-align:right;
+		color: #474e5d;
 	}
 
 	td:before {
@@ -115,12 +124,12 @@ only screen and (max-width: 760px),
 	/*
 	Label the data
 	*/
-	td:nth-of-type(1):before { content: "Room"; }
-	td:nth-of-type(2):before { content: "Ave Occupancy"; }
-	td:nth-of-type(3):before { content: "Ave frequency of use"; }
-	td:nth-of-type(4):before { content: "Ave Utilisation"; }
-	td:nth-of-type(5):before { content: "Ave Connection"; }
-	td:nth-of-type(6):before { content: "Rating"; }
+	td:nth-of-type(1):before { content: "Room"; text-align:left;color:#fff;}
+	td:nth-of-type(2):before { content: "Ave Occupancy"; text-align:left; color:#fff;}
+	td:nth-of-type(3):before { content: "Ave freq of use"; text-align:left;color:#fff;}
+	td:nth-of-type(4):before { content: "Ave Utilisation"; text-align:left;color:#fff;}
+	td:nth-of-type(5):before { content: "Ave Connection"; text-align:left;color:#fff;}
+	td:nth-of-type(6):before { content: "Rating"; text-align:left;color:#fff;}
 }
 </style>
 
