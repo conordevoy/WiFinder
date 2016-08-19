@@ -4,16 +4,18 @@
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
       <style>
-      html,body{height:100%;}
-    .container-fluid {
-        height:100%;
-     }
     .bg-1 {
-       background-image: url("../static/images/ucd.jpg");
-        background-repeat: no-repeat;
         color: #555555;
         background-size:100%,100%;
     }
+    body {
+    background-image: url("../static/images/ucd.jpg");
+    background-repeat: no-repeat;
+     -webkit-background-size: cover;
+      -moz-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;
+        }
     h2 {
         font-size: 5vw;
         letter-spacing: 0.825em;
@@ -25,7 +27,7 @@
     background-color: #fff;
     }
       </style>
-
+    <!--<div class="hero">-->
       <div class="container-fluid bg-1 text-center">
         <h2 class="margin">WiFinder</h2>
         <h3>UCD Occupancy Estimator</h3><br>
