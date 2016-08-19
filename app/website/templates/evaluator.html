@@ -33,34 +33,104 @@ form input {
     border: none;
 }
 
-        table {
+        <!--table {-->
+    <!--padding: 15px;-->
+    <!--text-align: center;-->
+    <!--margin-left: auto;-->
+    <!--margin-right: auto;-->
+    <!--width: 100%;-->
+    <!--border-collapse: collapse;-->
+    <!--}-->
+
+    <!--th, td {-->
+        <!--padding: 7px 10px 10px 10px;-->
+        <!--&lt;!&ndash;border: 1px solid&ndash;&gt;-->
+    <!--}-->
+table {
+border:none;
+border-collapse: collapse;
     padding: 15px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    }
+    width: 100%;
+}
 
-    th, td {
-        padding: 7px 10px 10px 10px;
-        border: 1px solid
-    }
+table td {
+border-left: 1px solid #ec583a;
+border-right: 1px solid #ec583a;
+}
 
-td {
-    background-color: #fa947e;
-    }
+table td:first-child {
+border-left: none;
+}
+
+table td:last-child {
+border-right: none;
+}
+
 
 th {
-    background-color:  #1abc9c;
+    color:  #ec583a;
+    text-align: center;
     }
+
+   @media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	th{
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	tr { border: 1px solid #fff; }
+
+	td {
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #fff;
+		position: relative;
+		padding-left: 50%;
+	}
+
+	td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "Room"; }
+	td:nth-of-type(2):before { content: "Ave Occupancy"; }
+	td:nth-of-type(3):before { content: "Ave frequency of use"; }
+	td:nth-of-type(4):before { content: "Ave Utilisation"; }
+	td:nth-of-type(5):before { content: "Ave Connection"; }
+	td:nth-of-type(6):before { content: "Rating"; }
+}
 </style>
 
-    <div class="container-fluid bg-2 text-center">
+    <div class="container-fluid bg-4 text-center">
         <h3 class="margin">Evaluate Room Utilisation</h3>
 
         <div>
             <table>
             {% for heading in headings %}
-                <th>{{heading}}</th>
+               <th>{{heading}}</th>
 
             {% endfor %}
 
@@ -74,6 +144,9 @@ th {
             </table>
         </div>
     </div>
+
+
+
 
 
 {% endblock %}

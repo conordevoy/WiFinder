@@ -33,9 +33,14 @@ form input {
     border: none;
 }
 </style>
-
+<script language="javascript">
+document.onload = scrollToElement($('#est_results'))
+    function scrollToElement(ele) {
+    $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
+    }
+</script>
     <div class="container-fluid bg-2 text-center">
-        <h3 class="margin">Estimate Occupancy</h3>
+        <h2 class="margin">Estimate Occupancy</h2>
         <form action= "/estimator">
 
             <select name="Room">
@@ -60,6 +65,7 @@ form input {
                 <option value="{{time.0}}">{{time.0}}</option>
                 {% endfor %}
             </select><br>
+                <!--<input type="submit" value="Submit" onclick=window.location="#est_results">-->
                 <input type="submit" value="Submit">
         </form>
         {% for message in get_flashed_messages() %}
@@ -67,7 +73,7 @@ form input {
         {% endfor %}
     </div>
 
-    <div class="container-fluid bg-3 text-center">
+    <div id="est_results" class="container-fluid bg-3 text-center">
         {% if linear_estimate or binary_estimate or tertiary_estimate %}
   <h3 class="margin">Estimated Occupancy Results</h3>
         {% endif %}
@@ -136,161 +142,6 @@ form input {
 
   </div>
 </div>
-<!--<style>-->
-    <!--.logo-small {-->
-    <!--color: #f4511e;-->
-    <!--font-size: 50px;-->
-<!--}-->
-<!--form{-->
-    <!--margin-left: auto;-->
-    <!--margin-right: auto;-->
-    <!--&lt;!&ndash;max-width: 200px;&ndash;&gt;-->
-    <!--color:#fff;-->
-<!--}-->
-<!--form select {-->
-    <!--height: 60px;-->
-    <!--width: 200px;-->
-    <!--margin-bottom: 30px;-->
-    <!--background-color: #f9f9f9;-->
-    <!--font-size: 15pt;-->
-    <!--border: none;-->
-    <!--color: grey;-->
-<!--}-->
-<!--form input {-->
-    <!--height: 60px;-->
-    <!--width: 200px;-->
-    <!--background-color: #ec583a;-->
-    <!--font-size: 15pt;-->
-    <!--color: #fff;-->
-    <!--margin-left: auto;-->
-    <!--margin-bottom: auto;-->
-    <!--border: none;-->
-<!--}-->
-
-<!--.submitter{-->
-    <!--margin-left:auto;-->
-    <!--margin-right:auto;-->
-    <!--}-->
-
-<!--</style>-->
-    <!--<div class="container-fluid bg-2 text-center">-->
-        <!--<form action= "/estimator">-->
-<!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col-sm-4">-->
-                <!--<h1>Room</h1>-->
-            <!--<select name="Room">-->
-                <!--<option value="{{ room_check if room_check != None}}">-->
-                    <!--{{ room_check if room_check != None else 'Select room:' }}</option>-->
-                <!--&lt;!&ndash;'rooms' is a parameter passed in the flask endpoint for '/search'-->
-                <!--This code iterates through that parameter and populates a search option for each value-->
-                <!--This structure is identical for all the search boxes&ndash;&gt;-->
-                <!--{% for room in rooms %}-->
-                <!--<option value="{{room.0}}">{{room.0}}</option>-->
-                <!--{% endfor %}-->
-            <!--</select>-->
-<!--</div>-->
-                        <!--<div class="col-sm-4">-->
-                <!--<h1>Date</h1>-->
-            <!--<select name="Date">-->
-                <!--<option value="{{ date_check if date_check != None}}">-->
-                <!--{{ date_check if date_check != None else 'Select date:' }}</option>-->
-                <!--{% for date in dates %}-->
-                <!--<option value="{{date.0}}">{{date.0}}</option>-->
-                <!--{% endfor %}-->
-            <!--</select>-->
-<!--</div>-->
-                        <!--<div class="col-sm-4">-->
-                <!--<h1>Time</h1>-->
-            <!--<select name="Time">-->
-              <!--<option value="{{ time_check if time_check != None}}">-->
-                  <!--{{ time_check if time_check != None else 'Select time:' }}</option>-->
-                <!--{% for time in times %}-->
-                <!--<option value="{{time.0}}">{{time.0}}</option>-->
-                <!--{% endfor %}-->
-            <!--</select>-->
-<!--</div>-->
-                        <!--<div class="submitter">-->
-
-            <!--<input type="submit" value="Submit">-->
-                            <!--</div>-->
-            <!--</div>-->
-    <!--</div>-->
-        <!--</form>-->
-    <!--</div>-->
-    <!--<div class="container-fluid bg-3 text-center">-->
-        <!--{% if linear_estimate or binary_estimate or tertiary_estimate %}-->
-  <!--<h3 class="margin">Estimated Occupancy Results</h3>-->
-        <!--{% endif %}-->
-  <!--<div class="row">-->
-
-    <!--<div class="col-sm-4">-->
-        <!--{% if binary_estimate == 'Empty' %}-->
-        <!--<div class="binary-empty">-->
-           <!--<span class="glyphicon glyphicon-remove-sign logo-small"></span>-->
-           <!--<h4>EMPTY</h4>-->
-            <!--<p>This class is estimated to be empty, meaning less than 25% full.</p>-->
-         <!--</div>-->
-        <!--{% endif %}-->
-
-        <!--{% if binary_estimate == 'Occupied' %}-->
-        <!--<div class="binary-occupied">-->
-           <!--<span class="glyphicon glyphicon-ok-sign logo-small"></span>-->
-           <!--<h4>OCCUPIED</h4>-->
-            <!--<p>This class is estimated to be occupied, meaning more than 25% full.</p>-->
-         <!--</div>-->
-        <!--{% endif %}-->
-
-    <!--</div>-->
-
-    <!--<div class="col-sm-4">-->
-
-        <!--{% if tertiary_estimate == 'Empty' %}-->
-        <!--<div class="tertiary-low">-->
-            <!--<span class="glyphicon glyphicon-circle-arrow-down logo-small"></span>-->
-            <!--<h4>LOW</h4>-->
-            <!--<p>This class is estimated to have a low occupancy, meaning less than 25% full.-->
-            <!--</p>-->
-         <!--</div>-->
-        <!--{% endif %}-->
-
-        <!--{% if tertiary_estimate == 'Medium' %}-->
-        <!--<div class="tertiary-medium">-->
-            <!--<span class="glyphicon glyphicon-circle-arrow-right logo-small"></span>-->
-            <!--<h4>MEDIUM</h4>-->
-            <!--<p>This class is estimated to have a medium occupancy, meaning between 25 -75% full.-->
-            <!--</p>-->
-         <!--</div>-->
-        <!--{% endif %}-->
-
-        <!--{% if tertiary_estimate == 'High' %}-->
-        <!--<div class="tertiary-high">-->
-            <!--<span class="glyphicon glyphicon-circle-arrow-up logo-small"></span>-->
-            <!--<h4>HIGH</h4>-->
-            <!--<p>This class is estimated to have a high occupancy, meaning more than 75% full.-->
-            <!--</p>-->
-         <!--</div>-->
-        <!--{% endif %}-->
-
-
-    <!--</div>-->
-
-    <!--{% if linear_estimate %}-->
-    <!--<div class="col-sm-4">-->
-        <!--<div class="linear">-->
-           <!--<h4 style="color: #f4511e; font-size: 70px">{{linear_estimate}}</h4>-->
-            <!--<p>people are estimated to be in this class.-->
-            <!--</p>-->
-        <!--</div>-->
-    <!--</div>-->
-      <!--{% endif %}-->
-
-  <!--</div>-->
-<!--</div>-->
-
-
-
-
 
 {% endblock %}
 

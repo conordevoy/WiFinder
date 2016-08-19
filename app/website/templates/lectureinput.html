@@ -3,6 +3,9 @@
 <!--Block content is the content which inserts into the block section of the parent page-->
 {% block content %}
 <style>
+   .bg-12 {
+      color: #808080;
+  }
 .bg-2 {
     background-color: #ec583a;
     }
@@ -57,6 +60,16 @@ form input {
     border: none;
 }
 </style>
+<div class="container-fluid bg-12 text-center">
+    <h1>Upload of additional Data</h1>
+    <p>We encourage lecturers to submit this form regularly. In an attempt to prevent
+        innacuracies in the data you may only input data for classes that occur today.
+        The additional data will automatically go through our data cleaning process
+        and will be fed into our data analytics models which may result in more accurate
+        and better predictive models..
+
+    </p>
+</div>
     <div class="container-fluid bg-2 text-center">
         <h2 class="margin">Upload Survey Data</h2>
         <form action= "/lectureinput">
