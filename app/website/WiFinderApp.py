@@ -228,6 +228,7 @@ def data_input():
             current_files= cf, title='Data Input')
 
 @WiFinderApp.route("/evaluator")
+@login_required
 def evaluator():
     '''returns appraisal data for rooms'''
 
@@ -356,6 +357,7 @@ def input():
                            modules_input=moduleinput)
 
 @WiFinderApp.route("/correlation")
+@login_required
 def correlator_plot():
 
     roomdata = query(get_all_rooms)
@@ -387,6 +389,7 @@ def correlator_plot():
 
 
 @WiFinderApp.route("/simple")
+@login_required
 def simple_mapper():
     '''allows for mutliple easy to read charts to be rendered'''
 
@@ -422,6 +425,7 @@ def simple_mapper():
                                )
 
 @WiFinderApp.route("/heatmap", methods=['GET', 'POST'])
+@login_required
 def heatmap():
 
     roomdata = query(get_all_rooms)
