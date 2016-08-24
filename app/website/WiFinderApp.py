@@ -360,8 +360,8 @@ def input():
 @login_required
 def correlator_plot():
 
-    roomdata = query(get_all_rooms)
-    datedata = query(get_all_dates)
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
     # get values from form
     room = request.args.get('Room')
@@ -393,8 +393,8 @@ def correlator_plot():
 def simple_mapper():
     '''allows for mutliple easy to read charts to be rendered'''
 
-    roomdata = query(get_all_rooms)
-    datedata = query(get_all_dates)
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
     chartdata = ['Histogram', 'Bar']
 
     # get values from form
@@ -428,8 +428,8 @@ def simple_mapper():
 @login_required
 def heatmap():
 
-    roomdata = query(get_all_rooms)
-    datedata = query(get_all_dates)
+    roomdata = query("SELECT DISTINCT RoomID FROM ROOM;")
+    datedata = query("SELECT DISTINCT Datetime FROM CLASS;")
 
     # get values from form
     room = request.args.get('Room')
