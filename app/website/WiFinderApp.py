@@ -367,7 +367,8 @@ def correlator_plot():
     room = request.args.get('Room')
     datetime = request.args.get('Date')
 
-    if room and datetime:
+    if room != 'default' and datetime != 'default' and room != None and datetime != None:
+    # if room and datetime:
         plot = correlatorPlot(datetime, room)
         script, div = components(plot)
         # error = None
@@ -402,7 +403,8 @@ def simple_mapper():
     datetime = request.args.get('Date')
     chartpick = request.args.get('Chart')
 
-    if room and datetime:
+    if room != 'default' and datetime != 'default' and room != None and datetime != None:
+    # if room and datetime:
         plot = simplePlotter(room, datetime, chartpick)
         script, div = components(plot)
         # error= chartpick
@@ -435,7 +437,8 @@ def heatmap():
     room = request.args.get('Room')
     datetime = request.args.get('Date')
 
-    if room and datetime:
+    if room != 'default' and datetime != 'default' and room != None and datetime != None:
+    # if room and datetime:
         plot = hotmap(datetime, room, weekly_occupancy_query)
         script, div = components(plot)
         # error = "Hi, I'm bokeh!"
