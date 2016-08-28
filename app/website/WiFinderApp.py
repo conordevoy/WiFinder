@@ -103,6 +103,7 @@ def index():
     '''load homepage'''
     return render_template("index.html",
                            title='Home')
+
 @WiFinderApp.route("/exploreview")
 @login_required
 def view():
@@ -193,6 +194,7 @@ def estimator():
 @WiFinderApp.route("/updatemodel", methods=['GET'])
 @login_required
 def update_model():
+    '''Route to update model'''
 
     # This does nothing yet. Need a way to pass a value saying whether to do this or not.
     # eventually, though, this will call:
